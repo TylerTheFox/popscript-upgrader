@@ -1,0 +1,22 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+
+# VS Code
+.vscode/
+
+# Parser generated files
+parsetab.py
+parser.out
+
+# Debug logs
+token_debug.log
+
+# Input/Output directories
+Inputs/
+Outputs/
+Reference/

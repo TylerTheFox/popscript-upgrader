@@ -1,0 +1,114 @@
+{
+    "control_flow": {
+        "IF": {
+            "description": "Conditional statement",
+            "syntax": "IF (condition) BEGIN ... END/ENDIF"
+        },
+        "ELSE": {
+            "description": "Alternative conditional branch",
+            "syntax": "ELSE BEGIN ... END"
+        },
+        "BEGIN": {
+            "description": "Start of code block",
+            "syntax": "BEGIN"
+        },
+        "END": {
+            "description": "End of code block",
+            "syntax": "END"
+        },
+        "EVERY": {
+            "description": "Periodic execution block",
+            "syntax": "EVERY interval [offset] BEGIN ... END"
+        }
+    },
+    "state_commands": {
+        "STATE_BRING_NEW_PEOPLE_BACK": {
+            "description": "Controls AI state for bringing new people back",
+            "syntax": "DO STATE_BRING_NEW_PEOPLE_BACK [ON|OFF]"
+        },
+        "STATE_TRAIN_PEOPLE": {
+            "description": "Controls AI state for training people",
+            "syntax": "DO STATE_TRAIN_PEOPLE [ON|OFF]"
+        },
+        "STATE_MED_MAN_GET_WILD_PEEPS": {
+            "description": "Controls medicine man behavior for getting wild people",
+            "syntax": "DO STATE_MED_MAN_GET_WILD_PEEPS [ON|OFF]"
+        },
+        "STATE_CONSTRUCT_BUILDING": {
+            "description": "Controls AI state for building construction",
+            "syntax": "DO STATE_CONSTRUCT_BUILDING [ON|OFF]"
+        },
+        "STATE_SPELL_DEFENCE": {
+            "description": "Controls spell defense behavior",
+            "syntax": "DO STATE_SPELL_DEFENCE param1 param2 [ON|OFF]"
+        },
+        "STATE_AUTO_ATTACK": {
+            "description": "Controls automatic attack behavior",
+            "syntax": "DO STATE_AUTO_ATTACK [ON|OFF]"
+        }
+    },
+    "action_commands": {
+        "SET": {
+            "description": "Sets a variable value",
+            "syntax": "SET variable value"
+        },
+        "MULTIPLY": {
+            "description": "Multiplies values",
+            "syntax": "MULTIPLY target source amount"
+        },
+        "INCREMENT": {
+            "description": "Increments a value",
+            "syntax": "INCREMENT target amount"
+        },
+        "DECREMENT": {
+            "description": "Decrents a value",
+            "syntax": "Decrents target amount"
+        },
+        "ATTACK": {
+            "description": "Initiates an attack command",
+            "syntax": "DO ATTACK p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12 p13"
+        }
+    },
+    "utility_commands": {
+        "TRIGGER_THING": {
+            "description": "Triggers an event or action",
+            "syntax": "DO TRIGGER_THING identifier"
+        },
+        "GET_HEIGHT_AT_POS": {
+            "description": "Gets terrain height at position",
+            "syntax": "DO GET_HEIGHT_AT_POS param1 param2"
+        },
+        "COUNT_PEOPLE_IN_MARKER": {
+            "description": "Counts people in a marker area",
+            "syntax": "DO COUNT_PEOPLE_IN_MARKER p1 p2 p3 p4"
+        }
+    },
+    "flyby_commands": {
+        "FLYBY_CREATE_NEW": {
+            "description": "Creates a new camera flyby",
+            "syntax": "DO FLYBY_CREATE_NEW"
+        },
+        "FLYBY_SET_EVENT_POS": {
+            "description": "Sets flyby event position",
+            "syntax": "DO FLYBY_SET_EVENT_POS p1 p2 p3 p4"
+        },
+        "FLYBY_START": {
+            "description": "Starts the flyby sequence",
+            "syntax": "DO FLYBY_START"
+        }
+    },
+    "user_interface": {
+        "ENABLE_USER_INPUTS": {
+            "description": "Enables user input",
+            "syntax": "DO ENABLE_USER_INPUTS"
+        },
+        "DISABLE_USER_INPUTS": {
+            "description": "Disables user input",
+            "syntax": "DO DISABLE_USER_INPUTS"
+        },
+        "CREATE_MSG_INFORMATION": {
+            "description": "Creates an information message",
+            "syntax": "DO CREATE_MSG_INFORMATION identifier"
+        }
+    }
+}
