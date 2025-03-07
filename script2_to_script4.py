@@ -160,13 +160,19 @@ def convert_int_constant(int_value):
     if not isinstance(int_value, str) or not int_value:
         return int_value
         
+    # Add this check at the beginning to prevent USER_ conversion
+    if isinstance(int_value, str) and int_value.startswith('USER_'):
+        return convert_user_var_name(int_value)
+    
     # Special mappings that don't follow the standard pattern
     special_mappings = {
         "INT_NO_SPECIFIC_SPELL": "M_SPELL_NONE",
-        "BUILDING" : "ATTACK_BUILDING",
-        "MARKER" : "ATTACK_MARKER",
+        "NO_SPECIFIC_BUILDING": "INT_NO_SPECIFIC_BUILDING",
+        "BUILDING": "ATTACK_BUILDING",
+        "MARKER": "ATTACK_MARKER",
         "INT_WRATH_OF_GOD": "M_SPELL_ARMAGEDDON",
         "INT_CONVERT": "M_SPELL_CONVERT_WILD",
+        "CONVERT": "M_SPELL_CONVERT_WILD",  # Add this line
         "INT_TARGET_MEDICINE_MAN": "ATTACK_TARGET_MEDICINE_MAN",
     }
     
@@ -187,6 +193,7 @@ def convert_int_constant(int_value):
         "INT_YELLOW_PEOPLE": "_gsi.Players[TRIBE_YELLOW].NumPeople",
         "INT_GREEN_PEOPLE": "_gsi.Players[TRIBE_GREEN].NumPeople",
         "INT_WILD_PEOPLE": "_gnsi.NumWildPeople",
+        "INT_CP_FREE_ENTRIES" : "FREE_ENTRIES(MY_TRIBE)"
     }
     
     if int_value in people_mappings:
@@ -261,8 +268,8 @@ def convert_user_var_name(var_name):
 
 def map_set_spell_entry(p):
     """Helper function for SET_SPELL_ENTRY command mapping"""
-    spell_idx = p[2]  # The spell slot index
-    spell_type = p[3]  # The spell type (INT_BLAST, 0, etc.)
+    spell_idx = convert_arg(p[2], {})  # The spell slot index
+    spell_type = convert_arg(p[3], {})  # The spell type (INT_BLAST, 0, etc.)
     
     # For the spell parameter in the function
     if spell_type.startswith('INT_'):
@@ -275,173 +282,243 @@ def map_set_spell_entry(p):
         # Special case: spell type 0 maps to BLAST for cost
         cost_spell = 'M_SPELL_BLAST'
     elif spell_type.startswith('INT_'):
-        cost_spell = 'M_SPELL_' + spell_type.replace('INT_', '')
+        cost_spell = 'M_SPELL_' + spell_type[4:]  # Remove 'INT_' prefix
+    elif spell_type.startswith('M_SPELL_'):
+        cost_spell = spell_type  # Already has the correct prefix
     else:
         cost_spell = 'M_SPELL_' + spell_type
     
-    return f"SET_SPELL_ENTRY(MY_TRIBE, {spell_idx}, {spell_param}, PLAYERS_SPELL_COST(MY_TRIBE, {cost_spell}), {p[5]}, {p[6]}, {p[7]})"
-
+    return f"SET_SPELL_ENTRY(MY_TRIBE, {spell_idx}, {spell_param}, PLAYERS_SPELL_COST(MY_TRIBE, {cost_spell}), {convert_arg(p[5], {})}, {convert_arg(p[6], {})}, {convert_arg(p[7], {})})"
 
 # Define missing attack command mapper
 def map_attack_command(p):
-    """Helper function for ATTACK command mapping"""
-    # Parameters for attack command
-    tribe = p[2]
-    marker = p[3]
-    target_type = p[4]
-    target = p[5]
-    spell1 = convert_int_constant(p[6])
-    spell2 = convert_int_constant(p[7])
-    spell3 = convert_int_constant(p[8])
-    attack_type = p[9]
-    action = p[10]
-    min_people = p[11]
-    
-    # Optional parameters
-    spell_delay = "-1"
-    attack_percent = "-1"
-    
-    if len(p) > 12:
-        spell_delay = p[12]
-    if len(p) > 13:
-        attack_percent = p[13]
-        
-    return f"ATTACK(MY_TRIBE, {marker}, {target_type}, {target}, {spell1}, {spell2}, {spell3}, {attack_type}, {action}, {min_people}, {spell_delay}, {attack_percent})"
+    """Helper function for ATTACK command with variable parameters"""
+    # Target tribe - always present
+    target_tribe = convert_arg(p[2], {})  # Use convert_arg to handle USER_ variables
 
-# Helper function for extracting user variables to declare
-def extract_user_variables(script_content):
-    """Extract USER_ variables from script content to declare at the beginning"""
-    import re
-    
-    # Find all USER_ variables in the script
-    matches = re.findall(r'USER_[A-Za-z0-9_]+', script_content)
-    user_vars = set(matches)
-    
-    # Generate variable declarations
-    declarations = []
-    for var in sorted(user_vars):
-        declarations.append(f"local {convert_user_var_name(var)} = 0")
-    
-    return declarations
+    # Number of attackers - use the centralized function for INT_ constants
+    num_attackers = p[3]
+    if num_attackers == "INT_MY_NUM_PEOPLE" or num_attackers == "MY_NUM_PEOPLE":
+        num_attackers = "_gsi.Players[MY_TRIBE].NumPeople"
+    elif isinstance(num_attackers, str) and num_attackers.startswith("INT_"):
+        # Special handling for person type counts
+        if num_attackers in ["INT_BRAVE", "INT_WARRIOR", "INT_RELIGIOUS", "INT_SPY", "INT_SUPER_WARRIOR"]:
+            person_type = convert_int_constant(num_attackers)
+            num_attackers = f"_gsi.Players[MY_TRIBE].NumPeopleOfType[{person_type}]"
+        else:
+            num_attackers = convert_int_constant(num_attackers)
+            
+    # Attack type
+    attack_type = convert_arg(p[4], {})
+    if isinstance(attack_type, str):
+        if not attack_type.startswith("ATTACK_"):
+            if attack_type.startswith("INT_"):
+                attack_type = convert_int_constant(attack_type)
+            if attack_type != "ATTACK_NORMAL":  # Avoid ATTACK_ATTACK_NORMAL
+                attack_type = f"ATTACK_{attack_type}"
+
+    # Target building/marker
+    target = convert_int_constant(p[5])
+
+    # Distance
+    distance = convert_arg(p[6], {})
+
+    # Spell types - use the centralized function
+    spell1 = convert_arg(p[7] if len(p) > 7 else "INT_NO_SPECIFIC_SPELL", {})
+    spell2 = convert_arg(p[8] if len(p) > 8 else "INT_NO_SPECIFIC_SPELL", {})
+    spell3 = convert_arg(p[9] if len(p) > 9 else "INT_NO_SPECIFIC_SPELL", {})
+
+    # Remaining parameters
+    attack_mode = convert_arg(p[10] if len(p) > 10 else "ATTACK_NORMAL", {})
+    param1 = convert_arg(p[11] if len(p) > 11 else "0", {})
+    param2 = convert_arg(p[12] if len(p) > 12 else "-1", {})
+    param3 = convert_arg(p[13] if len(p) > 13 else "-1", {})
+    param4 = convert_arg(p[14] if len(p) > 14 else "-1", {})
+
+    return f"ATTK_RST = ATTACK(MY_TRIBE, {target_tribe}, {num_attackers}, {attack_type}, {target}, {distance}, {spell1}, {spell2}, {spell3}, {attack_mode}, {param1}, {param2}, {param3}, {param4})"
 
 # Helper function for handling DO_CONVERT_AT_MARKER
 def map_convert_at_marker(p):
     """Map CONVERT_AT_MARKER command to Script4 equivalent"""
-    marker = p[2]
+    marker = convert_arg(p[2], {})
     return f"CONVERT_AT_MARKER(MY_TRIBE, {marker})"
 
 # Helper function for marker handling
 def map_marker_entries(p):
     """Map MARKER_ENTRIES command to Script4 equivalent"""
-    entries = ', '.join([p[i] if i < len(p) else '-1' for i in range(2, 6)])
+    entries = ', '.join([convert_arg(p[i], {}) if i < len(p) else '-1' for i in range(2, 6)])
     return f"MARKER_ENTRIES(MY_TRIBE, {entries})"
 
 # Helper function for count people in marker
 def map_count_people_in_marker(p):
     """Map COUNT_PEOPLE_IN_MARKER command to Script4 equivalent"""
-    tribe = p[2]
-    marker = p[3]
-    radius = p[4]
+    tribe = convert_arg(p[2], {})
+    marker = convert_arg(p[3], {})
+    radius = convert_arg(p[4], {})
     result_var = convert_user_var_name(p[5])
     
-    return f"{result_var} = COUNT_PEOPLE_IN_MARKER(TRIBE_{tribe}, {marker}, {radius})"
+    return f"{result_var} = COUNT_PEOPLE_IN_MARKER({tribe}, {marker}, {radius})"
 
 # Helper function for spell casting triggers
 def map_get_spells_cast(p):
     """Map GET_SPELLS_CAST command to Script4 equivalent"""
-    tribe = p[2]
-    spell = convert_int_constant(p[3])
+    tribe = convert_arg(p[2], {})
+    spell = convert_arg(p[3], {})
     result_var = convert_user_var_name(p[4])
     
-    return f"{result_var} = GET_SPELLS_CAST(TRIBE_{tribe}, {spell})"
+    return f"{result_var} = GET_SPELLS_CAST({tribe}, {spell})"
+
+def map_build_drum_tower(p):
+    """Map BUILD_DRUM_TOWER command to Script4 format"""
+    x_pos = convert_arg(p[2], {})
+    z_pos = convert_arg(p[3], {})
+    return f"BUILD_DRUM_TOWER(MY_TRIBE, {x_pos}, {z_pos})"
+
+def map_give_one_shot(p):
+    """Map GIVE_ONE_SHOT command to Script4 format"""
+    spell = convert_arg(p[2], {})
+    tribe = convert_arg(p[3], {})
+    tribe_converted = convert_int_constant(tribe)
+    return f"GIVE_ONE_SHOT({spell}, {tribe_converted})"
+
+def map_i_have_one_shot(p):
+    """Map I_HAVE_ONE_SHOT command to Script4 format"""
+    spell_type = "T_SPELL" if p[2] == "SPELL_TYPE" else "T_BUILDING"
+    spell = convert_arg(p[3], {})
+    variable = convert_user_var_name(p[4])
+    return f"{variable} = I_HAVE_ONE_SHOT(MY_TRIBE, {spell_type}, {spell})"
+
+def map_pray_at_head(p):
+    """Map PRAY_AT_HEAD command to Script4 format"""
+    num_people = convert_arg(p[2], {})
+    marker = convert_arg(p[3] if len(p) > 3 else "0", {})
+    return f"PRAY_AT_HEAD(MY_TRIBE, {num_people}, {marker})"
+
+def map_put_person_in_dt(p):
+    """Map PUT_PERSON_IN_DT command to Script4 format"""
+    person_type = convert_arg(p[2], {})
+    x_pos = convert_arg(p[3], {})
+    z_pos = convert_arg(p[4], {})
+    return f"PUT_PERSON_IN_DT(MY_TRIBE, {person_type}, {x_pos}, {z_pos})"
+
+def map_send_all_people_to_marker(p):
+    """Map SEND_ALL_PEOPLE_TO_MARKER command to Script4 format"""
+    marker = convert_arg(p[2], {})
+    return f"SEND_ALL_PEOPLE_TO_MARKER(MY_TRIBE, {marker})"
+
+def map_set_drum_tower_pos(p):
+    """Map SET_DRUM_TOWER_POS command to Script4 format"""
+    x_pos = convert_arg(p[2], {})
+    z_pos = convert_arg(p[3], {})
+    return f"SET_DRUM_TOWER_POS(MY_TRIBE, {x_pos}, {z_pos})"
+
+def map_spell_at_marker(p):
+    """Map SPELL_AT_MARKER command to Script4 format"""
+    spell = convert_arg(p[2], {})
+    marker = convert_arg(p[3], {})
+    direction = convert_arg(p[4], {})
+    return f"SPELL_ATTACK(MY_TRIBE, {spell}, {marker}, {direction})"
+
+def map_set_no_blue_reinc(p):
+    """Map SET_NO_BLUE_REINC command to Script4 format"""
+    return f"SET_NO_REINC(TRIBE_BLUE)"
 
 # Then update the command map functions to use this helper
 def build_command_map(tribe):
     command_map = {
         "GET_SPELLS_CAST": map_get_spells_cast,
-        "GET_HEIGHT_AT_POS": lambda p: f"{convert_user_var_name(p[3])} = GET_HEIGHT_AT_POS({p[2]})",
-        "GET_HEAD_TRIGGER_COUNT": lambda p: f"{convert_user_var_name(p[4])} = GET_HEAD_TRIGGER_COUNT({p[2]}, {p[3]})",
-        "GET_NUM_ONE_OFF_SPELLS": lambda p: f"{convert_user_var_name(p[4])} = GET_NUM_ONE_OFF_SPELLS(TRIBE_BLUE, {p[3].replace('INT_', 'M_SPELL_')})",
-        "NAV_CHECK": lambda p: f"{ convert_user_var_name(p[6]) } = NAV_CHECK(MY_TRIBE, { convert_int_constant(p[2]) }, { convert_int_constant(p[3]) }, {p[4]} , {p[5]})",
+        "GET_HEIGHT_AT_POS": lambda p: f"{convert_user_var_name(p[3])} = GET_HEIGHT_AT_POS({convert_arg(p[2], {})})",
+        "GET_HEAD_TRIGGER_COUNT": lambda p: f"{convert_user_var_name(p[4])} = GET_HEAD_TRIGGER_COUNT({convert_arg(p[2], {})}, {convert_arg(p[3], {})})",
+        "GET_NUM_ONE_OFF_SPELLS": lambda p: f"{convert_user_var_name(p[4])} = GET_NUM_ONE_OFF_SPELLS(TRIBE_BLUE, {convert_arg(p[3].replace('INT_', 'M_SPELL_'), {})})",
+        "NAV_CHECK": lambda p: f"{ convert_user_var_name(p[6]) } = NAV_CHECK(MY_TRIBE, { convert_arg(p[2], {}) }, { convert_int_constant(p[3]) }, { convert_int_constant(p[4]) }, {convert_arg(p[5], {})})",        
         "COUNT_PEOPLE_IN_MARKER": map_count_people_in_marker,
         
         # Core commands
-        "SET_REINCARNATION": lambda p: f"SET_REINCARNATION({p[2]}, MY_TRIBE)",
+        "SET_REINCARNATION": lambda p: f"SET_REINCARNATION({convert_arg(p[2], {})}, MY_TRIBE)",
         "DELAY_MAIN_DRUM_TOWER": lambda p: f"DELAY_MAIN_DRUM_TOWER(ON, MY_TRIBE)",
-        "SET_ATTACK_VARIABLE": lambda p: f"SET_ATTACK_VARIABLE(MY_TRIBE, {convert_user_var_name(p[2])})",
+        "SET_ATTACK_VARIABLE": lambda p: f"SET_ATTACK_VARIABLE(MY_TRIBE, 0) -- TODO! Not supported!",
         "DISABLE_USER_INPUTS": lambda p: f"DISABLE_USER_INPUTS()",
         "ENABLE_USER_INPUTS": lambda p: f"ENABLE_USER_INPUTS()",
         
         # State commands - using STATE_SET instead of SET_STATE
-        "STATE_BRING_NEW_PEOPLE_BACK": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BRING_NEW_PEOPLE_BACK']}, {p[2]})",
-        "STATE_TRAIN_PEOPLE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_TRAIN_PEOPLE']}, {p[2]})",
-        "STATE_MED_MAN_GET_WILD_PEEPS": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_MED_MAN_GET_WILD_PEEPS']}, {p[2]})",
-        "STATE_CONSTRUCT_BUILDING": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_CONSTRUCT_BUILDING']}, {p[2]})",
-        "STATE_FETCH_WOOD": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_FETCH_WOOD']}, {p[2]})",
-        "STATE_SEND_GHOSTS": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SEND_GHOSTS']}, {p[2]})",
-        "STATE_FETCH_LOST_PEOPLE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_FETCH_LOST_PEOPLE']}, {p[2]})",
-        "STATE_FETCH_FAR_VEHICLE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_FETCH_FAR_VEHICLE']}, {p[2]})",
-        "STATE_FETCH_LOST_VEHICLE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_FETCH_LOST_VEHICLE']}, {p[2]})",
-        "STATE_DEFEND": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_DEFEND']}, {p[2]})",
-        "STATE_DEFEND_BASE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_DEFEND_BASE']}, {p[2]})",
-        "STATE_HOUSE_A_PERSON": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_HOUSE_A_PERSON']}, {p[2]})",
-        "STATE_AUTO_ATTACK": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_AUTO_ATTACK']}, {p[2]})",
-        "STATE_SPELL_DEFENCE": lambda p: f"SHAMAN_DEFEND(MY_TRIBE, {p[2]}, {p[3]}, {p[4]})",
-        "STATE_POPULATE_DRUM_TOWER": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_POPULATE_DRUM_TOWER']}, {p[2]})",
-        "STATE_BUILD_VEHICLE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BUILD_VEHICLE']}, {p[2]})",
-        "STATE_PREACH": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_PREACH']}, {p[2]})",
-        "STATE_BUILD_WALLS": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BUILD_WALLS']}, {p[2]})",
-        "STATE_SABOTAGE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SABOTAGE']}, {p[2]})",
-        "STATE_SPELL_OFFENSIVE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SPELL_OFFENSIVE']}, {p[2]})",
-        "STATE_SUPER_DEFEND": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SUPER_DEFEND']}, {p[2]})",
-        "STATE_MED_MAN_DEFEND": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_MED_MAN_DEFEND']}, {p[2]})",
-        "STATE_FLATTEN_BASE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_FLATTEN_BASE']}, {p[2]})",
-        "STATE_BUILD_OUTER_DEFENCES": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BUILD_OUTER_DEFENCES']}, {p[2]})",
-        "STATE_GUARD_AT_MARKER": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_GUARD_AT_MARKER']}, {p[2]})",
-        "STATE_SEND_ALL_TO_MARKER": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SEND_ALL_TO_MARKER']}, {p[2]})",
-        "STATE_PRAY_AT_HEAD": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_PRAY_AT_HEAD']}, {p[2]})",
-        "STATE_BOAT_PATROL": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BOAT_PATROL']}, {p[2]})",
-        "STATE_DEFEND_SHAMEN": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_DEFEND_SHAMEN']}, {p[2]})",
-        "SPELL_AT_MARKER": lambda p: f"SPELL_ATTACK(MY_TRIBE, {convert_int_constant(p[2])}, {p[3]}, {p[4]})",
+        "STATE_BRING_NEW_PEOPLE_BACK": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BRING_NEW_PEOPLE_BACK']}, {convert_arg(p[2], {})})",
+        "STATE_TRAIN_PEOPLE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_TRAIN_PEOPLE']}, {convert_arg(p[2], {})})",
+        "STATE_MED_MAN_GET_WILD_PEEPS": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_MED_MAN_GET_WILD_PEEPS']}, {convert_arg(p[2], {})})",
+        "STATE_CONSTRUCT_BUILDING": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_CONSTRUCT_BUILDING']}, {convert_arg(p[2], {})})",
+        "STATE_FETCH_WOOD": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_FETCH_WOOD']}, {convert_arg(p[2], {})})",
+        "STATE_SEND_GHOSTS": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SEND_GHOSTS']}, {convert_arg(p[2], {})})",
+        "STATE_FETCH_LOST_PEOPLE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_FETCH_LOST_PEOPLE']}, {convert_arg(p[2], {})})",
+        "STATE_FETCH_FAR_VEHICLE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_FETCH_FAR_VEHICLE']}, {convert_arg(p[2], {})})",
+        "STATE_FETCH_LOST_VEHICLE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_FETCH_LOST_VEHICLE']}, {convert_arg(p[2], {})})",
+        "STATE_DEFEND": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_DEFEND']}, {convert_arg(p[2], {})})",
+        "STATE_DEFEND_BASE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_DEFEND_BASE']}, {convert_arg(p[2], {})})",
+        "STATE_HOUSE_A_PERSON": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_HOUSE_A_PERSON']}, {convert_arg(p[2], {})})",
+        "STATE_AUTO_ATTACK": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_AUTO_ATTACK']}, {convert_arg(p[2], {})})",
+        "STATE_SPELL_DEFENCE": lambda p: f"SHAMAN_DEFEND(MY_TRIBE, {convert_arg(p[2], {})}, {convert_arg(p[3], {})}, {convert_arg(p[4], {})})",
+        "STATE_POPULATE_DRUM_TOWER": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_POPULATE_DRUM_TOWER']}, {convert_arg(p[2], {})})",
+        "STATE_BUILD_VEHICLE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BUILD_VEHICLE']}, {convert_arg(p[2], {})})",
+        "STATE_PREACH": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_PREACH']}, {convert_arg(p[2], {})})",
+        "STATE_BUILD_WALLS": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BUILD_WALLS']}, {convert_arg(p[2], {})})",
+        "STATE_SABOTAGE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SABOTAGE']}, {convert_arg(p[2], {})})",
+        "STATE_SPELL_OFFENSIVE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SPELL_OFFENSIVE']}, {convert_arg(p[2], {})})",
+        "STATE_SUPER_DEFEND": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SUPER_DEFEND']}, {convert_arg(p[2], {})})",
+        "STATE_MED_MAN_DEFEND": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_MED_MAN_DEFEND']}, {convert_arg(p[2], {})})",
+        "STATE_FLATTEN_BASE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_FLATTEN_BASE']}, {convert_arg(p[2], {})})",
+        "STATE_BUILD_OUTER_DEFENCES": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BUILD_OUTER_DEFENCES']}, {convert_arg(p[2], {})})",
+        "STATE_GUARD_AT_MARKER": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_GUARD_AT_MARKER']}, {convert_arg(p[2], {})})",
+        "STATE_SEND_ALL_TO_MARKER": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SEND_ALL_TO_MARKER']}, {convert_arg(p[2], {})})",
+        "STATE_PRAY_AT_HEAD": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_PRAY_AT_HEAD']}, {convert_arg(p[2], {})})",
+        "STATE_BOAT_PATROL": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BOAT_PATROL']}, {convert_arg(p[2], {})})",
+        "STATE_DEFEND_SHAMEN": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_DEFEND_SHAMEN']}, {convert_arg(p[2], {})})",
 
         # Marker and defense commands
-        "SET_DEFENCE_RADIUS": lambda p: f"SET_DEFENCE_RADIUS(MY_TRIBE, {p[2]})",
-        "SET_MARKER_ENTRY": lambda p: f"SET_MARKER_ENTRY(MY_TRIBE, {p[2]}, {p[3]}, {p[4]}, {p[5]}, {p[6]}, {p[7]}, {p[8]})",
+        "SET_DEFENCE_RADIUS": lambda p: f"SET_DEFENCE_RADIUS(MY_TRIBE, {convert_arg(p[2], {})})",
+        "SET_MARKER_ENTRY": lambda p: f"SET_MARKER_ENTRY(MY_TRIBE, {convert_arg(p[2], {})}, {convert_arg(p[3], {})}, {convert_arg(p[4], {})}, {convert_arg(p[5], {})}, {convert_arg(p[6], {})}, {convert_arg(p[7], {})}, {convert_arg(p[8], {})})",
         "ONLY_STAND_AT_MARKERS": lambda p: f"ONLY_STAND_AT_MARKERS(MY_TRIBE)",
         "MARKER_ENTRIES": map_marker_entries,
         
         # Spell related commands - removed invalid functions
         
         "SET_SPELL_ENTRY": map_set_spell_entry,        
-        "SET_BUCKET_COUNT_FOR_SPELL": lambda p: f"SET_BUCKET_COUNT_FOR_SPELL(MY_TRIBE, {convert_int_constant(p[2])}, {p[3]})",
+        "SET_BUCKET_COUNT_FOR_SPELL": lambda p: f"SET_BUCKET_COUNT_FOR_SPELL(MY_TRIBE, {convert_arg(p[2], {})}, {convert_arg(p[3], {})})",
         
         # Flyby commands 
         "FLYBY_CREATE_NEW": lambda p: "FLYBY_CREATE_NEW()",
-        "FLYBY_ALLOW_INTERRUPT": lambda p: f"FLYBY_ALLOW_INTERRUPT({p[2]})",
-        "FLYBY_SET_EVENT_POS": lambda p: f"FLYBY_SET_EVENT_POS({p[2]}, {p[3]}, {p[4]}, {p[5]})",
-        "FLYBY_SET_EVENT_ANGLE": lambda p: f"FLYBY_SET_EVENT_ANGLE({p[2]}, {p[3]}, {p[4]})",
-        "FLYBY_SET_EVENT_ZOOM": lambda p: f"FLYBY_SET_EVENT_ZOOM({p[2]}, {p[3]}, {p[4]})",
-        "FLYBY_SET_EVENT_TOOLTIP": lambda p: f"FLYBY_SET_EVENT_TOOLTIP({p[2]}, {p[3]}, {p[4]}, {p[5]}, {p[6]})",
-        "FLYBY_SET_END_TARGET": lambda p: f"FLYBY_SET_END_TARGET({p[2]}, {p[3]}, {p[4]}, {p[5]})",
+        "FLYBY_ALLOW_INTERRUPT": lambda p: f"FLYBY_ALLOW_INTERRUPT({convert_arg(p[2], {})})",
+        "FLYBY_SET_EVENT_POS": lambda p: f"FLYBY_SET_EVENT_POS({convert_arg(p[2], {})}, {convert_arg(p[3], {})}, {convert_arg(p[4], {})}, {convert_arg(p[5], {})})",
+        "FLYBY_SET_EVENT_ANGLE": lambda p: f"FLYBY_SET_EVENT_ANGLE({convert_arg(p[2], {})}, {convert_arg(p[3], {})}, {convert_arg(p[4], {})})",
+        "FLYBY_SET_EVENT_ZOOM": lambda p: f"FLYBY_SET_EVENT_ZOOM({convert_arg(p[2], {})}, {convert_arg(p[3], {})}, {convert_arg(p[4], {})})",
+        "FLYBY_SET_EVENT_TOOLTIP": lambda p: f"FLYBY_SET_EVENT_TOOLTIP({convert_arg(p[2], {})}, {convert_arg(p[3], {})}, {convert_arg(p[4], {})}, {convert_arg(p[5], {})}, {convert_arg(p[6], {})})",
+        "FLYBY_SET_END_TARGET": lambda p: f"FLYBY_SET_END_TARGET({convert_arg(p[2], {})}, {convert_arg(p[3], {})}, {convert_arg(p[4], {})}, {convert_arg(p[5], {})})",
         "FLYBY_START": lambda p: "FLYBY_START()",
 
         # Message commands
-        "CREATE_MSG_INFORMATION": lambda p: f"CREATE_MSG_INFORMATION({p[2]})",
+        "CREATE_MSG_INFORMATION": lambda p: f"CREATE_MSG_INFORMATION({convert_arg(p[2], {})})",
         "SET_MSG_AUTO_OPEN_DLG": lambda p: "SET_MSG_AUTO_OPEN_DLG()",
         "SET_MSG_DELETE_ON_OK": lambda p: "SET_MSG_DELETE_ON_OK()",
 
         # Utility commands
         "PARTIAL_BUILDING_COUNT": lambda p: f"PARTIAL_BUILDING_COUNT(MY_TRIBE)",
-        "TRIGGER_THING": lambda p: f"TRIGGER_THING({p[2]})",
-        "REMOVE_HEAD_AT_POS": lambda p: f"REMOVE_HEAD_AT_POS({p[2]}, {p[3]})",
+        "TRIGGER_THING": lambda p: f"TRIGGER_THING({convert_arg(p[2], {})})",
+        "REMOVE_HEAD_AT_POS": lambda p: f"REMOVE_HEAD_AT_POS({convert_arg(p[2], {})}, {convert_arg(p[3], {})})",
         "DEFEND_SHAMEN": lambda p: f"DEFEND_SHAMEN(MY_TRIBE, _gsi.Players[MY_TRIBE].NumPeople)",
-        "TRAIN_PEOPLE_NOW": lambda p: f"TRAIN_PEOPLE_NOW(MY_TRIBE, {p[2]}, {p[3].replace('INT_', 'M_PERSON_')})",
+        "TRAIN_PEOPLE_NOW": lambda p: f"TRAIN_PEOPLE_NOW(MY_TRIBE, {convert_arg(p[2], {})}, {convert_arg(p[3].replace('INT_', 'M_PERSON_'), {})})",
 
         # Turn commands
-        "TURN_PUSH": lambda p: f"TURN_PUSH({p[2]})",
-        "SET_BUCKET_USAGE": lambda p: f"SET_BUCKET_USAGE(MY_TRIBE, {p[2]})",
+        "TURN_PUSH": lambda p: f"TURN_PUSH({convert_arg(p[2], {})})",
+        "SET_BUCKET_USAGE": lambda p: f"SET_BUCKET_USAGE(MY_TRIBE, {convert_arg(p[2], {})})",
         "ATTACK": map_attack_command,
-        "GIVE_UP_AND_SULK": lambda p: f"GIVE_UP_AND_SULK(MY_TRIBE, {p[2]})"
+        "GIVE_UP_AND_SULK": lambda p: f"GIVE_UP_AND_SULK(MY_TRIBE, {convert_arg(p[2], {})})",
+
+        'BUILD_DRUM_TOWER': map_build_drum_tower,
+        'GIVE_ONE_SHOT': map_give_one_shot, 
+        'I_HAVE_ONE_SHOT': map_i_have_one_shot,
+        'PRAY_AT_HEAD': map_pray_at_head,
+        'PUT_PERSON_IN_DT': map_put_person_in_dt,
+        'SEND_ALL_PEOPLE_TO_MARKER': map_send_all_people_to_marker,
+        'SET_DRUM_TOWER_POS': map_set_drum_tower_pos,
+        "SET_NO_BLUE_REINC": map_set_no_blue_reinc,
+        'SPELL_AT_MARKER': map_spell_at_marker
     }
     return command_map
 
@@ -639,6 +716,7 @@ def convert_script(input_file, output_file, system_spec, tribe, command_map, var
     lua_output.append('import(Module_String)')
     lua_output.append('import(Module_Bit32)')
     lua_output.append('import(Module_Game)')
+    lua_output.append('import(Module_Math)')
     lua_output.append('import(Module_Map)')
     lua_output.append('')
     
@@ -1052,7 +1130,7 @@ def convert_statement(stmt, tribe, command_map, variable_map, indent=0):
             else:
                 # Regular variable division
                 result_var = convert_variable(stmt[1], variable_map, tribe)
-                result.append(f"{indent_str}{result_var} = {var1} / {var2}")
+                result.append(f"{indent_str}{result_var} = math.floor({var1} / {var2})")
             
     return result
 
@@ -1092,25 +1170,35 @@ def convert_condition(condition, variable_map):
                 right = convert_condition(condition[2], variable_map)
                 return f"({left} {lua_op} {right})"
             else:
-                # Check if left or right are attribute accesses
-                if isinstance(condition[1], str) and condition[1].startswith('INT_ATTR_'):
-                    attr_name = condition[1][9:]  # Remove 'INT_ATTR_' prefix
-                    left = f"READ_CP_ATTRIB(MY_TRIBE, ATTR_{attr_name})"
+                # Check if left is a special case
+                if isinstance(condition[1], str):
+                    if condition[1].startswith('INT_ATTR_'):
+                        attr_name = condition[1][9:]  # Remove 'INT_ATTR_' prefix
+                        left = f"READ_CP_ATTRIB(MY_TRIBE, ATTR_{attr_name})"
+                    else:
+                        left = convert_value(condition[1], variable_map)
                 else:
                     left = convert_value(condition[1], variable_map)
                 
-                if isinstance(condition[2], str) and condition[2].startswith('INT_ATTR_'):
-                    attr_name = condition[2][9:]  # Remove 'INT_ATTR_' prefix
-                    right = f"READ_CP_ATTRIB(MY_TRIBE, ATTR_{attr_name})"
+                # Check if right is a special case  
+                if isinstance(condition[2], str):
+                    if condition[2].startswith('INT_ATTR_'):
+                        attr_name = condition[2][9:]  # Remove 'INT_ATTR_' prefix
+                        right = f"READ_CP_ATTRIB(MY_TRIBE, ATTR_{attr_name})"
+                    else:
+                        right = convert_value(condition[2], variable_map)
                 else:
                     right = convert_value(condition[2], variable_map)
                 
                 return f"{left} {lua_op} {right}"
     
     # For simple conditions
-    if isinstance(condition, str) and condition.startswith('INT_ATTR_'):
-        attr_name = condition[9:]  # Remove 'INT_ATTR_' prefix
-        return f"READ_CP_ATTRIB(MY_TRIBE, ATTR_{attr_name})"
+    if isinstance(condition, str):
+        if condition.startswith('INT_ATTR_'):
+            attr_name = condition[9:]  # Remove 'INT_ATTR_' prefix
+            return f"READ_CP_ATTRIB(MY_TRIBE, ATTR_{attr_name})"
+        else:
+            return convert_value(condition, variable_map)
     else:
         return convert_value(condition, variable_map)
 
@@ -1150,9 +1238,39 @@ def convert_variable(var, variable_map, tribe):
 def convert_value(value, variable_map):
     """Convert a value to Lua syntax"""
     if isinstance(value, str):
+        # Add special mappings for attack targets and building types
+        if value == "BUILDING":
+            return "ATTACK_BUILDING"
+        elif value == "MARKER":
+            return "ATTACK_MARKER" 
+        elif value == "NO_SPECIFIC_BUILDING":
+            return "INT_NO_SPECIFIC_BUILDING"
+
         # Special handling for mana references
         if value == "INT_MY_MANA":
             return "MANA(MY_TRIBE)"
+        
+        # Special handling for CP_FREE_ENTRIES
+        if value == "INT_CP_FREE_ENTRIES":
+            return "FREE_ENTRIES(MY_TRIBE)"
+        
+        # Special handling for CP_FREE_ENTRIES
+        if value == "INT_CONVERT":
+            return "M_SPELL_CONVERT_WILD"
+            
+        # Add special handling for building references
+        if value.startswith("INT_M_BUILDING_"):
+            building_type = value.replace("INT_M_BUILDING_", "")
+            return f"PLAYERS_BUILDING_OF_TYPE(MY_TRIBE, M_BUILDING_{building_type})"
+            
+        # Handle tribally-specific building references
+        for prefix, tribe in [("INT_B_BUILDING_", "TRIBE_BLUE"), 
+                              ("INT_R_BUILDING_", "TRIBE_RED"),
+                              ("INT_Y_BUILDING_", "TRIBE_YELLOW"),
+                              ("INT_G_BUILDING_", "TRIBE_GREEN")]:
+            if value.startswith(prefix):
+                building_type = value.replace(prefix, "")
+                return f"PLAYERS_BUILDING_OF_TYPE({tribe}, M_BUILDING_{building_type})"
         
         # Check for direct spell assignments
         spell_names = [
@@ -1221,51 +1339,9 @@ def convert_value(value, variable_map):
 
 def convert_arg(arg, variable_map):
     """Convert a command argument to Lua syntax"""
+    if isinstance(arg, str) and arg.startswith('USER_'):
+        return convert_user_var_name(arg)  # Convert USER_ to SC2_USR_
     return convert_value(arg, variable_map)
-
-def map_attack_command(p):
-    """Helper function for ATTACK command with variable parameters"""
-    # Target tribe - always present
-    target_tribe = f"TRIBE_{p[2]}"
-    
-    # Number of attackers - use the centralized function for INT_ constants
-    num_attackers = p[3]
-    if isinstance(num_attackers, str) and num_attackers.startswith("INT_"):
-        # Special handling for person type counts
-        if num_attackers in ["INT_BRAVE", "INT_WARRIOR", "INT_RELIGIOUS", "INT_SPY", "INT_SUPER_WARRIOR"]:
-            person_type = convert_int_constant(num_attackers)
-            num_attackers = f"_gsi.Players[MY_TRIBE].NumPeopleOfType[{person_type}]"
-        else:
-            num_attackers = convert_int_constant(num_attackers)
-    
-    # Attack type 
-    attack_type = p[4]
-    if isinstance(attack_type, str):
-        if not attack_type.startswith("ATTACK_"):
-            if attack_type.startswith("INT_"):
-                attack_type = convert_int_constant(attack_type)
-            if attack_type != "ATTACK_NORMAL":  # Avoid ATTACK_ATTACK_NORMAL
-                attack_type = f"ATTACK_{attack_type}"
-    
-    # Target building/marker
-    target = convert_int_constant(p[5])
-    
-    # Distance
-    distance = p[6]
-    
-    # Spell types - use the centralized function
-    spell1 = convert_int_constant(p[7] if len(p) > 7 else "INT_NO_SPECIFIC_SPELL")
-    spell2 = convert_int_constant(p[8] if len(p) > 8 else "INT_NO_SPECIFIC_SPELL")
-    spell3 = convert_int_constant(p[9] if len(p) > 9 else "INT_NO_SPECIFIC_SPELL")
-    
-    # Remaining parameters
-    attack_mode = p[10] if len(p) > 10 else "ATTACK_NORMAL"
-    param1 = p[11] if len(p) > 11 else "0"
-    param2 = p[12] if len(p) > 12 else "-1"
-    param3 = p[13] if len(p) > 13 else "-1"
-    param4 = p[14] if len(p) > 14 else "-1"
-    
-    return f"ATTK_RST = ATTACK(MY_TRIBE, {target_tribe}, {num_attackers}, {attack_type}, {target}, {distance}, {spell1}, {spell2}, {spell3}, {attack_mode}, {param1}, {param2}, {param3}, {param4})"
 
 # Extend the main function to use this converter
 def main():
