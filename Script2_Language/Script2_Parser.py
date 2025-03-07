@@ -74,3 +74,43 @@ def Debug_Parse_Script2(script_code):
         print(f"\n--- PARSE ERROR ---\n{str(e)}")
         traceback.print_exc()
         return None
+    
+# Add this function to enable more forgiving parsing
+
+def Safe_Parse_Script2(script_code):
+    """Parse a script with fallback mechanisms for better error recovery."""
+    try:
+        return Parse_Script2(script_code)
+    except Exception as e:
+        print(f"Standard parsing failed: {str(e)}")
+        
+        # Try line-by-line parsing to extract as much as possible
+        lines = script_code.split("\n")
+        valid_statements = []
+        
+        print("Attempting recovery parsing...")
+        in_block = False
+        current_block = []
+        
+        for i, line in enumerate(lines, 1):
+            line = line.strip()
+            if not line or line.startswith("//"):
+                continue
+                
+            if line == "BEGIN":
+                in_block = True
+                current_block = ["BEGIN"]
+            elif line == "END":
+                in_block = False
+                current_block.append("END")
+                valid_statements.append(("\n".join(current_block), i - len(current_block), i))
+                current_block = []
+            elif in_block:
+                current_block.append(line)
+            elif line and not in_block and not line.startswith("//"):
+                valid_statements.append((line, i, i))
+        
+        print(f"Recovered {len(valid_statements)} statement blocks")
+        
+        # Return a simplified AST with the valid parts
+        return ('script', 'RECOVERED', ('statements', [s for s, _, _ in valid_statements]))

@@ -53,10 +53,13 @@ p_if_statement.__doc__ = grammar_rules['if_statement']
 
 # Create p_do_statement with the right docstring
 def p_do_statement(p):
-    # Convert all do_statement variants into a tuple with 'do' as first element
-    # followed by all arguments
-    args = [p[i] for i in range(2, len(p))]
-    p[0] = tuple(['do'] + args)
+    if len(p) == 3 and p[2] == 'do_command':
+        # This handles the general case DO command arg_list
+        p[0] = tuple(['do', p[2]] + p[3] if p[3] else [])
+    else:
+        # Original case for specific DO commands
+        args = [p[i] for i in range(2, len(p))]
+        p[0] = tuple(['do'] + args)
 p_do_statement.__doc__ = grammar_rules['do_statement']
 
 # Create p_set_statement with the right docstring
@@ -115,23 +118,49 @@ def p_empty(p):
     pass
 p_empty.__doc__ = grammar_rules['empty']
 
+# Replace the existing p_error function with this improved version
+
 def p_error(p):
     if p:
-        print(f"Syntax error at token {p.lineno}, token={p.type}, value={p.value}")
-        # Try to recover synchronization by skipping to the next statement
+        print(f"Syntax error at line {p.lineno}, token={p.type}, value={p.value}")
+        
+        # Store additional error context
+        parser.error_token = p
+        parser.error_line = p.lineno if hasattr(p, 'lineno') else 'unknown'
+        
+        # Try to recover by skipping the problematic token
         parser.errok()
         
-        # Skip tokens until we find something that looks like a statement start
+        # Skip to next statement boundary for better recovery
         while True:
             tok = parser.token()
-            if not tok or tok.type in ['BEGIN', 'END', 'IF', 'ELSE', 'DO', 'SET', 'EVERY', 'SCRIPT_END']:
+            if not tok or tok.type in ['BEGIN', 'END', 'IF', 'ELSE', 'DO', 'SET', 'EVERY', 'ENDIF', 'SCRIPT_END']:
                 break
         
-        # Return the token that might start the next valid statement
-        if tok:
-            return tok
+        return tok
     else:
         print("Syntax error at EOF")
+
+def p_do_command(p):
+    p[0] = p[1]
+p_do_command.__doc__ = grammar_rules['do_command']
+
+def p_arg_list(p):
+    if len(p) == 3:
+        p[0] = [p[1]] + p[2]  # Multiple arguments
+    elif len(p) == 2:
+        p[0] = [p[1]]         # Single argument
+    else:
+        p[0] = []             # No arguments
+p_arg_list.__doc__ = grammar_rules['arg_list']
+
+def p_arg(p):
+    p[0] = p[1]
+p_arg.__doc__ = grammar_rules['arg']
+
+def p_divide_statement(p):
+    p[0] = ('divide', p[2], p[3], p[4])
+p_divide_statement.__doc__ = grammar_rules['divide_statement']
 
 # Build the parser
 parser = yacc.yacc()

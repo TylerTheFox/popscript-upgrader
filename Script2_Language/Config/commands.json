@@ -56,6 +56,10 @@
             "description": "Multiplies values",
             "syntax": "MULTIPLY target source amount"
         },
+        "DIVIDE": {
+            "description": "Divides values",
+            "syntax": "DIVIDE target source amount"
+        },
         "INCREMENT": {
             "description": "Increments a value",
             "syntax": "INCREMENT target amount"

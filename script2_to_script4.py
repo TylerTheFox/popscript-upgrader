@@ -7,13 +7,116 @@ from Script2_Language.Script2_Parser import *
 def parse_arguments():
     """Parse command line arguments"""
     par = argparse.ArgumentParser(description='Convert PopScript to Lua')
-    par.add_argument('input_file', help='Input script file (e.g. cpscr10.scr)')
-    par.add_argument('output_file', help='Output Lua file (e.g. Level1_Blue.lua)')
+    
+    # Add batch processing mode option
+    group = par.add_mutually_exclusive_group(required=True)
+    
+    # Single file conversion mode
+    group.add_argument('-f', '--file', action='store_true', help='Single file conversion mode')
+    # Batch conversion mode
+    group.add_argument('-b', '--batch', action='store_true', help='Batch conversion mode for all SCR files in a directory')
+    
+    # Conditional arguments
+    par.add_argument('input', help='Input script file or directory (for batch mode)')
+    par.add_argument('output', help='Output Lua file or directory (for batch mode)')
     par.add_argument('system_spec', help='System specification JSON file')
     par.add_argument('--tribe', default='TRIBE_BLUE', 
                        choices=['TRIBE_BLUE', 'TRIBE_RED', 'TRIBE_YELLOW', 'TRIBE_GREEN'],
                        help='Default tribe for commands (default: TRIBE_BLUE)')
     return par.parse_args()
+
+def process_directory(input_dir, output_dir, system_spec, tribe, command_map, variable_map):
+    """
+    Process all SCR files in a directory
+    
+    Args:
+        input_dir: Path to the input directory containing SCR files
+        output_dir: Path to save the output Lua files
+        system_spec: JSON system specification
+        tribe: The target tribe for the script
+        command_map: Command mapping dictionary
+        variable_map: Variable mapping dictionary
+    """
+    # Create output directory if it doesn't exist
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        print(f"Created output directory: {output_dir}")
+    
+    # Find all .SCR files (case insensitive)
+    scr_files = []
+    for file in os.listdir(input_dir):
+        if file.lower().endswith('.scr'):
+            scr_files.append(file)
+    
+    total_files = len(scr_files)
+    print(f"Found {total_files} SCR files to process")
+    
+    # Process each file
+    success_count = 0
+    failure_count = 0
+    failed_files = []  # Track files that couldn't be converted
+    
+    # Process each file with detailed error tracking
+    for i, scr_file in enumerate(sorted(scr_files), 1):
+        input_path = os.path.join(input_dir, scr_file)
+        
+        # Generate output filename - replace .SCR with .lua
+        output_file = os.path.splitext(scr_file)[0] + '.lua'
+        output_path = os.path.join(output_dir, output_file)
+        
+        # Show progress
+        progress = (i / total_files) * 100
+        print(f"[{i}/{total_files} - {progress:.1f}%] Processing {scr_file}...", end="", flush=True)
+        
+        try:
+            convert_script(input_path, output_path, system_spec, tribe, command_map, variable_map)
+            success_count += 1
+            print(" ✓")
+        except Exception as e:
+            failure_count += 1
+            error_msg = str(e)
+            failed_files.append((scr_file, error_msg))
+            print(f" ✗ - Error: {error_msg[:50]}...")
+    
+    # Calculate completion percentage
+    completion_percentage = (success_count / total_files) * 100 if total_files > 0 else 0
+    
+    # Display summary report
+    print("\n" + "="*50)
+    print(f"CONVERSION SUMMARY:")
+    print(f"  Total files: {total_files}")
+    print(f"  Successfully converted: {success_count}")
+    print(f"  Failed conversions: {failure_count}")
+    print(f"  Completion percentage: {completion_percentage:.2f}%")
+    
+    # Display failed files if any
+    if failed_files:
+        print("\nFailed files:")
+        for file, error in failed_files:
+            print(f"  • {file}: {error[:100]}{'...' if len(error) > 100 else ''}")
+        
+        # Generate a detailed report file
+        report_path = os.path.join(output_dir, "conversion_report.txt")
+        with open(report_path, 'w') as report_file:
+            report_file.write(f"SCRIPT CONVERSION REPORT\n")
+            report_file.write(f"=====================\n\n")
+            report_file.write(f"Total files: {total_files}\n")
+            report_file.write(f"Successfully converted: {success_count}\n")
+            report_file.write(f"Failed conversions: {failure_count}\n")
+            report_file.write(f"Completion percentage: {completion_percentage:.2f}%\n\n")
+            report_file.write("FAILED FILES DETAILS\n")
+            report_file.write("===================\n\n")
+            
+            for file, error in failed_files:
+                report_file.write(f"File: {file}\n")
+                report_file.write(f"Error: {error}\n")
+                report_file.write("-"*50 + "\n")
+        
+        print(f"\nDetailed conversion report written to: {report_path}")
+    else:
+        print("\nAll files were successfully converted!")
+    
+    return success_count, failure_count, failed_files
 
 STATE_CP_MAP = {
     "STATE_BRING_NEW_PEOPLE_BACK": "CP_AT_TYPE_BRING_NEW_PEOPLE_BACK",
@@ -28,7 +131,23 @@ STATE_CP_MAP = {
     "STATE_DEFEND": "CP_AT_TYPE_DEFEND",
     "STATE_DEFEND_BASE": "CP_AT_TYPE_DEFEND_BASE",
     "STATE_HOUSE_A_PERSON": "CP_AT_TYPE_HOUSE_A_PERSON",
-    "STATE_AUTO_ATTACK": "CP_AT_TYPE_AUTO_ATTACK"
+    "STATE_AUTO_ATTACK": "CP_AT_TYPE_AUTO_ATTACK",
+    "STATE_POPULATE_DRUM_TOWER": "CP_AT_TYPE_POPULATE_DRUM_TOWER",
+    "STATE_BUILD_VEHICLE": "CP_AT_TYPE_BUILD_VEHICLE",
+    "STATE_PREACH": "CP_AT_TYPE_PREACH",
+    "STATE_SPELL_DEFENCE": "CP_AT_TYPE_SPELL_DEFENCE",
+    "STATE_BUILD_WALLS": "CP_AT_TYPE_BUILD_WALLS",
+    "STATE_SABOTAGE": "CP_AT_TYPE_SABOTAGE",
+    "STATE_SPELL_OFFENSIVE": "CP_AT_TYPE_SPELL_OFFENSIVE",
+    "STATE_SUPER_DEFEND": "CP_AT_TYPE_SUPER_DEFEND",
+    "STATE_MED_MAN_DEFEND": "CP_AT_TYPE_MED_MAN_DEFEND",
+    "STATE_FLATTEN_BASE": "CP_AT_TYPE_FLATTEN_BASE",
+    "STATE_BUILD_OUTER_DEFENCES": "CP_AT_TYPE_BUILD_OUTER_DEFENCES",
+    "STATE_GUARD_AT_MARKER": "CP_AT_TYPE_GUARD_AT_MARKER",
+    "STATE_SEND_ALL_TO_MARKER": "CP_AT_TYPE_SEND_ALL_TO_MARKER",
+    "STATE_PRAY_AT_HEAD": "CP_AT_TYPE_PRAY_AT_HEAD",
+    "STATE_BOAT_PATROL": "CP_AT_TYPE_BOAT_PATROL",
+    "STATE_DEFEND_SHAMEN": "CP_AT_TYPE_DEFEND_SHAMEN"
 }
 
 # First, define a centralized function for INT_ conversions
@@ -44,13 +163,19 @@ def convert_int_constant(int_value):
     # Special mappings that don't follow the standard pattern
     special_mappings = {
         "INT_NO_SPECIFIC_SPELL": "M_SPELL_NONE",
-        "INT_NO_SPECIFIC_BUILDING": "0",
-        "INT_NO_SPECIFIC_PERSON": "0",
+        "BUILDING" : "ATTACK_BUILDING",
+        "MARKER" : "ATTACK_MARKER",
         "INT_WRATH_OF_GOD": "M_SPELL_ARMAGEDDON",
         "INT_CONVERT": "M_SPELL_CONVERT_WILD",
         "INT_TARGET_MEDICINE_MAN": "ATTACK_TARGET_MEDICINE_MAN",
     }
     
+    # Add tribe name handling
+    if int_value in ('BLUE', 'RED', 'GREEN', 'YELLOW'):
+        return f'TRIBE_{int_value}'
+        
+    #1000
+
     if int_value in special_mappings:
         return special_mappings[int_value]
     
@@ -80,9 +205,10 @@ def convert_int_constant(int_value):
                 "G": "TRIBE_GREEN",
                 "M": "MY_TRIBE"
             }
-            tribe = tribe_map.get(tribe_prefix, "MY_TRIBE")
-            return f"_gsi.Players[{tribe}].NumPeopleOfType[M_PERSON_{person_type}]"
-    
+            
+            if tribe_prefix in tribe_map:
+                return f"_gsi.Players[{tribe_map[tribe_prefix]}].PeopleOfType[M_PERSON_{person_type}]"
+            
     # Standard spell mappings
     spell_names = [
         "BLAST", "BURN", "LIGHTNING_BOLT", "WHIRLWIND", "INSECT_PLAGUE", 
@@ -103,45 +229,146 @@ def convert_int_constant(int_value):
     
     if int_value.startswith("INT_") and any(building in int_value for building in building_types):
         for building in building_types:
-            if building in int_value and not "_BUILDING_" in int_value:
-                return int_value.replace(f"INT_{building}", f"M_BUILDING_{building}")
-        return int_value.replace("INT_", "M_BUILDING_")
-    
+            if building in int_value:
+                return int_value.replace("INT_", "M_BUILDING_")
+        
     # Person type mappings without tribe prefix (INT_WARRIOR etc.)
     person_types = ["BRAVE", "WARRIOR", "RELIGIOUS", "SPY", "SUPER_WARRIOR", "MEDICINE_MAN"]
     if int_value in [f"INT_{t}" for t in person_types]:
         return int_value.replace("INT_", "M_PERSON_")
     
     # Player-specific prefixes
-    for prefix in ["INT_M_", "INT_B_", "INT_R_", "INT_Y_", "INT_G_"]:
+    for prefix, tribe in [("INT_M_", "MY_TRIBE"), 
+                          ("INT_B_", "TRIBE_BLUE"), 
+                          ("INT_R_", "TRIBE_RED"), 
+                          ("INT_Y_", "TRIBE_YELLOW"), 
+                          ("INT_G_", "TRIBE_GREEN")]:
         if int_value.startswith(prefix):
-            return int_value.replace(prefix, "M_")
+            rest = int_value[len(prefix):]
+            return f"_gsi.Players[{tribe}].{rest}"
     
     # Default case - just remove the INT_ prefix
-    if int_value.startswith("INT_"):
-        return int_value[4:]
+    #if int_value.startswith("INT_"):
+    #    return int_value[4:]  # Remove the "INT_" part
     
     return int_value
 
 def convert_user_var_name(var_name):
     """Convert USER_ variable names to SC2_USR_ format"""
     if isinstance(var_name, str) and var_name.startswith('USER_'):
-        return var_name.replace('USER_', 'SC2_USR_')
+        return 'SC2_USR_' + var_name[5:]
     return var_name
+
+def map_set_spell_entry(p):
+    """Helper function for SET_SPELL_ENTRY command mapping"""
+    spell_idx = p[2]  # The spell slot index
+    spell_type = p[3]  # The spell type (INT_BLAST, 0, etc.)
+    
+    # For the spell parameter in the function
+    if spell_type.startswith('INT_'):
+        spell_param = spell_type.replace('INT_', 'M_SPELL_')
+    else:
+        spell_param = spell_type
+    
+    # For the spell cost parameter
+    if spell_type == '0':
+        # Special case: spell type 0 maps to BLAST for cost
+        cost_spell = 'M_SPELL_BLAST'
+    elif spell_type.startswith('INT_'):
+        cost_spell = 'M_SPELL_' + spell_type.replace('INT_', '')
+    else:
+        cost_spell = 'M_SPELL_' + spell_type
+    
+    return f"SET_SPELL_ENTRY(MY_TRIBE, {spell_idx}, {spell_param}, PLAYERS_SPELL_COST(MY_TRIBE, {cost_spell}), {p[5]}, {p[6]}, {p[7]})"
+
+
+# Define missing attack command mapper
+def map_attack_command(p):
+    """Helper function for ATTACK command mapping"""
+    # Parameters for attack command
+    tribe = p[2]
+    marker = p[3]
+    target_type = p[4]
+    target = p[5]
+    spell1 = convert_int_constant(p[6])
+    spell2 = convert_int_constant(p[7])
+    spell3 = convert_int_constant(p[8])
+    attack_type = p[9]
+    action = p[10]
+    min_people = p[11]
+    
+    # Optional parameters
+    spell_delay = "-1"
+    attack_percent = "-1"
+    
+    if len(p) > 12:
+        spell_delay = p[12]
+    if len(p) > 13:
+        attack_percent = p[13]
+        
+    return f"ATTACK(MY_TRIBE, {marker}, {target_type}, {target}, {spell1}, {spell2}, {spell3}, {attack_type}, {action}, {min_people}, {spell_delay}, {attack_percent})"
+
+# Helper function for extracting user variables to declare
+def extract_user_variables(script_content):
+    """Extract USER_ variables from script content to declare at the beginning"""
+    import re
+    
+    # Find all USER_ variables in the script
+    matches = re.findall(r'USER_[A-Za-z0-9_]+', script_content)
+    user_vars = set(matches)
+    
+    # Generate variable declarations
+    declarations = []
+    for var in sorted(user_vars):
+        declarations.append(f"local {convert_user_var_name(var)} = 0")
+    
+    return declarations
+
+# Helper function for handling DO_CONVERT_AT_MARKER
+def map_convert_at_marker(p):
+    """Map CONVERT_AT_MARKER command to Script4 equivalent"""
+    marker = p[2]
+    return f"CONVERT_AT_MARKER(MY_TRIBE, {marker})"
+
+# Helper function for marker handling
+def map_marker_entries(p):
+    """Map MARKER_ENTRIES command to Script4 equivalent"""
+    entries = ', '.join([p[i] if i < len(p) else '-1' for i in range(2, 6)])
+    return f"MARKER_ENTRIES(MY_TRIBE, {entries})"
+
+# Helper function for count people in marker
+def map_count_people_in_marker(p):
+    """Map COUNT_PEOPLE_IN_MARKER command to Script4 equivalent"""
+    tribe = p[2]
+    marker = p[3]
+    radius = p[4]
+    result_var = convert_user_var_name(p[5])
+    
+    return f"{result_var} = COUNT_PEOPLE_IN_MARKER(TRIBE_{tribe}, {marker}, {radius})"
+
+# Helper function for spell casting triggers
+def map_get_spells_cast(p):
+    """Map GET_SPELLS_CAST command to Script4 equivalent"""
+    tribe = p[2]
+    spell = convert_int_constant(p[3])
+    result_var = convert_user_var_name(p[4])
+    
+    return f"{result_var} = GET_SPELLS_CAST(TRIBE_{tribe}, {spell})"
 
 # Then update the command map functions to use this helper
 def build_command_map(tribe):
     command_map = {
-        "GET_SPELLS_CAST": lambda p: f"{convert_user_var_name(p[4])} = GET_SPELLS_CAST(TRIBE_{p[2]}, {p[3].replace('INT_', 'M_SPELL_')})",
+        "GET_SPELLS_CAST": map_get_spells_cast,
         "GET_HEIGHT_AT_POS": lambda p: f"{convert_user_var_name(p[3])} = GET_HEIGHT_AT_POS({p[2]})",
         "GET_HEAD_TRIGGER_COUNT": lambda p: f"{convert_user_var_name(p[4])} = GET_HEAD_TRIGGER_COUNT({p[2]}, {p[3]})",
         "GET_NUM_ONE_OFF_SPELLS": lambda p: f"{convert_user_var_name(p[4])} = GET_NUM_ONE_OFF_SPELLS(TRIBE_BLUE, {p[3].replace('INT_', 'M_SPELL_')})",
-        "COUNT_PEOPLE_IN_MARKER": lambda p: f"{convert_user_var_name(p[5])} = COUNT_PEOPLE_IN_MARKER(TRIBE_{p[2]}, {p[3]}, {p[4]})",
+        "NAV_CHECK": lambda p: f"{ convert_user_var_name(p[6]) } = NAV_CHECK(MY_TRIBE, { convert_int_constant(p[2]) }, { convert_int_constant(p[3]) }, {p[4]} , {p[5]})",
+        "COUNT_PEOPLE_IN_MARKER": map_count_people_in_marker,
         
         # Core commands
         "SET_REINCARNATION": lambda p: f"SET_REINCARNATION({p[2]}, MY_TRIBE)",
         "DELAY_MAIN_DRUM_TOWER": lambda p: f"DELAY_MAIN_DRUM_TOWER(ON, MY_TRIBE)",
-        "SET_ATTACK_VARIABLE": lambda p: f"SET_ATTACK_VARIABLE(MY_TRIBE, {p[2]})",
+        "SET_ATTACK_VARIABLE": lambda p: f"SET_ATTACK_VARIABLE(MY_TRIBE, {convert_user_var_name(p[2])})",
         "DISABLE_USER_INPUTS": lambda p: f"DISABLE_USER_INPUTS()",
         "ENABLE_USER_INPUTS": lambda p: f"ENABLE_USER_INPUTS()",
         
@@ -160,12 +387,28 @@ def build_command_map(tribe):
         "STATE_HOUSE_A_PERSON": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_HOUSE_A_PERSON']}, {p[2]})",
         "STATE_AUTO_ATTACK": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_AUTO_ATTACK']}, {p[2]})",
         "STATE_SPELL_DEFENCE": lambda p: f"SHAMAN_DEFEND(MY_TRIBE, {p[2]}, {p[3]}, {p[4]})",
+        "STATE_POPULATE_DRUM_TOWER": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_POPULATE_DRUM_TOWER']}, {p[2]})",
+        "STATE_BUILD_VEHICLE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BUILD_VEHICLE']}, {p[2]})",
+        "STATE_PREACH": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_PREACH']}, {p[2]})",
+        "STATE_BUILD_WALLS": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BUILD_WALLS']}, {p[2]})",
+        "STATE_SABOTAGE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SABOTAGE']}, {p[2]})",
+        "STATE_SPELL_OFFENSIVE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SPELL_OFFENSIVE']}, {p[2]})",
+        "STATE_SUPER_DEFEND": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SUPER_DEFEND']}, {p[2]})",
+        "STATE_MED_MAN_DEFEND": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_MED_MAN_DEFEND']}, {p[2]})",
+        "STATE_FLATTEN_BASE": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_FLATTEN_BASE']}, {p[2]})",
+        "STATE_BUILD_OUTER_DEFENCES": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BUILD_OUTER_DEFENCES']}, {p[2]})",
+        "STATE_GUARD_AT_MARKER": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_GUARD_AT_MARKER']}, {p[2]})",
+        "STATE_SEND_ALL_TO_MARKER": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_SEND_ALL_TO_MARKER']}, {p[2]})",
+        "STATE_PRAY_AT_HEAD": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_PRAY_AT_HEAD']}, {p[2]})",
+        "STATE_BOAT_PATROL": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_BOAT_PATROL']}, {p[2]})",
+        "STATE_DEFEND_SHAMEN": lambda p: f"STATE_SET(MY_TRIBE, {STATE_CP_MAP['STATE_DEFEND_SHAMEN']}, {p[2]})",
+        "SPELL_AT_MARKER": lambda p: f"SPELL_ATTACK(MY_TRIBE, {convert_int_constant(p[2])}, {p[3]}, {p[4]})",
 
         # Marker and defense commands
         "SET_DEFENCE_RADIUS": lambda p: f"SET_DEFENCE_RADIUS(MY_TRIBE, {p[2]})",
         "SET_MARKER_ENTRY": lambda p: f"SET_MARKER_ENTRY(MY_TRIBE, {p[2]}, {p[3]}, {p[4]}, {p[5]}, {p[6]}, {p[7]}, {p[8]})",
         "ONLY_STAND_AT_MARKERS": lambda p: f"ONLY_STAND_AT_MARKERS(MY_TRIBE)",
-        "MARKER_ENTRIES": lambda p: f"MARKER_ENTRIES(MY_TRIBE, {p[2]}, {p[3]}, {p[4]}, {p[5]})",
+        "MARKER_ENTRIES": map_marker_entries,
         
         # Spell related commands - removed invalid functions
         
@@ -198,30 +441,9 @@ def build_command_map(tribe):
         "TURN_PUSH": lambda p: f"TURN_PUSH({p[2]})",
         "SET_BUCKET_USAGE": lambda p: f"SET_BUCKET_USAGE(MY_TRIBE, {p[2]})",
         "ATTACK": map_attack_command,
+        "GIVE_UP_AND_SULK": lambda p: f"GIVE_UP_AND_SULK(MY_TRIBE, {p[2]})"
     }
     return command_map
-
-def map_set_spell_entry(p):
-    """Helper function for SET_SPELL_ENTRY command mapping"""
-    spell_idx = p[2]  # The spell slot index
-    spell_type = p[3]  # The spell type (INT_BLAST, 0, etc.)
-    
-    # For the spell parameter in the function
-    if spell_type.startswith('INT_'):
-        spell_param = spell_type.replace('INT_', 'M_SPELL_')
-    else:
-        spell_param = spell_type
-    
-    # For the spell cost parameter
-    if spell_type == '0':
-        # Special case: spell type 0 maps to BLAST for cost
-        cost_spell = 'M_SPELL_BLAST'
-    elif spell_type.startswith('INT_'):
-        cost_spell = 'M_SPELL_' + spell_type.replace('INT_', '')
-    else:
-        cost_spell = 'M_SPELL_' + spell_type
-    
-    return f"SET_SPELL_ENTRY(MY_TRIBE, {spell_idx}, {spell_param}, PLAYERS_SPELL_COST(MY_TRIBE, {cost_spell}), {p[5]}, {p[6]}, {p[7]})"
 
 def build_variable_map(tribe):
     return {
@@ -230,6 +452,9 @@ def build_variable_map(tribe):
         "INT_GAME_TURN": lambda: "getTurn()",
         "INT_MY_NUM_KILLED_BY_BLUE": lambda: f"_gsi.Players[TRIBE_BLUE].PeopleKilled[MY_TRIBE]",
         "INT_BLUE_PEOPLE": lambda: "GET_NUM_PEOPLE(TRIBE_BLUE)",
+        "INT_RED_PEOPLE": lambda: "GET_NUM_PEOPLE(TRIBE_RED)",
+        "INT_YELLOW_PEOPLE": lambda: "GET_NUM_PEOPLE(TRIBE_YELLOW)",
+        "INT_GREEN_PEOPLE": lambda: "GET_NUM_PEOPLE(TRIBE_GREEN)",
         
         # Building and person types
         "INT_M_PERSON_WARRIOR": lambda: f"_gsi.Players[MY_TRIBE].NumPeopleOfType[M_PERSON_WARRIOR]",
@@ -397,7 +622,7 @@ def convert_script(input_file, output_file, system_spec, tribe, command_map, var
         
     parsed_script = Parse_Script2(script_content)
     
-    # Generate Lua output
+    # Generate Lua output``
     lua_output = []
     
     # Add standard header
@@ -678,21 +903,9 @@ def convert_statement(stmt, tribe, command_map, variable_map, indent=0):
         elif stmt_type == 'every':
             # Format: ('every', period, offset, body)
             period = stmt[1]
-            offset = stmt[2]
+            offset = stmt[2] if stmt[2] is not None else 0
             
-            # Check if period is a power of 2
-            if period == None:
-                # It's a power of 2, determine the power
-                power = 0
-                period_int = int(period)
-                while period_int > 1:
-                    period_int >>= 1
-                    power += 1
-                result.append(f"{indent_str}if EVERY_2POW_TURNS({power}) then")
-            elif offset == None:
-                result.append(f"{indent_str}if EVERY_2POW_TURNS({int(period)}) then")
-            else:
-                result.append(f"{indent_str}if ((getTurn() + MY_TRIBE + {offset}) % {period} == 0) then")
+            result.append(f"{indent_str}if ((getTurn() + MY_TRIBE + {offset}) % {period} == 0) then")
             
             # Convert body
             body = convert_statements(stmt[3], tribe, command_map, variable_map)
@@ -724,15 +937,68 @@ def convert_statement(stmt, tribe, command_map, variable_map, indent=0):
             
         elif stmt_type == 'set':
             var = convert_variable(stmt[1], variable_map, tribe)
-            value = convert_value(stmt[2], variable_map)
+            value = stmt[2]
+            
+            # Special handling for spell assignments and building references
+            if isinstance(value, str):
+                spell_names = [
+                    "BLAST", "BURN", "LIGHTNING_BOLT", "WHIRLWIND", "INSECT_PLAGUE", 
+                    "INVISIBILITY", "HYPNOTISM", "FIRESTORM", "GHOST_ARMY", "EROSION", 
+                    "SWAMP", "LAND_BRIDGE", "ANGEL_OF_DEATH", "EARTHQUAKE", "FLATTEN", 
+                    "VOLCANO", "SHIELD", "TELEPORT", "BLOODLUST", "CONVERT",
+                ]
+                
+                building_types = [
+                    "TEPEE", "HUT", "FARM", "DRUM_TOWER", "TEMPLE", "SPY_TRAIN", 
+                    "WARRIOR_TRAIN", "SUPER_TRAIN", "WALL_PIECE", "GATE",
+                    "BOAT_HUT_1", "BOAT_HUT_2", "AIRSHIP_HUT_1", "AIRSHIP_HUT_2"
+                ]
+                
+                # Handle spell costs in the format INT_M_SPELL_X_COST
+                if value.startswith("INT_M_SPELL_") and "_COST" in value:
+                    spell_name = value.split("_COST")[0].replace("INT_M_SPELL_", "")
+                    converted_value = f"PLAYERS_SPELL_COST(MY_TRIBE, M_SPELL_{spell_name})"
+                
+                # Handle building references in the format INT_M_BUILDING_X
+                elif value.startswith("INT_M_BUILDING_"):
+                    building_type = value.replace("INT_M_BUILDING_", "")
+                    converted_value = f"PLAYERS_BUILDING_OF_TYPE(MY_TRIBE, M_BUILDING_{building_type})"
+                
+                # Handle direct spell name assignments
+                elif value in spell_names:
+                    converted_value = f"M_SPELL_{value}"
+                
+                # Handle other spell cost references
+                elif "_COST" in value:
+                    spell_name = None
+                    
+                    # Extract spell name from various formats
+                    if value.startswith("INT_") and value.endswith("_COST"):
+                        potential_spell = value[4:-5]  # Remove INT_ and _COST
+                        if potential_spell in spell_names:
+                            spell_name = potential_spell
+                    elif value.endswith("_COST"):
+                        potential_spell = value[:-5]  # Remove _COST
+                        if potential_spell in spell_names:
+                            spell_name = potential_spell
+                            
+                    # Generate spell cost lookup if we found a valid spell name
+                    if spell_name:
+                        converted_value = f"PLAYERS_SPELL_COST(MY_TRIBE, M_SPELL_{spell_name})"
+                    else:
+                        converted_value = convert_value(value, variable_map)
+                else:
+                    converted_value = convert_value(value, variable_map)
+            else:
+                converted_value = convert_value(value, variable_map)
             
             if stmt[1].startswith('INT_ATTR_'):
                 # Handle attribute settings specially
                 attr_name = stmt[1][9:]  # Remove 'INT_ATTR_' prefix
-                result.append(f"{indent_str}WRITE_CP_ATTRIB(MY_TRIBE, ATTR_{attr_name}, {value})")
+                result.append(f"{indent_str}WRITE_CP_ATTRIB(MY_TRIBE, ATTR_{attr_name}, {converted_value})")
             else:
                 # Regular variable assignment
-                result.append(f"{indent_str}{var} = {value}")
+                result.append(f"{indent_str}{var} = {converted_value}")
                 
         elif stmt_type == 'increment':
             # Format: ('increment', variable, value)
@@ -773,6 +1039,20 @@ def convert_statement(stmt, tribe, command_map, variable_map, indent=0):
                 # Regular variable multiplication
                 result_var = convert_variable(stmt[1], variable_map, tribe)
                 result.append(f"{indent_str}{result_var} = {var1} * {var2}")
+    
+        elif stmt_type == 'divide':
+            # Format: ('divide', result_var, var1, var2)
+            var1 = convert_value(stmt[2], variable_map)
+            var2 = convert_value(stmt[3], variable_map)
+            
+            if stmt[1].startswith('INT_ATTR_'):
+                # Handle attribute division specially
+                attr_name = stmt[1][9:]  # Remove 'INT_ATTR_' prefix
+                result.append(f"{indent_str}WRITE_CP_ATTRIB(MY_TRIBE, ATTR_{attr_name}, {var1} / {var2})")
+            else:
+                # Regular variable division
+                result_var = convert_variable(stmt[1], variable_map, tribe)
+                result.append(f"{indent_str}{result_var} = {var1} / {var2}")
             
     return result
 
@@ -870,6 +1150,42 @@ def convert_variable(var, variable_map, tribe):
 def convert_value(value, variable_map):
     """Convert a value to Lua syntax"""
     if isinstance(value, str):
+        # Special handling for mana references
+        if value == "INT_MY_MANA":
+            return "MANA(MY_TRIBE)"
+        
+        # Check for direct spell assignments
+        spell_names = [
+            "BLAST", "BURN", "LIGHTNING_BOLT", "WHIRLWIND", "INSECT_PLAGUE", 
+            "INVISIBILITY", "HYPNOTISM", "FIRESTORM", "GHOST_ARMY", "EROSION", 
+            "SWAMP", "LAND_BRIDGE", "ANGEL_OF_DEATH", "EARTHQUAKE", "FLATTEN", 
+            "VOLCANO", "SHIELD", "TELEPORT", "BLOODLUST", "CONVERT",
+        ]
+        
+        # Check for spell costs first
+        if "_COST" in value:
+            spell_name = None
+            # Extract spell name from various formats
+            if value.startswith("INT_M_SPELL_") and value.endswith("_COST"):
+                spell_name = value[12:-5]  # Remove INT_M_SPELL_ and _COST
+            elif value.startswith("INT_") and value.endswith("_COST"):
+                potential_spell = value[4:-5]  # Remove INT_ and _COST
+                if potential_spell in spell_names:
+                    spell_name = potential_spell
+            elif value.endswith("_COST"):
+                potential_spell = value[:-5]  # Remove _COST
+                if potential_spell in spell_names:
+                    spell_name = potential_spell
+                    
+            # Generate spell cost lookup if we found a valid spell name
+            if spell_name:
+                return f"PLAYERS_SPELL_COST(MY_TRIBE, M_SPELL_{spell_name})"
+        
+        # Handle direct spell name assignments
+        if value.startswith("INT_") and value[4:] in spell_names:
+            return f"M_SPELL_{value[4:]}"
+        elif value in spell_names:
+            return f"M_SPELL_{value}"
         # Check if it's a variable
         if value in variable_map:
             return variable_map[value]()
@@ -880,8 +1196,6 @@ def convert_value(value, variable_map):
             # Handle built-in constants/variables
             if value == 'INT_NO_SPECIFIC_SPELL':
                 return 'M_SPELL_NONE'
-            elif value == 'INT_NO_SPECIFIC_BUILDING':
-                return 'ATTACK_BUILDING'
             elif value.startswith('INT_M_SPELL_'):
                 return value.replace('INT_M_SPELL_', 'M_SPELL_')
             elif value.startswith('INT_M_'):
@@ -994,8 +1308,14 @@ def main():
         for cmd, reason in invalid_commands.items():
             print(f"  {cmd}: {reason}")
 
-    # Convert the script
-    convert_script(args.input_file, args.output_file, system_spec, args.tribe, valid_commands, variable_map)
+    # Check whether we're in single file or batch mode
+    if args.file:
+        # Single file conversion
+        convert_script(args.input, args.output, system_spec, args.tribe, valid_commands, variable_map)
+        print(f"Converted {args.input} to {args.output}")
+    elif args.batch:
+        # Batch conversion - process all SCR files in a directory
+        process_directory(args.input, args.output, system_spec, args.tribe, valid_commands, variable_map)
     
 if __name__ == "__main__":
     main()

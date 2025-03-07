@@ -11,6 +11,9 @@ from Utils.Constants_Loader import STATE_TOKENS, DO_COMMANDS, OPERATORS
 # Dynamically build the state_token rule based on constants
 state_token_rule = '\n        state_token : ' + '\n                   | '.join(STATE_TOKENS)
 
+# Dynamically build a general DO command rule
+do_commands_rule = '\n        do_command : ' + '\n                  | '.join(DO_COMMANDS)
+
 # Production rules
 grammar_rules = {
     'script': '''
@@ -36,6 +39,7 @@ grammar_rules = {
                  | multiply_statement
                  | increment_statement
                  | decrement_statement
+                 | divide_statement
     ''',
 
     'if_statement': '''
@@ -60,6 +64,8 @@ grammar_rules = {
                     | DO FLYBY_SET_EVENT_TOOLTIP IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER
                     | DO FLYBY_SET_END_TARGET IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER
                     | DO FLYBY_START
+                    | DO GIVE_UP_AND_SULK ON
+                    | DO GIVE_UP_AND_SULK OFF
                     | DO TRAIN_PEOPLE_NOW IDENTIFIER IDENTIFIER
                     | DO DEFEND_SHAMEN IDENTIFIER
                     | DO REMOVE_HEAD_AT_POS IDENTIFIER IDENTIFIER
@@ -96,6 +102,28 @@ grammar_rules = {
                     | DO state_token INTEGER INTEGER INTEGER
                     | DO state_token INTEGER INTEGER ON
                     | DO state_token INTEGER INTEGER OFF
+                    | DO CONVERT_AT_MARKER IDENTIFIER 
+                    | DO CONVERT_AT_MARKER INTEGER
+                    | DO CREATE_MSG_NARRATIVE IDENTIFIER
+                    | DO NAV_CHECK IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER
+                    | DO SPELL_AT_MARKER IDENTIFIER IDENTIFIER IDENTIFIER
+                    | DO do_command arg_list
+    ''',
+    
+    'do_command': do_commands_rule,
+    
+    'arg_list': '''
+        arg_list : arg arg_list
+                | arg
+                | empty
+    ''',
+    
+    'arg': '''
+        arg : IDENTIFIER
+            | INTEGER
+            | STRING
+            | ON
+            | OFF
     ''',
 
     'set_statement': '''
@@ -119,6 +147,10 @@ grammar_rules = {
 
     'decrement_statement': '''
         decrement_statement : DECREMENT IDENTIFIER IDENTIFIER
+    ''',
+
+    'divide_statement': '''
+        divide_statement : DIVIDE IDENTIFIER IDENTIFIER IDENTIFIER
     ''',
     
     # Use the dynamically built state token rule
