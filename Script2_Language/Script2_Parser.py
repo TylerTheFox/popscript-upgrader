@@ -38,7 +38,7 @@ def Parse_Script2(script_code):
 
     try:
         # Parse the script 
-        result = parser.parse(script_code, debug=True)  # Enable debug mode
+        result = parser.parse(script_code, debug=2)  # Enable debug mode
         if result is None:
             # Get last token position if available
             last_pos = getattr(parser, 'symstack', ['unknown'])[-1] if hasattr(parser, 'symstack') else 'unknown'

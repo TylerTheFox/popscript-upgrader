@@ -115,12 +115,634 @@ def build_command_map(variable_map):
         "SET_NO_BLUE_REINC": map_set_no_blue_reinc,
         'SPELL_AT_MARKER': map_spell_at_marker,
         "CREATE_MSG_NARRATIVE": map_create_msg_narrative,
-        "SEND_SHAMEN_DEFENDERS_HOME" : map_send_shaman_denfenders_home
+        "SEND_SHAMEN_DEFENDERS_HOME" : map_send_shaman_denfenders_home,
+        "TRIGGER_LEVEL_WON": map_trigger_level_won,
+        "SET_MSG_TIMEOUT" : map_set_msg_timeout,
+        "CLEAR_ALL_MSG" : map_clear_all_msg,
+        "DESELECT_ALL_BLUE_PEOPLE" : map_deselect_all_blue_people,
+        "REMOVE_PLAYER_THING" : map_remove_player_thing,
+        "ZOOM_TO" : map_zoom_to,
+        "KILL_TEAM_IN_AREA" : map_kill_team_in_area,
+        "TURN_PANEL_ON" : map_turn_panel_on,
+        "GIVE_PLAYER_SPELL" : map_give_player_spell,
+        "FLASH_BUTTON" : map_flash_button,
+        "COUNT_BLUE_IN_HOUSES" : map_count_blue_in_houses,
+        "COUNT_BLUE_WITH_BUILD_COMMAND" : map_count_blue_with_build_command,
+        "COUNT_BLUE_SHAPES" : map_count_blue_shapes,
+        "MOVE_SHAMAN_TO_MARKER" : map_move_shaman_to_marker,
+        "IS_PLAYER_IN_WORLD_VIEW" : map_is_player_in_world_view,
+        "SET_AUTO_BUILD" : map_set_auto_build,
+        "SET_AUTO_HOUSE" : map_set_auto_house, 
+        "GIVE_MANA_TO_PLAYER" : map_give_mana_to_player,
+        "CREATE_MSG_INFORMATION_ZOOM" : map_create_msg_information_zoom,
+        "TARGET_BLUE_SHAMAN" : map_target_blue_shaman,
+        "CLEAR_GUARDING_FROM" : map_clear_guarding_from,
+        "CALL_TO_ARMS" : map_call_to_arms,
+        "GET_NUM_PEOPLE_BEING_PREACHED": map_get_num_people_being_preached,
+        "PREACH_AT_MARKER" : map_preach_at_marker,
+        "FIX_WILD_IN_AREA": map_fix_wild_in_area,
+        "COUNT_ANGELS": map_count_angels,
+        "REMOVE_TIMER": map_remove_timer,
+        "HAS_TIMER_REACHED_ZERO": map_has_timer_reached_zero,
+        "GUARD_BETWEEN_MARKERS": map_guard_between_markers,
+        "IS_SHAMAN_AVAILABLE_FOR_ATTACK": map_is_shaman_available_for_attack,
+        "BUILD_MAIN_DRUM_TOWER": map_build_main_drum_tower,
+        "BOAT_PATROL": map_boat_patrol,
+        "TRIGGER_LEVEL_LOST": map_trigger_level_lost,
+        "IS_PRISON_ON_LEVEL": map_is_prison_on_level,
+        "IS_BUILDING_NEAR": map_is_building_near,
+        "DELETE_SMOKE_STUFF": map_delete_smoke_stuff,
+        "AUTO_MESSAGES": map_auto_messages,
+        "CONVERT_AT_MARKER": map_convert_at_marker,
+        "EXTRA_WOOD_COLLECTION": map_extra_wood_collection,
+        "MARVELLOUS_HOUSE_DEATH": map_marvellous_house_death,
+        "SET_TIMER_GOING": map_set_timer_going,
+        "SET_WOOD_COLLECTION_RADII": map_set_wood_collection_radii,
+        "TARGET_BLUE_DRUM_TOWERS": map_target_blue_drum_towers,
+        "TARGET_S_WARRIORS": map_target_s_warriors,
+        "SET_BASE_MARKER": map_set_base_marker,
+        "SET_BASE_RADIUS": map_set_base_radius,
     }
     return command_map
 
+def map_auto_messages(p, variable_map):
+    """
+    Map AUTO_MESSAGES command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    state = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"AUTO_MESSAGES({state})"
+
+def map_convert_at_marker(p, variable_map):
+    """
+    Map CONVERT_AT_MARKER command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    marker = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"CONVERT_AT_MARKER({marker})"
+
+def map_extra_wood_collection(p, variable_map):
+    """
+    Map EXTRA_WOOD_COLLECTION command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    state = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"EXTRA_WOOD_COLLECTION({state})"
+
+def map_marvellous_house_death(p, variable_map):
+    """
+    Map MARVELLOUS_HOUSE_DEATH command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    return f"MARVELLOUS_HOUSE_DEATH()"
+
+def map_set_timer_going(p, variable_map):
+    """
+    Map SET_TIMER_GOING command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    time = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"SET_TIMER_GOING({time})"
+
+def map_set_wood_collection_radii(p, variable_map):
+    """
+    Map SET_WOOD_COLLECTION_RADII command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    min_wood = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    max_wood = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    min_rf = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
+    max_rf = convert_value(p[PARAM_INDEX_FIFTH_ARG], variable_map)
+    return f"SET_WOOD_COLLECTION_RADII({min_wood}, {max_wood}, {min_rf}, {max_rf})"
+
+def map_target_blue_drum_towers(p, variable_map):
+    """
+    Map TARGET_BLUE_DRUM_TOWERS command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    return f"TARGET_BLUE_DRUM_TOWERS()"
+
+def map_target_s_warriors(p, variable_map):
+    """
+    Map TARGET_S_WARRIORS command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    return f"TARGET_S_WARRIORS()"
+
+def map_set_base_marker(p, variable_map):
+    """
+    Map SET_BASE_MARKER command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    marker = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"SET_BASE_MARKER({marker})"
+
+def map_set_base_radius(p, variable_map):
+    """
+    Map SET_BASE_RADIUS command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    radius = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"SET_BASE_RADIUS({radius})"
+
+def map_delete_smoke_stuff(p, variable_map):
+    """
+    Map DELETE_SMOKE_STUFF command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    x = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    z = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    rad = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
+    return f"DELETE_SMOKE_STUFF({x}, {z}, {rad})"
+
+def map_is_building_near(p, variable_map):
+    """
+    Map IS_BUILDING_NEAR command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    building = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    marker = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    radius = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
+    var = convert_user_var_name(p[PARAM_INDEX_FIFTH_ARG])
+    return f"{var} = IS_BUILDING_NEAR({building}, {marker}, {radius})"
+
+def map_is_prison_on_level(p, variable_map):
+    """
+    Map IS_PRISON_ON_LEVEL command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    var = convert_user_var_name(p[PARAM_INDEX_SECOND_ARG])
+    return f"{var} = IS_PRISON_ON_LEVEL()"
+
+def map_trigger_level_lost(p, variable_map):
+    return f"TRIGGER_LEVEL_LOST()"
+
+def map_boat_patrol(p, variable_map):
+    """
+    Map BOAT_PATROL command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    # Extract parameters for vehicle patrol
+    num_people = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    marker1 = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    marker2 = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
+    marker3 = convert_value(p[PARAM_INDEX_FIFTH_ARG], variable_map)
+    marker4 = convert_value(p[6], variable_map)
+    
+    # Check the vehicle type - code shows it can be BOAT_TYPE or BALLOON_TYPE
+    vehicle_type = p[7]
+    if vehicle_type == "BOAT_TYPE":
+        vehicle_type_value = "M_VEHICLE_BOAT_1"
+    elif vehicle_type == "BALLOON_TYPE":
+        vehicle_type_value = "M_VEHICLE_AIRSHIP_1"
+    else:
+        vehicle_type_value = "M_VEHICLE_BOAT_1"  # Default to boat if unspecified
+    
+    # Map to VEHICLE_PATROL function
+    return f"VEHICLE_PATROL({MY_TRIBE}, {num_people}, {marker1}, {marker2}, {marker3}, {marker4}, {vehicle_type_value})"
+
+def map_build_main_drum_tower(p, variable_map):
+    return f"_gsi.Players[{MY_TRIBE}].CP.Flags = bit.band(_gsi.Players[{MY_TRIBE}].CP.Flags, bit.bnot(CPF_DONT_BUILD_MAIN_DRUM_TOWER_YET))"
+
+def map_is_shaman_available_for_attack(p, variable_map):
+    """
+    Map IS_SHAMAN_AVAILABLE_FOR_ATTACK command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    var = convert_user_var_name(p[PARAM_INDEX_SECOND_ARG])
+    return f"{var} = IS_SHAMAN_AVAILABLE_FOR_ATTACK({MY_TRIBE})"
+
+def map_guard_between_markers(p, variable_map):
+    """
+    Map GUARD_BETWEEN_MARKERS command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    marker1 = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    marker2 = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    num_braves = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
+    num_warriors = convert_value(p[PARAM_INDEX_FIFTH_ARG], variable_map)
+    num_s_warriors = convert_value(p[6], variable_map)
+    num_preachers = convert_value(p[7], variable_map)
+    guard_type = convert_value(p[8], variable_map)
+    
+    return f"GUARD_BETWEEN_MARKERS({MY_TRIBE}, {marker1}, {marker2}, {num_braves}, {num_warriors}, {num_s_warriors}, {num_preachers}, {guard_type})"
+
+def map_has_timer_reached_zero(p, variable_map):
+    """
+    Map HAS_TIMER_REACHED_ZERO command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    return "HAS_TIMER_REACHED_ZERO()"
+
+def map_remove_timer(p, variable_map):
+    """
+    Map REMOVE_TIMER command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    return "REMOVE_TIMER()"
+
+def map_count_angels(p, variable_map):
+    """
+    Map COUNT_ANGELS command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    tribe = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    var = convert_user_var_name(p[PARAM_INDEX_SECOND_ARG])
+    return f"{var} = COUNT_ANGELS({tribe})"
+
+def map_fix_wild_in_area(p, variable_map):
+    """
+    Map FIX_WILD_IN_AREA command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    x = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    z = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    Rad = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
+    return f"FIX_WILD_IN_AREA({x}, {z}, {Rad})"
+
+def map_preach_at_marker(p, variable_map):
+
+    """
+    Map PREACH_AT_MARKER command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    marker = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"PREACH_AT_MARKER({marker})"
+
+def map_get_num_people_being_preached(p, variable_map):
+    """
+    Map GET_NUM_PEOPLE_BEING_PREACHED command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    tribe = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    var = convert_user_var_name(p[PARAM_INDEX_THIRD_ARG])
+    return f"{var} = GET_NUM_PEOPLE_BEING_PREACHED({tribe})"
+
+def map_call_to_arms(p, variable_map):
+    return f"CALL_TO_ARMS({MY_TRIBE})"
+
+def map_clear_guarding_from(p, variable_map):
+    """
+    Map CLEAR_GUARDING_FROM command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    ent1 = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    ent2 = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    ent3 = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
+    ent4 = convert_value(p[PARAM_INDEX_FIFTH_ARG], variable_map)
+    return f"CLEAR_GUARDING_FROM({ent1}, {ent2}, {ent3}, {ent4})"
+
+def map_target_blue_shaman(p, variable_map):
+    return f"TARGET_SHAMAN({TRIBE_BLUE})"
+
+def map_create_msg_information_zoom(p, variable_map):
+    """
+    Map CREATE_MSG_INFORMATION_ZOOM command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    index = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    x = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    z = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
+    angle = convert_value(p[PARAM_INDEX_FIFTH_ARG], variable_map)
+    return f"CREATE_MSG_INFORMATION_ZOOM({index}, {x}, {z}, {angle})"
+
+def map_give_mana_to_player(p, variable_map):
+    """
+    Map GIVE_MANA_TO_PLAYER command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    player = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    mana = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    return f"GIVE_MANA_TO_PLAYER({player}, {mana})"
+
+def map_set_auto_house(p, variable_map):
+    """
+    Map SET_AUTO_HOUSE command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    state = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"SET_AUTO_HOUSE({state})"
+
+def map_set_auto_build(p, variable_map):
+    """
+    Map SET_AUTO_BUILD command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    state = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"SET_AUTO_BUILD({state})"
+
+def map_is_player_in_world_view(p, variable_map):
+    """
+    Map IS_PLAYER_IN_WORLD_VIEW command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    var = convert_user_var_name(p[PARAM_INDEX_SECOND_ARG])
+    return f"{var} = IS_PLAYER_IN_WORLD_VIEW({MY_TRIBE})"
+
+def map_move_shaman_to_marker(p, variable_map):
+    """
+    Map MOVE_SHAMAN_TO_MARKER command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    marker = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"MOVE_SHAMAN_TO_MARKER({marker})"
+
+def map_count_blue_shapes(p, variable_map):
+    """
+    Map COUNT_BLUE_SHAPES command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    var = convert_user_var_name(p[PARAM_INDEX_SECOND_ARG])
+    return f"{var} = COUNT_SHAPES({TRIBE_BLUE})"
+
+def map_count_blue_with_build_command(p, variable_map):
+    """
+    Map COUNT_BLUE_WITH_BUILD_COMMAND command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    var = convert_user_var_name(p[PARAM_INDEX_SECOND_ARG])
+    return f"{var} = COUNT_BLUE_WITH_BUILD_COMMAND({TRIBE_BLUE})"
+
+def map_count_blue_in_houses(p, variable_map):
+    """
+    Map COUNT_BLUE_IN_HOUSES command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    var = convert_user_var_name(p[PARAM_INDEX_SECOND_ARG])
+    return f"{var} = COUNT_PEOPLE_IN_HOUSES({TRIBE_BLUE})"
+
+def map_flash_button(p, variable_map):
+    """
+    Map FLASH_BUTTON command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        variable_map: Dictionary of variable mappings
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    button = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    onoff =  convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    return f"FLASH_BUTTON({button}, {onoff})"
+
+def map_give_player_spell(p, variable_map):
+    tribe = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    thing = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+
+    # Check if thing contains BUILDING or SPELL and set appropriate type
+    if "BUILDING" in thing:
+        return f"set_player_can_cast({thing}, {tribe})"
+    elif "SPELL" in thing:
+        return f"set_player_can_build({thing}, {tribe})"
+    else:
+        raise ValueError(f"Unsupported thing type in REMOVE_PLAYER_THING: {thing}")
+
+def map_turn_panel_on(p, variable_map):
+    idx = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"TURN_PANEL_ON({idx})"
+
+def map_kill_team_in_area(p, variable_map):
+    """
+    Map KILL_TEAM_IN_AREA command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    x = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    z = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    Rad = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
+    return f"KILL_TEAM_IN_AREA({x}, {z}, {Rad})"
+
+def map_zoom_to(p, variable_map):
+    """
+    Map ZOOM_TO command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    x = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    z = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+    Angle = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
+    return f"ZOOM_TO({x}, {z}, {Angle})"
+
+def map_remove_player_thing(p, variable_map):
+    tribe = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    thing = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
+
+    # Check if thing contains BUILDING or SPELL and set appropriate type
+    if "BUILDING" in thing:
+        return f"set_player_cannot_cast({thing}, {tribe})"
+    elif "SPELL" in thing:
+        return f"set_player_cannot_build({thing}, {tribe})"
+    else:
+        raise ValueError(f"Unsupported thing type in REMOVE_PLAYER_THING: {thing}")
+    
+
+
+def map_deselect_all_blue_people(p, variable_map):
+    return f"DESELECT_ALL_BLUE_PEOPLE({TRIBE_BLUE})"
+
+def map_clear_all_msg(p, variable_map):
+    return "CLEAR_ALL_MSG()"
+
+def map_set_msg_timeout(p, variable_map):
+    """
+    Map SET_MSG_TIMEOUT command to Script4 equivalent
+    
+    Args:
+        p: Command parameters
+        
+    Returns:
+        String containing the Script4 equivalent command
+    """
+    time = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
+    return f"SET_MSG_TIMEOUT({time})"
+
+def map_trigger_level_won(p, variable_map):
+    return f"TRIGGER_LEVEL_WON()"
+
 def map_send_shaman_denfenders_home(p, variable_map):
-    return f"SEND_SHAMEN_DEFENDERS_HOME(MY_TRIBE)"
+    return f"SEND_SHAMEN_DEFENDERS_HOME({MY_TRIBE})"
 
 def map_state_bring_new_people_back(p, variable_map):
     return map_state_command(p, "STATE_BRING_NEW_PEOPLE_BACK", variable_map)
@@ -247,7 +869,7 @@ def map_get_num_one_off_spells(p, variable_map):
     """
     var = convert_user_var_name(p[PARAM_INDEX_FOURTH_ARG])
     spell = convert_value(p[PARAM_INDEX_THIRD_ARG].replace('INT_', 'M_SPELL_'), variable_map)
-    return f"{var} = GET_NUM_ONE_OFF_SPELLS(TRIBE_BLUE, {spell})"
+    return f"{var} = GET_NUM_ONE_OFF_SPELLS({TRIBE_BLUE}, {spell})"
 
 def map_nav_check(p, variable_map):
     """
@@ -264,7 +886,7 @@ def map_nav_check(p, variable_map):
     param2 = convert_int_constant(p[PARAM_INDEX_THIRD_ARG])
     param3 = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
     param4 = convert_value(p[PARAM_INDEX_FIFTH_ARG], variable_map)
-    return f"{var} = NAV_CHECK(MY_TRIBE, {param1}, {param2}, {param3}, {param4})"
+    return f"{var} = NAV_CHECK({MY_TRIBE}, {param1}, {param2}, {param3}, {param4})"
 
 def map_set_reincarnation(p, variable_map):
     """
@@ -289,7 +911,7 @@ def map_delay_main_drum_tower(p, variable_map):
     Returns:
         String containing the Script4 equivalent command
     """
-    return "DELAY_MAIN_DRUM_TOWER(ON, MY_TRIBE)"
+    return f"DELAY_MAIN_DRUM_TOWER(ON, {MY_TRIBE})"
 
 def map_set_attack_variable(p, variable_map):
     """
@@ -301,7 +923,7 @@ def map_set_attack_variable(p, variable_map):
     Returns:
         String containing the Script4 equivalent command
     """
-    return "SET_ATTACK_VARIABLE(MY_TRIBE, 0) -- TODO! Not supported!"
+    return f"SET_ATTACK_VARIABLE({MY_TRIBE}, 0) -- TODO! Not supported!"
 
 def map_disable_user_inputs(p, variable_map):
     """
@@ -339,7 +961,7 @@ def map_state_command(p, state_name, variable_map):
         String containing the Script4 equivalent command
     """
     state = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
-    return f"STATE_SET(MY_TRIBE, {STATE_CP_MAP[state_name]}, {state})"
+    return f"STATE_SET({MY_TRIBE}, {STATE_CP_MAP[state_name]}, {state})"
 
 def map_state_spell_defence(p, variable_map):
     """
@@ -354,7 +976,7 @@ def map_state_spell_defence(p, variable_map):
     param1 = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
     param2 = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
     param3 = convert_value(p[PARAM_INDEX_FOURTH_ARG], variable_map)
-    return f"SHAMAN_DEFEND(MY_TRIBE, {param1}, {param2}, {param3})"
+    return f"SHAMAN_DEFEND({MY_TRIBE}, {param1}, {param2}, {param3})"
 
 def map_set_defence_radius(p, variable_map):
     """
@@ -367,7 +989,7 @@ def map_set_defence_radius(p, variable_map):
         String containing the Script4 equivalent command
     """
     radius = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
-    return f"SET_DEFENCE_RADIUS(MY_TRIBE, {radius})"
+    return f"SET_DEFENCE_RADIUS({MY_TRIBE}, {radius})"
 
 def map_set_marker_entry(p, variable_map):
     """
@@ -386,7 +1008,7 @@ def map_set_marker_entry(p, variable_map):
     param5 = convert_value(p[6], variable_map)
     param6 = convert_value(p[7], variable_map)
     param7 = convert_value(p[8], variable_map)
-    return f"SET_MARKER_ENTRY(MY_TRIBE, {param1}, {param2}, {param3}, {param4}, {param5}, {param6}, {param7})"
+    return f"SET_MARKER_ENTRY({MY_TRIBE}, {param1}, {param2}, {param3}, {param4}, {param5}, {param6}, {param7})"
 
 def map_only_stand_at_markers(p, variable_map):
     """
@@ -398,7 +1020,7 @@ def map_only_stand_at_markers(p, variable_map):
     Returns:
         String containing the Script4 equivalent command
     """
-    return "ONLY_STAND_AT_MARKERS(MY_TRIBE)"
+    return f"ONLY_STAND_AT_MARKERS({MY_TRIBE})"
 
 def map_set_bucket_count_for_spell(p, variable_map):
     """
@@ -412,7 +1034,7 @@ def map_set_bucket_count_for_spell(p, variable_map):
     """
     spell = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
     count = convert_value(p[PARAM_INDEX_THIRD_ARG], variable_map)
-    return f"SET_BUCKET_COUNT_FOR_SPELL(MY_TRIBE, {spell}, {count})"
+    return f"SET_BUCKET_COUNT_FOR_SPELL({MY_TRIBE}, {spell}, {count})"
 
 def map_flyby_create_new(p, variable_map):
     """
@@ -590,7 +1212,7 @@ def map_partial_building_count(p, variable_map):
     Returns:
         String containing the Script4 equivalent command
     """
-    return "PARTIAL_BUILDING_COUNT(MY_TRIBE)"
+    return f"PARTIAL_BUILDING_COUNT({MY_TRIBE})"
 
 def map_trigger_thing(p, variable_map):
     """
@@ -629,7 +1251,7 @@ def map_defend_shamen(p, variable_map):
     Returns:
         String containing the Script4 equivalent command
     """
-    return "DEFEND_SHAMEN(MY_TRIBE, _gsi.Players[MY_TRIBE].NumPeople)"
+    return f"DEFEND_SHAMEN({MY_TRIBE}, _gsi.Players[{MY_TRIBE}].NumPeople)"
 
 def map_train_people_now(p, variable_map):
     """
@@ -643,7 +1265,7 @@ def map_train_people_now(p, variable_map):
     """
     param1 = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
     param2 = convert_value(p[PARAM_INDEX_THIRD_ARG].replace('INT_', 'M_PERSON_'), variable_map)
-    return f"TRAIN_PEOPLE_NOW(MY_TRIBE, {param1}, {param2})"
+    return f"TRAIN_PEOPLE_NOW({MY_TRIBE}, {param1}, {param2})"
 
 def map_turn_push(p, variable_map):
     """
@@ -669,7 +1291,7 @@ def map_set_bucket_usage(p, variable_map):
         String containing the Script4 equivalent command
     """
     usage = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
-    return f"SET_BUCKET_USAGE(MY_TRIBE, {usage})"
+    return f"SET_BUCKET_USAGE({MY_TRIBE}, {usage})"
 
 def map_give_up_and_sulk(p, variable_map):
     """
@@ -682,7 +1304,7 @@ def map_give_up_and_sulk(p, variable_map):
         String containing the Script4 equivalent command
     """
     param = convert_value(p[PARAM_INDEX_SECOND_ARG], variable_map)
-    return f"GIVE_UP_AND_SULK(MY_TRIBE, {param})"
+    return f"GIVE_UP_AND_SULK({MY_TRIBE}, {param})"
 
 def map_set_spell_entry(p, variable_map):
     """Helper function for SET_SPELL_ENTRY command mapping"""
@@ -706,7 +1328,7 @@ def map_set_spell_entry(p, variable_map):
     else:
         cost_spell = f'{SPELL_PREFIX}{spell_type}'
     
-    return f"SET_SPELL_ENTRY(MY_TRIBE, {spell_idx}, {spell_param}, PLAYERS_SPELL_COST(MY_TRIBE, {cost_spell}), {convert_value(p[5], variable_map)}, {convert_value(p[6], variable_map)}, {convert_value(p[7], variable_map)})"
+    return f"SET_SPELL_ENTRY({MY_TRIBE}, {spell_idx}, {spell_param}, PLAYERS_SPELL_COST({MY_TRIBE}, {cost_spell}), {convert_value(p[5], variable_map)}, {convert_value(p[6], variable_map)}, {convert_value(p[7], variable_map)})"
 
 # Define missing attack command mapper
 def map_attack_command(p, variable_map):

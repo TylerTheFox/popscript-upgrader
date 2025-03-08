@@ -1,5 +1,5 @@
 {
-    "generation_time": "2025-03-03 03:50:54",
+    "generation_time": "2025-03-08 01:26:12",
     "available_modules": [
         "Script4",
         "Script4_Building",
@@ -23993,12 +23993,12 @@
                     "name": "MapPosXZ",
                     "members": [
                         {
-                            "datatype": "",
-                            "name": "MapPosXZ::Pos"
+                            "datatype": "UWORD",
+                            "name": "Pos"
                         },
                         {
-                            "datatype": "",
-                            "name": "MapPosXZ::XZ"
+                            "datatype": "UWORD",
+                            "name": "XZ"
                         }
                     ],
                     "functions": [],
@@ -24023,16 +24023,16 @@
                     "name": "ThingPos",
                     "members": [
                         {
-                            "datatype": "",
-                            "name": "ThingPos::D2"
+                            "datatype": "Coord2D",
+                            "name": "D2"
                         },
                         {
-                            "datatype": "",
-                            "name": "ThingPos::D3"
+                            "datatype": "Coord3D",
+                            "name": "D3"
                         },
                         {
-                            "datatype": "",
-                            "name": "ThingPos::D3Debug"
+                            "datatype": "Coord3DDebug",
+                            "name": "D3Debug"
                         }
                     ],
                     "functions": [],
@@ -24094,8 +24094,8 @@
                             "name": "ShapeOrBldgIdx"
                         },
                         {
-                            "datatype": "",
-                            "name": "MapPosXZ::Pos"
+                            "datatype": "MapPosXZ",
+                            "name": "Pos"
                         },
                         {
                             "datatype": "UBYTE",
@@ -29220,7 +29220,7 @@
                         },
                         {
                             "datatype": "ObjectProxy",
-                            "name": "TempBuildingIdxs[NUM_BUILDING_TYPES"
+                            "name": "TempBuildingIdxs[NUM_BUILDING_TYPES+1]"
                         },
                         {
                             "datatype": "UWORD",
@@ -29232,11 +29232,11 @@
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumPeopleOfType[NUM_PEOPLE_TYPES"
+                            "name": "NumPeopleOfType[NUM_PEOPLE_TYPES+1]"
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumLocalPeopleOfType[NUM_PEOPLE_TYPES"
+                            "name": "NumLocalPeopleOfType[NUM_PEOPLE_TYPES+1]"
                         },
                         {
                             "datatype": "SWORD",
@@ -29244,43 +29244,43 @@
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumPeopleInGuiState[NUM_PEOPLE_TYPES"
+                            "name": "NumPeopleInGuiState[NUM_PEOPLE_TYPES+1][NUM_PEOPLE_GUI_STATES+1]"
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumLocalPeopleInGuiState[NUM_PEOPLE_TYPES"
+                            "name": "NumLocalPeopleInGuiState[NUM_PEOPLE_TYPES+1][NUM_PEOPLE_GUI_STATES+1]"
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumBuildingsOfType[NUM_BUILDING_TYPES"
+                            "name": "NumBuildingsOfType[NUM_BUILDING_TYPES+1]"
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumVehiclesOfType[NUM_VEHICLE_TYPES"
+                            "name": "NumVehiclesOfType[NUM_VEHICLE_TYPES+1]"
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumBuiltOrPartBuiltBuildingsOfType[NUM_BUILDING_TYPES"
+                            "name": "NumBuiltOrPartBuiltBuildingsOfType[NUM_BUILDING_TYPES+1]"
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumBldgMarkersOfType[NUM_BUILDING_TYPES"
+                            "name": "NumBldgMarkersOfType[NUM_BUILDING_TYPES+1]"
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumPeopleInBoats[NUM_PEOPLE_TYPES"
+                            "name": "NumPeopleInBoats[NUM_PEOPLE_TYPES+1]"
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumLocalPeopleInBoats[NUM_PEOPLE_TYPES"
+                            "name": "NumLocalPeopleInBoats[NUM_PEOPLE_TYPES+1]"
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumPeopleInBalloons[NUM_PEOPLE_TYPES"
+                            "name": "NumPeopleInBalloons[NUM_PEOPLE_TYPES+1]"
                         },
                         {
                             "datatype": "SWORD",
-                            "name": "NumLocalPeopleInBalloons[NUM_PEOPLE_TYPES"
+                            "name": "NumLocalPeopleInBalloons[NUM_PEOPLE_TYPES+1]"
                         },
                         {
                             "datatype": "SBYTE",
@@ -29312,11 +29312,11 @@
                         },
                         {
                             "datatype": "UBYTE",
-                            "name": "SpellsCast[NUM_SPELL_TYPES"
+                            "name": "SpellsCast[NUM_SPELL_TYPES+1]"
                         },
                         {
                             "datatype": "UBYTE",
-                            "name": "PreLSMENumOneShots[NUM_LANDSCAPE_SPELL_TYPES"
+                            "name": "PreLSMENumOneShots[NUM_LANDSCAPE_SPELL_TYPES+1]"
                         },
                         {
                             "datatype": "UBYTE",
@@ -29347,15 +29347,15 @@
                     "members": [
                         {
                             "datatype": "UBYTE",
-                            "name": "MaxCharges[NUM_SPELL_TYPES"
+                            "name": "MaxCharges[NUM_SPELL_TYPES+1]"
                         },
                         {
                             "datatype": "SLONG",
-                            "name": "Cost[NUM_SPELL_TYPES"
+                            "name": "Cost[NUM_SPELL_TYPES+1]"
                         },
                         {
                             "datatype": "SLONG",
-                            "name": "WorldCoordRange[NUM_SPELL_TYPES"
+                            "name": "WorldCoordRange[NUM_SPELL_TYPES+1]"
                         }
                     ],
                     "functions": [],
@@ -29381,7 +29381,7 @@
                     "members": [
                         {
                             "datatype": "UWORD",
-                            "name": "MaxBuildingsOfType[NUM_BUILDING_TYPES"
+                            "name": "MaxBuildingsOfType[NUM_BUILDING_TYPES+1]"
                         }
                     ],
                     "functions": [],
@@ -32228,6 +32228,16 @@
                 {
                     "name": "CONVERT_AT_MARKER",
                     "description": "Converts people at a specified marker.",
+                    "parameters": [
+                        "SLONG pn",
+                        "SLONG marker"
+                    ],
+                    "return": "void",
+                    "deprecated": false
+                },
+                {
+                    "name": "PREACH_AT_MARKER",
+                    "description": "Preaches at a specified marker.",
                     "parameters": [
                         "SLONG pn",
                         "SLONG marker"

@@ -26,42 +26,42 @@ def convert_script_file(input_file, output_file, tribe, command_map, variable_ma
     Returns:
         SUCCESS or FAILURE
     """
-    try:
-        # Read the input script
-        with open(input_file, 'r') as f:
-            script_content = f.read()
-        
-        # Parse and convert the script
-        
-        parsed_script = Parse_Script2(script_content)
-        if not parsed_script:
-            logging.error(f"Failed to parse {input_file}")
-            return FAILURE
-        
-        # Extract user variables
-        user_variables = extract_user_variables(parsed_script)
-        
-        # Generate Lua output
-        lua_output = convert_script(
-            parsed_script,  
-            input_file,
-            output_file, 
-            tribe, 
-            command_map, 
-            variable_map
-        )
-        
-        # Write output to file
-        os.makedirs(os.path.dirname(output_file), exist_ok=True)
-        with open(output_file, 'w') as f:
-            f.write('\n'.join(lua_output))
-        
-        logging.info(f"Successfully converted {input_file} to {output_file}")
-        return SUCCESS
-        
-    except Exception as e:
-        logging.error(f"Error converting {input_file}: {str(e)}")
+    #try:
+    # Read the input script
+    with open(input_file, 'r') as f:
+        script_content = f.read()
+    
+    # Parse and convert the script
+    
+    parsed_script = Parse_Script2(script_content)
+    if not parsed_script:
+        logging.error(f"Failed to parse {input_file}")
         return FAILURE
+    
+    # Extract user variables
+    user_variables = extract_user_variables(parsed_script)
+    
+    # Generate Lua output
+    lua_output = convert_script(
+        parsed_script,  
+        input_file,
+        output_file, 
+        tribe, 
+        command_map, 
+        variable_map
+    )
+    
+    # Write output to file
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    with open(output_file, 'w') as f:
+        f.write('\n'.join(lua_output))
+    
+    logging.info(f"Successfully converted {input_file} to {output_file}")
+    return SUCCESS
+        
+    #except Exception as e:
+    #    logging.error(f"Error converting {input_file}: {str(e)}")
+   #     return FAILURE
 
 
 def extract_user_variables(parsed_script):

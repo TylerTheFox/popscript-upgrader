@@ -72,21 +72,21 @@ def process_directory(input_dir, output_dir, tribe, command_map, variable_map):
         progress = (i / total_files) * 100
         print(f"[{i}/{total_files} - {progress:.1f}%] Processing {scr_file}...", end="", flush=True)
         
-        #try:
-        result = convert_script_file(input_path, output_path, tribe, command_map, variable_map)
-        if result == SUCCESS:
-            success_count += 1
-            print(" ✓")
-        else:
-            failure_count += 1
-            error_msg = f"Conversion failed with status {result}"
+        try:
+            result = convert_script_file(input_path, output_path, tribe, command_map, variable_map)
+            if result == SUCCESS:
+                success_count += 1
+                print(" ✓")
+            else:
+                failure_count += 1
+                error_msg = f"Conversion failed with status {result}"
+                failed_files.append((scr_file, error_msg))
+                print(f" ✗ - Error: {error_msg}")
+        except Exception as e:
+            error_msg = str(e)
             failed_files.append((scr_file, error_msg))
             print(f" ✗ - Error: {error_msg}")
-        #except Exception as e:
-        #    failure_count += 1
-        #    error_msg = str(e)
-        #    failed_files.append((scr_file, error_msg))
-        #    print(f" ✗ - Error: {error_msg[:50]}...")
+            failure_count += 1
     
     # Print summary report
     _write_summary_report(total_files, success_count, failure_count, failed_files, output_dir)
