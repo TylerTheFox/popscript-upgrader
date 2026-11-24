@@ -1,0 +1,4718 @@
+{
+ "tokens": {
+  "IF": 1000,
+  "ELSE": 1001,
+  "ENDIF": 1002,
+  "BEGIN": 1003,
+  "END": 1004,
+  "EVERY": 1005,
+  "DO": 1006,
+  "SET": 1007,
+  "INCREMENT": 1008,
+  "DECREMENT": 1009,
+  ">": 1012,
+  "<": 1013,
+  "==": 1014,
+  "!=": 1015,
+  ">=": 1016,
+  "<=": 1017,
+  "SCRIPT_END": 1019,
+  "AND": 1020,
+  "OR": 1021,
+  "MULTIPLY": 1025,
+  "DIVIDE": 1026
+ },
+ "script_version": 12,
+ "keywords": [
+  {
+   "name": "ON",
+   "alacn": "ON",
+   "token": 1022,
+   "kind": "onoff",
+   "lua": "ON",
+   "value": 1
+  },
+  {
+   "name": "OFF",
+   "alacn": "OFF",
+   "token": 1023,
+   "kind": "onoff",
+   "lua": "OFF",
+   "value": 0
+  },
+  {
+   "name": "BLUE",
+   "alacn": "BLUE",
+   "token": 1118,
+   "kind": "tribe",
+   "lua": "TRIBE_BLUE",
+   "value": 0
+  },
+  {
+   "name": "RED",
+   "alacn": "RED",
+   "token": 1119,
+   "kind": "tribe",
+   "lua": "TRIBE_RED",
+   "value": 1
+  },
+  {
+   "name": "YELLOW",
+   "alacn": "YELLOW",
+   "token": 1120,
+   "kind": "tribe",
+   "lua": "TRIBE_YELLOW",
+   "value": 2
+  },
+  {
+   "name": "GREEN",
+   "alacn": "GREEN",
+   "token": 1121,
+   "kind": "tribe",
+   "lua": "TRIBE_GREEN",
+   "value": 3
+  },
+  {
+   "name": "WILD",
+   "alacn": "COUNT_WILD",
+   "token": 1058,
+   "kind": "wild",
+   "lua": "WILD",
+   "value": 8
+  },
+  {
+   "name": "MARKER",
+   "alacn": "ATTACK_MARKER",
+   "token": 1070,
+   "kind": "target_type",
+   "lua": "ATTACK_MARKER",
+   "value": 0
+  },
+  {
+   "name": "BUILDING",
+   "alacn": "ATTACK_BUILDING",
+   "token": 1071,
+   "kind": "target_type",
+   "lua": "ATTACK_BUILDING",
+   "value": 1
+  },
+  {
+   "name": "PERSON",
+   "alacn": "ATTACK_PERSON",
+   "token": 1072,
+   "kind": "target_type",
+   "lua": "ATTACK_PERSON",
+   "value": 2
+  },
+  {
+   "name": "ATTACK_NORMAL",
+   "alacn": "ATTACK_NORMAL",
+   "token": 1078,
+   "kind": "attack_type",
+   "lua": "ATTACK_NORMAL",
+   "value": 0
+  },
+  {
+   "name": "ATTACK_BY_BOAT",
+   "alacn": "ATTACK_BY_BOAT",
+   "token": 1079,
+   "kind": "attack_type",
+   "lua": "ATTACK_BY_BOAT",
+   "value": 1
+  },
+  {
+   "name": "ATTACK_BY_BALLOON",
+   "alacn": "ATTACK_BY_BALLOON",
+   "token": 1080,
+   "kind": "attack_type",
+   "lua": "ATTACK_BY_BALLOON",
+   "value": 2
+  },
+  {
+   "name": "GUARD_NORMAL",
+   "alacn": "GUARD_NORMAL",
+   "token": 1087,
+   "kind": "guard_type",
+   "lua": "GUARD_NORMAL",
+   "value": 0
+  },
+  {
+   "name": "GUARD_WITH_GHOSTS",
+   "alacn": "GUARD_WITH_GHOSTS",
+   "token": 1088,
+   "kind": "guard_type",
+   "lua": "GUARD_WITH_GHOSTS",
+   "value": 1
+  },
+  {
+   "name": "SPELL_TYPE",
+   "alacn": "SPELL_TYPE",
+   "token": 1099,
+   "kind": "oneshot_type",
+   "lua": "T_SPELL",
+   "value": 11
+  },
+  {
+   "name": "BUILDING_TYPE",
+   "alacn": "BUILDING_TYPE",
+   "token": 1100,
+   "kind": "oneshot_type",
+   "lua": "T_BUILDING",
+   "value": 2
+  },
+  {
+   "name": "BOAT_TYPE",
+   "alacn": "BOAT_TYPE",
+   "token": 1104,
+   "kind": "vehicle_type",
+   "lua": "M_VEHICLE_BOAT_1",
+   "value": 1
+  },
+  {
+   "name": "BALLOON_TYPE",
+   "alacn": "BALLOON_TYPE",
+   "token": 1105,
+   "kind": "vehicle_type",
+   "lua": "M_VEHICLE_AIRSHIP_1",
+   "value": 3
+  }
+ ],
+ "commands": [
+  {
+   "token": 1028,
+   "name": "STATE_CONSTRUCT_BUILDING",
+   "alacn": "STATE_CONSTRUCT_BUILDING",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_CONSTRUCT_BUILDING)",
+   "status": "yes"
+  },
+  {
+   "token": 1029,
+   "name": "STATE_FETCH_WOOD",
+   "alacn": "STATE_FETCH_WOOD",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_FETCH_WOOD)",
+   "status": "yes"
+  },
+  {
+   "token": 1030,
+   "name": "STATE_MED_MAN_GET_WILD_PEEPS",
+   "alacn": "STATE_SHAMAN_GET_WILDS",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS)",
+   "status": "yes"
+  },
+  {
+   "token": 1031,
+   "name": "STATE_HOUSE_A_PERSON",
+   "alacn": "STATE_HOUSE_A_PERSON",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_HOUSE_A_PERSON)",
+   "status": "yes"
+  },
+  {
+   "token": 1032,
+   "name": "STATE_SEND_GHOSTS",
+   "alacn": "STATE_SEND_GHOSTS",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_SEND_GHOSTS)",
+   "status": "yes"
+  },
+  {
+   "token": 1033,
+   "name": "STATE_BRING_NEW_PEOPLE_BACK",
+   "alacn": "STATE_STATE_BRING_NEW_PEOPLE_BACK",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_BRING_NEW_PEOPLE_BACK)",
+   "status": "yes"
+  },
+  {
+   "token": 1034,
+   "name": "STATE_TRAIN_PEOPLE",
+   "alacn": "STATE_TRAIN_PEOPLE",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_TRAIN_PEOPLE)",
+   "status": "yes"
+  },
+  {
+   "token": 1035,
+   "name": "STATE_POPULATE_DRUM_TOWER",
+   "alacn": "STATE_POPULATE_DRUM_TOWER",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_POPULATE_DRUM_TOWER)",
+   "status": "yes"
+  },
+  {
+   "token": 1036,
+   "name": "STATE_DEFEND",
+   "alacn": "STATE_DEFEND",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_DEFEND)",
+   "status": "yes"
+  },
+  {
+   "token": 1037,
+   "name": "STATE_DEFEND_BASE",
+   "alacn": "STATE_DEFEND_BASE",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_DEFEND_BASE)",
+   "status": "yes"
+  },
+  {
+   "token": 1038,
+   "name": "STATE_SPELL_DEFENCE",
+   "alacn": "STATE_SPELL_DEFENCE",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "SHAMAN_DEFEND({me}, {1}, {2}, {3})",
+   "status": "yes"
+  },
+  {
+   "token": 1039,
+   "name": "STATE_PREACH",
+   "alacn": "STATE_PREACH",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_PREACH)",
+   "status": "yes"
+  },
+  {
+   "token": 1040,
+   "name": "STATE_BUILD_WALLS",
+   "alacn": "STATE_BUILD_WALLS",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_REPAIR_BLDGS)",
+   "status": "yes"
+  },
+  {
+   "token": 1041,
+   "name": "STATE_SABOTAGE",
+   "alacn": "STATE_SABOTAGE",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_SABOTAGE)",
+   "status": "yes"
+  },
+  {
+   "token": 1042,
+   "name": "STATE_SPELL_OFFENSIVE",
+   "alacn": "STATE_SPELL_OFFENSIVE",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_SPELL_OFFENSIVE)",
+   "status": "yes"
+  },
+  {
+   "token": 1043,
+   "name": "STATE_SUPER_DEFEND",
+   "alacn": "STATE_FIREWARRIOR_DEFEND",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_SUPER_DEFEND)",
+   "status": "yes"
+  },
+  {
+   "token": 1044,
+   "name": "STATE_BUILD_VEHICLE",
+   "alacn": "STATE_BUILD_VEHICLE",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_BUILD_VEHICLE)",
+   "status": "yes"
+  },
+  {
+   "token": 1045,
+   "name": "STATE_FETCH_LOST_PEOPLE",
+   "alacn": "STATE_FETCH_LOST_PEOPLE",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_FETCH_LOST_PEOPLE)",
+   "status": "yes"
+  },
+  {
+   "token": 1046,
+   "name": "STATE_FETCH_LOST_VEHICLE",
+   "alacn": "STATE_FETCH_LOST_VEHICLE",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_FETCH_LOST_VEHICLE)",
+   "status": "yes"
+  },
+  {
+   "token": 1047,
+   "name": "STATE_FETCH_FAR_VEHICLE",
+   "alacn": "STATE_FETCH_FAR_VEHICLE",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_FETCH_FAR_VEHICLE)",
+   "status": "yes"
+  },
+  {
+   "token": 1048,
+   "name": "STATE_AUTO_ATTACK",
+   "alacn": "STATE_AUTO_ATTACK",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_AUTO_ATTACK)",
+   "status": "yes"
+  },
+  {
+   "token": 1049,
+   "name": "STATE_MED_MAN_DEFEND",
+   "alacn": null,
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "special": "unsupported",
+   "why": "the interpreter has no handler for this command; a script using it stops being parsed correctly",
+   "status": "no"
+  },
+  {
+   "token": 1050,
+   "name": "STATE_FLATTEN_BASE",
+   "alacn": "STATE_FLATTEN_BASE",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_FLATTEN_BASE)",
+   "status": "yes"
+  },
+  {
+   "token": 1051,
+   "name": "STATE_BUILD_OUTER_DEFENCES",
+   "alacn": "STATE_BUILD_OUTER_DEFENCES",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "STATE_SET({me}, {1}, CP_AT_TYPE_BUILD_OUTER_DEFENCES)",
+   "status": "yes"
+  },
+  {
+   "token": 1059,
+   "name": "ATTACK",
+   "alacn": "ATTACK",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "value",
+     "label": "num ppl"
+    },
+    {
+     "kind": "target_type",
+     "label": "target"
+    },
+    {
+     "kind": "value",
+     "label": "attack model"
+    },
+    {
+     "kind": "value",
+     "label": "damage"
+    },
+    {
+     "kind": "value",
+     "label": "spell 1"
+    },
+    {
+     "kind": "value",
+     "label": "spell 2"
+    },
+    {
+     "kind": "value",
+     "label": "spell 3"
+    },
+    {
+     "kind": "attack_type",
+     "label": "attack type"
+    },
+    {
+     "kind": "value",
+     "label": "bring back vehicles"
+    },
+    {
+     "kind": "value",
+     "label": "marker 1"
+    },
+    {
+     "kind": "value",
+     "label": "marker 2"
+    },
+    {
+     "kind": "value",
+     "label": "marker 3"
+    }
+   ],
+   "call": "ATTACK({me}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13})",
+   "status": "yes"
+  },
+  {
+   "token": 1064,
+   "name": "SPELL_AT_MARKER",
+   "alacn": "SPELL_ATTACK",
+   "params": [
+    {
+     "kind": "value",
+     "label": "spell"
+    },
+    {
+     "kind": "value",
+     "label": "marker"
+    },
+    {
+     "kind": "value",
+     "label": "direction"
+    }
+   ],
+   "call": "SPELL_ATTACK({me}, {1}, {2}, {3})",
+   "status": "yes"
+  },
+  {
+   "token": 1065,
+   "name": "RESET_BASE_MARKER",
+   "alacn": "RESET_BASE_MARKER",
+   "params": [],
+   "call": "RESET_BASE_MARKER({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1066,
+   "name": "SET_BASE_MARKER",
+   "alacn": "SET_BASE_MARKER",
+   "params": [
+    {
+     "kind": "value",
+     "label": "marker"
+    }
+   ],
+   "call": "SET_BASE_MARKER({me}, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1067,
+   "name": "SET_BASE_RADIUS",
+   "alacn": "SET_BASE_RADIUS",
+   "params": [
+    {
+     "kind": "value",
+     "label": "radius"
+    }
+   ],
+   "call": "SET_BASE_RADIUS({me}, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1068,
+   "name": "COUNT_PEOPLE_IN_MARKER",
+   "alacn": "COUNT_PEOPLE_IN_MARKER",
+   "params": [
+    {
+     "kind": "tribe_wild",
+     "label": "team"
+    },
+    {
+     "kind": "value",
+     "label": "marker"
+    },
+    {
+     "kind": "value",
+     "label": "radius"
+    },
+    {
+     "kind": "var",
+     "label": "var"
+    }
+   ],
+   "set": 4,
+   "expr": "COUNT_PEOPLE_IN_MARKER({1}, {2}, {3})",
+   "status": "yes"
+  },
+  {
+   "token": 1069,
+   "name": "SET_DRUM_TOWER_POS",
+   "alacn": "SET_DRUM_TOWER_POS",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    }
+   ],
+   "call": "SET_DRUM_TOWER_POS({me}, {1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1073,
+   "name": "CONVERT_AT_MARKER",
+   "alacn": "CONVERT_AT_MARKER",
+   "params": [
+    {
+     "kind": "value",
+     "label": "marker"
+    }
+   ],
+   "call": "CONVERT_AT_MARKER({me}, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1074,
+   "name": "PREACH_AT_MARKER",
+   "alacn": "PREACH_AT_MARKER",
+   "params": [
+    {
+     "kind": "value",
+     "label": "marker"
+    }
+   ],
+   "call": "PREACH_AT_MARKER({me}, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1075,
+   "name": "SEND_GHOST_PEOPLE",
+   "alacn": "SEND_GHOST_PEOPLE",
+   "params": [
+    {
+     "kind": "value",
+     "label": "num"
+    }
+   ],
+   "call": "SEND_GHOST_PEOPLE({me}, {1}, 0)",
+   "status": "yes"
+  },
+  {
+   "token": 1076,
+   "name": "GET_SPELLS_CAST",
+   "alacn": "GET_SPELLS_CAST",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "value",
+     "label": "spell"
+    },
+    {
+     "kind": "var",
+     "label": "var"
+    }
+   ],
+   "set": 3,
+   "expr": "GET_SPELLS_CAST({1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1077,
+   "name": "GET_NUM_ONE_OFF_SPELLS",
+   "alacn": "GET_NUM_ONE_OFF_SPELLS",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "value",
+     "label": "spell"
+    },
+    {
+     "kind": "var",
+     "label": "var"
+    }
+   ],
+   "set": 3,
+   "expr": "GET_NUM_ONE_OFF_SPELLS({1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1081,
+   "name": "SET_ATTACK_VARIABLE",
+   "alacn": "SET_ATTACK_VARIABLE",
+   "params": [
+    {
+     "kind": "var",
+     "label": "var"
+    }
+   ],
+   "special": "attack_var",
+   "status": "partial"
+  },
+  {
+   "token": 1082,
+   "name": "BUILD_DRUM_TOWER",
+   "alacn": "BUILD_DRUM_TOWER",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    }
+   ],
+   "call": "BUILD_DRUM_TOWER({me}, {1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1083,
+   "name": "GUARD_AT_MARKER",
+   "alacn": "GUARD_AT_MARKER",
+   "params": [
+    {
+     "kind": "value",
+     "label": "marker"
+    },
+    {
+     "kind": "value",
+     "label": "num braves"
+    },
+    {
+     "kind": "value",
+     "label": "num warriors"
+    },
+    {
+     "kind": "value",
+     "label": "num firewarriors"
+    },
+    {
+     "kind": "value",
+     "label": "num preachers"
+    },
+    {
+     "kind": "guard_type",
+     "label": "guard"
+    }
+   ],
+   "call": "GUARD_BETWEEN_MARKERS({me}, {1}, -1, {2}, {3}, {4}, {5}, {6})",
+   "status": "yes"
+  },
+  {
+   "token": 1084,
+   "name": "GUARD_BETWEEN_MARKERS",
+   "alacn": "GUARD_BETWEEN_MARKERS",
+   "params": [
+    {
+     "kind": "value",
+     "label": "marker"
+    },
+    {
+     "kind": "value",
+     "label": "marker 2"
+    },
+    {
+     "kind": "value",
+     "label": "num braves"
+    },
+    {
+     "kind": "value",
+     "label": "num warriors"
+    },
+    {
+     "kind": "value",
+     "label": "num firewarriors"
+    },
+    {
+     "kind": "value",
+     "label": "num preachers"
+    },
+    {
+     "kind": "guard_type",
+     "label": "guard"
+    }
+   ],
+   "call": "GUARD_BETWEEN_MARKERS({me}, {1}, {2}, {3}, {4}, {5}, {6}, {7})",
+   "status": "yes"
+  },
+  {
+   "token": 1085,
+   "name": "GET_HEIGHT_AT_POS",
+   "alacn": "GET_HEIGHT_AT_POS",
+   "params": [
+    {
+     "kind": "value",
+     "label": "marker"
+    },
+    {
+     "kind": "var",
+     "label": "var"
+    }
+   ],
+   "set": 2,
+   "expr": "GET_HEIGHT_AT_POS({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1086,
+   "name": "SEND_ALL_PEOPLE_TO_MARKER",
+   "alacn": "SEND_ALL_PEOPLE_TO_MARKER",
+   "params": [
+    {
+     "kind": "value",
+     "label": "marker"
+    }
+   ],
+   "call": "SEND_ALL_PEOPLE_TO_MARKER({me}, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1089,
+   "name": "RESET_CONVERT_MARKER",
+   "alacn": "RESET_CONVERT_MARKER",
+   "params": [],
+   "special": "noop",
+   "why": "the interpreter ignores this command",
+   "status": "yes"
+  },
+  {
+   "token": 1090,
+   "name": "SET_CONVERT_MARKER",
+   "alacn": "SET_CONVERT_MARKER",
+   "params": [
+    {
+     "kind": "value",
+     "label": "marker"
+    }
+   ],
+   "special": "noop",
+   "why": "the interpreter evaluates the marker and ignores it",
+   "status": "yes"
+  },
+  {
+   "token": 1091,
+   "name": "SET_MARKER_ENTRY",
+   "alacn": "SET_MARKER_ENTRY",
+   "params": [
+    {
+     "kind": "value",
+     "label": "entry"
+    },
+    {
+     "kind": "value",
+     "label": "marker1"
+    },
+    {
+     "kind": "value",
+     "label": "marker2"
+    },
+    {
+     "kind": "value",
+     "label": "num braves"
+    },
+    {
+     "kind": "value",
+     "label": "num warriors"
+    },
+    {
+     "kind": "value",
+     "label": "num firewarriors"
+    },
+    {
+     "kind": "value",
+     "label": "num preachers"
+    }
+   ],
+   "call": "SET_MARKER_ENTRY({me}, {1}, {2}, {3}, {4}, {5}, {6}, {7})",
+   "status": "yes"
+  },
+  {
+   "token": 1092,
+   "name": "MARKER_ENTRIES",
+   "alacn": "MARKER_ENTRIES",
+   "params": [
+    {
+     "kind": "value",
+     "label": null
+    },
+    {
+     "kind": "value",
+     "label": null
+    },
+    {
+     "kind": "value",
+     "label": null
+    },
+    {
+     "kind": "value",
+     "label": null
+    }
+   ],
+   "call": "MARKER_ENTRIES({me}, {1}, {2}, {3}, {4})",
+   "status": "no"
+  },
+  {
+   "token": 1093,
+   "name": "CLEAR_GUARDING_FROM",
+   "alacn": "CLEAR_GUARDING_FROM",
+   "params": [
+    {
+     "kind": "value",
+     "label": "entry1"
+    },
+    {
+     "kind": "value",
+     "label": "entry2"
+    },
+    {
+     "kind": "value",
+     "label": "entry3"
+    },
+    {
+     "kind": "value",
+     "label": "entry4"
+    }
+   ],
+   "call": "CLEAR_GUARDING_FROM({me}, {1}, {2}, {3}, {4})",
+   "status": "yes"
+  },
+  {
+   "token": 1094,
+   "name": "SET_BUILDING_DIRECTION",
+   "alacn": "SET_BUILDING_DIRECTION",
+   "params": [
+    {
+     "kind": "value",
+     "label": "dir"
+    }
+   ],
+   "call": "SET_BUILDING_DIRECTION({me}, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1095,
+   "name": "TRAIN_PEOPLE_NOW",
+   "alacn": "TRAIN_PEOPLE_NOW",
+   "params": [
+    {
+     "kind": "value",
+     "label": "num"
+    },
+    {
+     "kind": "value",
+     "label": "model"
+    }
+   ],
+   "call": "TRAIN_PEOPLE_NOW({me}, {1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1096,
+   "name": "PRAY_AT_HEAD",
+   "alacn": "PRAY_AT_HEAD",
+   "params": [
+    {
+     "kind": "value",
+     "label": "num ppl"
+    },
+    {
+     "kind": "value",
+     "label": "marker"
+    }
+   ],
+   "call": "PRAY_AT_HEAD({me}, {1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1097,
+   "name": "PUT_PERSON_IN_DT",
+   "alacn": "PUT_PERSON_IN_DT",
+   "params": [
+    {
+     "kind": "value",
+     "label": "person type"
+    },
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    }
+   ],
+   "call": "PUT_PERSON_IN_DT({me}, {1}, {2}, {3})",
+   "status": "yes"
+  },
+  {
+   "token": 1098,
+   "name": "I_HAVE_ONE_SHOT",
+   "alacn": "I_HAVE_ONE_SHOT",
+   "params": [
+    {
+     "kind": "oneshot_type",
+     "label": "type"
+    },
+    {
+     "kind": "value",
+     "label": "model"
+    },
+    {
+     "kind": "var",
+     "label": "var"
+    }
+   ],
+   "set": 3,
+   "expr": "I_HAVE_ONE_SHOT({me}, {1}, {2})",
+   "norm": true,
+   "status": "yes"
+  },
+  {
+   "token": 1101,
+   "name": "BOAT_PATROL",
+   "alacn": "VEHICLE_PATROL",
+   "params": [
+    {
+     "kind": "value",
+     "label": "num ppl"
+    },
+    {
+     "kind": "value",
+     "label": "marker1"
+    },
+    {
+     "kind": "value",
+     "label": "marker2"
+    },
+    {
+     "kind": "value",
+     "label": "marker3"
+    },
+    {
+     "kind": "value",
+     "label": "marker4"
+    },
+    {
+     "kind": "vehicle_type",
+     "label": "vehicle type"
+    }
+   ],
+   "call": "VEHICLE_PATROL({me}, {1}, {2}, {3}, {4}, {5}, {6})",
+   "status": "yes"
+  },
+  {
+   "token": 1102,
+   "name": "DEFEND_SHAMEN",
+   "alacn": "DEFEND_SHAMEN",
+   "params": [
+    {
+     "kind": "value",
+     "label": "num ppl"
+    }
+   ],
+   "call": "DEFEND_SHAMEN({me}, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1103,
+   "name": "SEND_SHAMEN_DEFENDERS_HOME",
+   "alacn": "SEND_SHAMEN_DEFENDERS_HOME",
+   "params": [],
+   "call": "SEND_SHAMEN_DEFENDERS_HOME({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1106,
+   "name": "IS_BUILDING_NEAR",
+   "alacn": "IS_BUILDING_NEAR",
+   "params": [
+    {
+     "kind": "value",
+     "label": "building model"
+    },
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "value",
+     "label": "radius"
+    },
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 6,
+   "expr": "IS_BUILDING_NEAR({4}, {1}, {2}, {3}, {5})",
+   "status": "yes"
+  },
+  {
+   "token": 1107,
+   "name": "BUILD_AT",
+   "alacn": "BUILD_AT",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "building model"
+    },
+    {
+     "kind": "value",
+     "label": "settlement number"
+    }
+   ],
+   "call": "computer_build_at_xz(getPlayer({me}), {1}, {2}, {3})",
+   "ignored": [
+    4
+   ],
+   "status": "yes"
+  },
+  {
+   "token": 1108,
+   "name": "SET_SPELL_ENTRY",
+   "alacn": "SET_SPELL_ENTRY",
+   "params": [
+    {
+     "kind": "value",
+     "label": "entry"
+    },
+    {
+     "kind": "value",
+     "label": "spell"
+    },
+    {
+     "kind": "value",
+     "label": "mini mana"
+    },
+    {
+     "kind": "value",
+     "label": "frequency"
+    },
+    {
+     "kind": "value",
+     "label": "min ppl"
+    },
+    {
+     "kind": "value",
+     "label": "base spell"
+    }
+   ],
+   "call": "SET_SPELL_ENTRY({me}, {1}, {2}, {3}, {4}, {5}, {6})",
+   "status": "yes"
+  },
+  {
+   "token": 1109,
+   "name": "DELAY_MAIN_DRUM_TOWER",
+   "alacn": "DELAY_MAIN_DRUM_TOWER",
+   "params": [],
+   "call": "DELAY_MAIN_DRUM_TOWER(ON, {me})",
+   "status": "yes"
+  },
+  {
+   "token": 1110,
+   "name": "BUILD_MAIN_DRUM_TOWER",
+   "alacn": "BUILD_MAIN_DRUM_TOWER",
+   "params": [],
+   "call": "DELAY_MAIN_DRUM_TOWER(OFF, {me})",
+   "status": "yes"
+  },
+  {
+   "token": 1111,
+   "name": "ZOOM_TO",
+   "alacn": "ZOOM_TO",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "y"
+    },
+    {
+     "kind": "value",
+     "label": "angle"
+    }
+   ],
+   "call": "ZOOM_TO({1}, {2}, {3})",
+   "status": "partial"
+  },
+  {
+   "token": 1112,
+   "name": "DISABLE_USER_INPUTS",
+   "alacn": "DISABLE_USER_INPUTS",
+   "params": [],
+   "call": "DISABLE_USER_INPUTS()",
+   "status": "partial"
+  },
+  {
+   "token": 1113,
+   "name": "ENABLE_USER_INPUTS",
+   "alacn": "ENABLE_USER_INPUTS",
+   "params": [],
+   "call": "ENABLE_USER_INPUTS()",
+   "status": "partial"
+  },
+  {
+   "token": 1114,
+   "name": "OPEN_DIALOG",
+   "alacn": "OPEN_DIALOG",
+   "params": [
+    {
+     "kind": "value",
+     "label": "index"
+    }
+   ],
+   "call": "OPEN_DIALOG({1})",
+   "status": "partial"
+  },
+  {
+   "token": 1115,
+   "name": "GIVE_ONE_SHOT",
+   "alacn": "GIVE_ONE_SHOT",
+   "params": [
+    {
+     "kind": "value",
+     "label": "spell"
+    },
+    {
+     "kind": "tribe",
+     "label": "team"
+    }
+   ],
+   "call": "GIVE_ONE_SHOT({1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1116,
+   "name": "CLEAR_STANDING_PEOPLE",
+   "alacn": "CLEAR_STANDING_PEOPLE",
+   "params": [],
+   "call": "CLEAR_STANDING_PEOPLE({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1117,
+   "name": "ONLY_STAND_AT_MARKERS",
+   "alacn": "ONLY_STAND_AT_MARKERS",
+   "params": [],
+   "call": "ONLY_STAND_AT_MARKERS({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1122,
+   "name": "NAV_CHECK",
+   "alacn": "NAV_CHECK",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "target_type",
+     "label": "type"
+    },
+    {
+     "kind": "value",
+     "label": "model"
+    },
+    {
+     "kind": "value",
+     "label": "remember"
+    },
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 5,
+   "expr": "NAV_CHECK({me}, {1}, {2}, {3}, {4})",
+   "status": "yes"
+  },
+  {
+   "token": 1123,
+   "name": "TARGET_S_WARRIORS",
+   "alacn": "TARGET_FIREWARRIORS",
+   "params": [],
+   "call": "TARGET_S_WARRIORS({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1124,
+   "name": "DONT_TARGET_S_WARRIORS",
+   "alacn": "DONT_TARGET_FIREWARRIORS",
+   "params": [],
+   "call": "DONT_TARGET_S_WARRIORS({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1125,
+   "name": "TARGET_BLUE_SHAMAN",
+   "alacn": "TARGET_BLUE_SHAMAN",
+   "params": [],
+   "call": "TARGET_SHAMAN({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1126,
+   "name": "DONT_TARGET_BLUE_SHAMAN",
+   "alacn": "DONT_TARGET_BLUE_SHAMAN",
+   "params": [],
+   "call": "DONT_TARGET_SHAMAN({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1127,
+   "name": "TARGET_BLUE_DRUM_TOWERS",
+   "alacn": "TARGET_BLUE_DRUM_TOWERS",
+   "params": [],
+   "call": "TARGET_DRUM_TOWERS({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1128,
+   "name": "DONT_TARGET_BLUE_DRUM_TOWERS",
+   "alacn": "DONT_TARGET_BLUE_DRUM_TOWERS",
+   "params": [],
+   "call": "DONT_TARGET_DRUM_TOWERS({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1129,
+   "name": "OH_LOOK_BLUE_HAS_JUST_KILLED_HIS_FIRST_GHOST",
+   "alacn": "HAS_BLUE_KILLED_A_GHOST",
+   "params": [
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 1,
+   "expr": "OH_LOOK_PLAYER_HAS_JUST_KILLED_HIS_FIRST_GHOST(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1130,
+   "name": "COUNT_GUARD_POSTS",
+   "alacn": "COUNT_GUARD_FIRES",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "rad"
+    },
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 4,
+   "expr": "COUNT_GUARD_POSTS({1}, {2}, {3})",
+   "status": "yes"
+  },
+  {
+   "token": 1131,
+   "name": "GET_HEAD_TRIGGER_COUNT",
+   "alacn": "GET_HEAD_TRIGGER_COUNT",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 3,
+   "expr": "GET_HEAD_TRIGGER_COUNT({1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1132,
+   "name": "MOVE_SHAMAN_TO_MARKER",
+   "alacn": "MOVE_SHAMAN_TO_MARKER",
+   "params": [
+    {
+     "kind": "value",
+     "label": "marker"
+    }
+   ],
+   "call": "MOVE_SHAMAN_TO_MARKER(TRIBE_BLUE, {1})",
+   "status": "partial"
+  },
+  {
+   "token": 1133,
+   "name": "TRACK_SHAMAN_TO_ANGLE",
+   "alacn": "TRACK_SHAMAN_TO_ANGLE",
+   "params": [
+    {
+     "kind": "value",
+     "label": "angle"
+    }
+   ],
+   "call": "TRACK_SHAMAN_TO_ANGLE(TRIBE_BLUE, {1})",
+   "status": "no"
+  },
+  {
+   "token": 1134,
+   "name": "TRACK_SHAMAN_EXTRA_BOLLOCKS",
+   "alacn": "TRACK_SHAMAN_EXTRA_BOLLOCKS",
+   "params": [
+    {
+     "kind": "value",
+     "label": "angle"
+    }
+   ],
+   "call": "TRACK_SHAMAN_EXTRA_BOLLOCKS(TRIBE_BLUE, {1})",
+   "status": "partial"
+  },
+  {
+   "token": 1135,
+   "name": "IS_SHAMAN_AVAILABLE_FOR_ATTACK",
+   "alacn": "IS_SHAMAN_AVAILABLE_FOR_ATTACK",
+   "params": [
+    {
+     "kind": "var",
+     "label": "var"
+    }
+   ],
+   "set": 1,
+   "expr": "IS_SHAMAN_AVAILABLE_FOR_ATTACK({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1136,
+   "name": "PARTIAL_BUILDING_COUNT",
+   "alacn": "PARTIAL_BUILDING_COUNT",
+   "params": [],
+   "call": "PARTIAL_BUILDING_COUNT({me})",
+   "flag": "partial_count",
+   "status": "partial"
+  },
+  {
+   "token": 1137,
+   "name": "SEND_BLUE_PEOPLE_TO_MARKER",
+   "alacn": "SEND_BLUE_PEOPLE_TO_MARKER",
+   "params": [
+    {
+     "kind": "value",
+     "label": "marker"
+    }
+   ],
+   "call": "SEND_PEOPLE_TO_MARKER(TRIBE_BLUE, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1138,
+   "name": "GIVE_MANA_TO_PLAYER",
+   "alacn": "GIVE_MANA_TO_PLAYER",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "value",
+     "label": "mana"
+    }
+   ],
+   "call": "GIVE_MANA_TO_PLAYER({1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1139,
+   "name": "IS_PLAYER_IN_WORLD_VIEW",
+   "alacn": "IS_PLAYER_IN_WORLD_VIEW",
+   "params": [
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 1,
+   "expr": "IS_PLAYER_IN_WORLD_VIEW()",
+   "norm": true,
+   "status": "partial"
+  },
+  {
+   "token": 1140,
+   "name": "SET_AUTO_BUILD",
+   "alacn": "SET_AUTO_BUILD",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "SET_AUTO_BUILD({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1141,
+   "name": "DESELECT_ALL_BLUE_PEOPLE",
+   "alacn": "DESELECT_ALL_BLUE_PEOPLE",
+   "params": [],
+   "call": "DESELECT_ALL_PEOPLE(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1142,
+   "name": "FLASH_BUTTON",
+   "alacn": "FLASH_BUTTON",
+   "params": [
+    {
+     "kind": "value",
+     "label": "id"
+    },
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "FLASH_BUTTON({1}, {2})",
+   "status": "partial"
+  },
+  {
+   "token": 1143,
+   "name": "TURN_PANEL_ON",
+   "alacn": "TURN_PANEL_ON",
+   "params": [
+    {
+     "kind": "value",
+     "label": "id"
+    }
+   ],
+   "call": "TURN_PANEL_ON({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1144,
+   "name": "GIVE_PLAYER_SPELL",
+   "alacn": "GIVE_PLAYER_SPELL",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "value",
+     "label": "spell"
+    }
+   ],
+   "special": "give",
+   "status": "yes"
+  },
+  {
+   "token": 1145,
+   "name": "HAS_PLAYER_BEEN_IN_ENCYC",
+   "alacn": "HAS_PLAYER_BEEN_IN_ENCYC",
+   "params": [
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 1,
+   "expr": "HAS_PLAYER_BEEN_IN_ENCYC(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1146,
+   "name": "IS_BLUE_SHAMAN_SELECTED",
+   "alacn": "IS_BLUE_SHAMAN_SELECTED",
+   "params": [
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 1,
+   "expr": "IS_SHAMAN_SELECTED(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1147,
+   "name": "CLEAR_SHAMAN_LEFT_CLICK",
+   "alacn": "CLEAR_SHAMAN_LEFT_CLICK",
+   "params": [],
+   "call": "CLEAR_SHAMAN_LEFT_CLICK(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1148,
+   "name": "CLEAR_SHAMAN_RIGHT_CLICK",
+   "alacn": "CLEAR_SHAMAN_RIGHT_CLICK",
+   "params": [],
+   "call": "CLEAR_SHAMAN_RIGHT_CLICK(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1149,
+   "name": "IS_SHAMAN_ICON_LEFT_CLICKED",
+   "alacn": "IS_SHAMAN_ICON_LEFT_CLICKED",
+   "params": [
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 1,
+   "expr": "IS_SHAMAN_ICON_LEFT_CLICKED(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1150,
+   "name": "IS_SHAMAN_ICON_RIGHT_CLICKED",
+   "alacn": "IS_SHAMAN_ICON_RIGHT_CLICKED",
+   "params": [
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 1,
+   "expr": "IS_SHAMAN_ICON_RIGHT_CLICKED(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1151,
+   "name": "TRIGGER_THING",
+   "alacn": "TRIGGER_THING",
+   "params": [
+    {
+     "kind": "value",
+     "label": "idx"
+    }
+   ],
+   "call": "TRIGGER_THING({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1152,
+   "name": "TRACK_TO_MARKER",
+   "alacn": "TRACK_TO_MARKER",
+   "params": [
+    {
+     "kind": "value",
+     "label": "idx"
+    }
+   ],
+   "call": "TRACK_TO_MARKER({1})",
+   "status": "partial"
+  },
+  {
+   "token": 1153,
+   "name": "CAMERA_ROTATION",
+   "alacn": "CAMERA_ROTATION",
+   "params": [
+    {
+     "kind": "value",
+     "label": "angle"
+    }
+   ],
+   "call": "CAMERA_ROTATION({me}, {1})",
+   "status": "partial"
+  },
+  {
+   "token": 1154,
+   "name": "STOP_CAMERA_ROTATION",
+   "alacn": "STOP_CAMERA_ROTATION",
+   "params": [],
+   "call": "STOP_CAMERA_ROTATION()",
+   "status": "partial"
+  },
+  {
+   "token": 1155,
+   "name": "COUNT_BLUE_SHAPES",
+   "alacn": "COUNT_BLUE_SHAPES",
+   "params": [
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 1,
+   "expr": "COUNT_SHAPES(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1156,
+   "name": "COUNT_BLUE_IN_HOUSES",
+   "alacn": "COUNT_BLUE_IN_HOUSES",
+   "params": [
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 1,
+   "expr": "COUNT_PEOPLE_IN_HOUSES(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1157,
+   "name": "HAS_HOUSE_INFO_BEEN_SHOWN",
+   "alacn": "HAS_HOUSE_INFO_BEEN_SHOWN",
+   "params": [
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 1,
+   "expr": "HAS_HOUSE_INFO_BEEN_SHOWN(TRIBE_BLUE)",
+   "norm": true,
+   "status": "partial"
+  },
+  {
+   "token": 1158,
+   "name": "CLEAR_HOUSE_INFO_FLAG",
+   "alacn": "CLEAR_HOUSE_INFO_FLAG",
+   "params": [],
+   "call": "CLEAR_HOUSE_INFO_FLAG(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1159,
+   "name": "SET_AUTO_HOUSE",
+   "alacn": "SET_AUTO_HOUSE",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "SET_AUTO_HOUSE({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1160,
+   "name": "COUNT_BLUE_WITH_BUILD_COMMAND",
+   "alacn": "COUNT_BLUE_WITH_BUILD_COMMAND",
+   "params": [
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 1,
+   "expr": "COUNT_WITH_BUILD_COMMAND(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1161,
+   "name": "DONT_HOUSE_SPECIALISTS",
+   "alacn": "DONT_HOUSE_SPECIALISTS",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "DONT_HOUSE_SPECIALISTS({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1162,
+   "name": "TARGET_PLAYER_DT_AND_S",
+   "alacn": "TARGET_PLAYER_DT_AND_S",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    }
+   ],
+   "call": "TARGET_PLAYER_DT_AND_S({me}, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1163,
+   "name": "REMOVE_PLAYER_THING",
+   "alacn": "REMOVE_PLAYER_THING",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "value",
+     "label": "spell"
+    }
+   ],
+   "special": "remove",
+   "status": "yes"
+  },
+  {
+   "token": 1164,
+   "name": "SET_REINCARNATION",
+   "alacn": "SET_REINCARNATION",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "SET_REINCARNATION({1}, {me})",
+   "status": "yes"
+  },
+  {
+   "token": 1165,
+   "name": "EXTRA_WOOD_COLLECTION",
+   "alacn": "EXTRA_WOOD_COLLECTION",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "EXTRA_WOOD_COLLECTION({1}, {me})",
+   "status": "yes"
+  },
+  {
+   "token": 1166,
+   "name": "SET_WOOD_COLLECTION_RADII",
+   "alacn": "SET_WOOD_COLLECTION_RADII",
+   "params": [
+    {
+     "kind": "value",
+     "label": "min"
+    },
+    {
+     "kind": "value",
+     "label": "max"
+    },
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    }
+   ],
+   "call": "SET_WOOD_COLLECTION_RADII({me}, {1}, {2}, {3}, {4})",
+   "status": "yes"
+  },
+  {
+   "token": 1167,
+   "name": "GET_NUM_PEOPLE_CONVERTED",
+   "alacn": "GET_NUM_PEOPLE_CONVERTED",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 2,
+   "expr": "GET_NUM_PEOPLE_CONVERTED({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1168,
+   "name": "GET_NUM_PEOPLE_BEING_PREACHED",
+   "alacn": "GET_NUM_PEOPLE_BEING_PREACHED",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 2,
+   "expr": "GET_NUM_PEOPLE_BEING_PREACHED({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1169,
+   "name": "TRIGGER_LEVEL_LOST",
+   "alacn": "TRIGGER_LEVEL_LOST",
+   "params": [],
+   "call": "TRIGGER_LEVEL_LOST()",
+   "status": "yes"
+  },
+  {
+   "token": 1170,
+   "name": "TRIGGER_LEVEL_WON",
+   "alacn": "TRIGGER_LEVEL_WON",
+   "params": [],
+   "call": "TRIGGER_LEVEL_WON()",
+   "status": "yes"
+  },
+  {
+   "token": 1171,
+   "name": "REMOVE_HEAD_AT_POS",
+   "alacn": "REMOVE_HEAD_AT_POS",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    }
+   ],
+   "call": "REMOVE_HEAD_AT_POS({1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1172,
+   "name": "SET_BUCKET_USAGE",
+   "alacn": "SET_BUCKET_USAGE",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "SET_BUCKET_USAGE({me}, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1173,
+   "name": "SET_BUCKET_COUNT_FOR_SPELL",
+   "alacn": "SET_BUCKET_COUNT_FOR_SPELL",
+   "params": [
+    {
+     "kind": "value",
+     "label": "spell"
+    },
+    {
+     "kind": "value",
+     "label": "mult"
+    }
+   ],
+   "call": "SET_BUCKET_COUNT_FOR_SPELL({me}, {1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1174,
+   "name": "CREATE_MSG_NARRATIVE",
+   "alacn": "CREATE_MSG_NARRATIVE",
+   "params": [
+    {
+     "kind": "value",
+     "label": null
+    }
+   ],
+   "call": "CREATE_MSG_NARRATIVE({1})",
+   "status": "partial"
+  },
+  {
+   "token": 1175,
+   "name": "CREATE_MSG_OBJECTIVE",
+   "alacn": "CREATE_MSG_OBJECTIVE",
+   "params": [
+    {
+     "kind": "value",
+     "label": null
+    }
+   ],
+   "call": "CREATE_MSG_OBJECTIVE({1})",
+   "status": "partial"
+  },
+  {
+   "token": 1176,
+   "name": "CREATE_MSG_INFORMATION",
+   "alacn": "CREATE_MSG_INFORMATION",
+   "params": [
+    {
+     "kind": "value",
+     "label": null
+    }
+   ],
+   "call": "CREATE_MSG_INFORMATION({1})",
+   "status": "partial"
+  },
+  {
+   "token": 1177,
+   "name": "CREATE_MSG_INFORMATION_ZOOM",
+   "alacn": "CREATE_MSG_INFORMATION_ZOOM",
+   "params": [
+    {
+     "kind": "value",
+     "label": "idx"
+    },
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "angle"
+    }
+   ],
+   "call": "CREATE_MSG_INFORMATION_ZOOM({1}, {2}, {3}, {4})",
+   "status": "partial"
+  },
+  {
+   "token": 1178,
+   "name": "SET_MSG_ZOOM",
+   "alacn": "SET_MSG_ZOOM",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "angle"
+    }
+   ],
+   "call": "SET_MSG_ZOOM({1}, {2}, {3})",
+   "status": "partial"
+  },
+  {
+   "token": 1179,
+   "name": "SET_MSG_TIMEOUT",
+   "alacn": "SET_MSG_TIMEOUT",
+   "params": [
+    {
+     "kind": "value",
+     "label": null
+    }
+   ],
+   "call": "SET_MSG_TIMEOUT({1})",
+   "status": "partial"
+  },
+  {
+   "token": 1180,
+   "name": "SET_MSG_DELETE_ON_OK",
+   "alacn": "SET_MSG_DELETE_ON_OK",
+   "params": [],
+   "call": "SET_MSG_DELETE_ON_OK()",
+   "status": "partial"
+  },
+  {
+   "token": 1181,
+   "name": "SET_MSG_RETURN_ON_OK",
+   "alacn": "SET_MSG_RETURN_ON_OK",
+   "params": [],
+   "call": "SET_MSG_RETURN_ON_OK()",
+   "status": "partial"
+  },
+  {
+   "token": 1182,
+   "name": "SET_MSG_DELETE_ON_RMB_ZOOM",
+   "alacn": "SET_MSG_DELETE_ON_RMB_ZOOM",
+   "params": [],
+   "call": "SET_MSG_DELETE_ON_RMB_ZOOM()",
+   "status": "partial"
+  },
+  {
+   "token": 1183,
+   "name": "SET_MSG_OPEN_DLG_ON_RMB_ZOOM",
+   "alacn": "SET_MSG_OPEN_DLG_ON_RMB_ZOOM",
+   "params": [],
+   "call": "SET_MSG_OPEN_DLG_ON_RMB_ZOOM()",
+   "status": "partial"
+  },
+  {
+   "token": 1184,
+   "name": "SET_MSG_CREATE_RETURN_MSG_ON_RMB_ZOOM",
+   "alacn": "SET_MSG_CREATE_RETURN_MSG_ON_RMB_ZOOM",
+   "params": [],
+   "call": "SET_MSG_CREATE_RETURN_MSG_ON_RMB_ZOOM()",
+   "status": "partial"
+  },
+  {
+   "token": 1185,
+   "name": "SET_MSG_OPEN_DLG_ON_RMB_DELETE",
+   "alacn": "SET_MSG_OPEN_DLG_ON_RMB_DELETE",
+   "params": [],
+   "call": "SET_MSG_OPEN_DLG_ON_RMB_DELETE()",
+   "status": "partial"
+  },
+  {
+   "token": 1186,
+   "name": "SET_MSG_ZOOM_ON_LMB_OPEN_DLG",
+   "alacn": "SET_MSG_ZOOM_ON_LMB_OPEN_DLG",
+   "params": [],
+   "call": "SET_MSG_ZOOM_ON_LMB_OPEN_DLG()",
+   "status": "partial"
+  },
+  {
+   "token": 1187,
+   "name": "SET_MSG_AUTO_OPEN_DLG",
+   "alacn": "SET_MSG_AUTO_OPEN_DLG",
+   "params": [],
+   "call": "SET_MSG_AUTO_OPEN_DLG()",
+   "status": "partial"
+  },
+  {
+   "token": 1188,
+   "name": "SET_SPECIAL_NO_BLDG_PANEL",
+   "alacn": "SET_SPECIAL_NO_BLDG_PANEL",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "SET_SPECIAL_NO_BLDG_PANEL({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1189,
+   "name": "SET_MSG_OK_SAVE_EXIT_DLG",
+   "alacn": "SET_MSG_OK_SAVE_EXIT_DLG",
+   "params": [],
+   "call": "SET_MSG_OK_SAVE_EXIT_DLG()",
+   "status": "partial"
+  },
+  {
+   "token": 1190,
+   "name": "FIX_WILD_IN_AREA",
+   "alacn": "FIX_WILD_IN_AREA",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "rad"
+    }
+   ],
+   "call": "FIX_WILD_IN_AREA({1}, {2}, {3})",
+   "status": "yes"
+  },
+  {
+   "token": 1191,
+   "name": "CHECK_IF_PERSON_PREACHED_TO",
+   "alacn": "CHECK_IF_PERSON_PREACHED_TO",
+   "params": [
+    {
+     "kind": "var",
+     "label": null
+    },
+    {
+     "kind": "var",
+     "label": null
+    },
+    {
+     "kind": "var",
+     "label": null
+    }
+   ],
+   "special": "preached",
+   "status": "partial"
+  },
+  {
+   "token": 1192,
+   "name": "COUNT_ANGELS",
+   "alacn": "COUNT_ANGELS",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 2,
+   "expr": "COUNT_ANGELS({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1193,
+   "name": "SET_NO_BLUE_REINC",
+   "alacn": "SET_NO_BLUE_REINC",
+   "params": [],
+   "call": "SET_NO_REINC(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1194,
+   "name": "IS_SHAMAN_IN_AREA",
+   "alacn": "IS_SHAMAN_IN_AREA",
+   "params": [
+    {
+     "kind": "tribe",
+     "label": "team"
+    },
+    {
+     "kind": "value",
+     "label": "marker"
+    },
+    {
+     "kind": "value",
+     "label": "radius"
+    },
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 4,
+   "expr": "IS_SHAMAN_IN_AREA({1}, {2}, {3})",
+   "status": "partial"
+  },
+  {
+   "token": 1195,
+   "name": "FORCE_TOOLTIP",
+   "alacn": "FORCE_TOOLTIP",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "head / building"
+    },
+    {
+     "kind": "value",
+     "label": "duration"
+    }
+   ],
+   "call": "FORCE_TOOLTIP({1}, {2}, {tooltip:3}, {4})",
+   "status": "partial"
+  },
+  {
+   "token": 1196,
+   "name": "SET_DEFENCE_RADIUS",
+   "alacn": "SET_DEFENCE_RADIUS",
+   "params": [
+    {
+     "kind": "value",
+     "label": "rad"
+    }
+   ],
+   "call": "SET_DEFENCE_RADIUS({me}, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1197,
+   "name": "MARVELLOUS_HOUSE_DEATH",
+   "alacn": "MARVELLOUS_HOUSE_DEATH",
+   "params": [],
+   "call": "MARVELLOUS_HOUSE_DEATH({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1198,
+   "name": "CALL_TO_ARMS",
+   "alacn": "CALL_TO_ARMS",
+   "params": [],
+   "call": "CALL_TO_ARMS({me})",
+   "status": "yes"
+  },
+  {
+   "token": 1199,
+   "name": "DELETE_SMOKE_STUFF",
+   "alacn": "DELETE_SMOKE_STUFF",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "rad"
+    }
+   ],
+   "call": "DELETE_SMOKE_STUFF({1}, {2}, {3})",
+   "status": "yes"
+  },
+  {
+   "token": 1200,
+   "name": "SET_TIMER_GOING",
+   "alacn": "SET_TIMER_GOING",
+   "params": [
+    {
+     "kind": "value",
+     "label": "time"
+    }
+   ],
+   "call": "SET_TIMER_GOING({seconds:1}, 1)",
+   "status": "partial"
+  },
+  {
+   "token": 1201,
+   "name": "REMOVE_TIMER",
+   "alacn": "REMOVE_TIMER",
+   "params": [],
+   "call": "REMOVE_TIMER()",
+   "status": "yes"
+  },
+  {
+   "token": 1202,
+   "name": "HAS_TIMER_REACHED_ZERO",
+   "alacn": "HAS_TIMER_REACHED_ZERO",
+   "params": [
+    {
+     "kind": "var",
+     "label": "user var"
+    }
+   ],
+   "set": 1,
+   "expr": "HAS_TIMER_REACHED_ZERO()",
+   "norm": true,
+   "status": "yes"
+  },
+  {
+   "token": 1203,
+   "name": "START_REINC_NOW",
+   "alacn": "START_REINC_NOW",
+   "params": [],
+   "call": "START_REINC_NOW(TRIBE_BLUE)",
+   "status": "yes"
+  },
+  {
+   "token": 1204,
+   "name": "TURN_PUSH",
+   "alacn": "TURN_PUSH",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "TURN_PUSH({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1205,
+   "name": "FLYBY_CREATE_NEW",
+   "alacn": "FLYBY_CREATE_NEW",
+   "params": [],
+   "call": "FLYBY_CREATE_NEW()",
+   "status": "yes"
+  },
+  {
+   "token": 1206,
+   "name": "FLYBY_START",
+   "alacn": "FLYBY_START",
+   "params": [],
+   "call": "FLYBY_START()",
+   "status": "yes"
+  },
+  {
+   "token": 1207,
+   "name": "FLYBY_STOP",
+   "alacn": "FLYBY_STOP",
+   "params": [],
+   "call": "FLYBY_STOP()",
+   "status": "yes"
+  },
+  {
+   "token": 1208,
+   "name": "FLYBY_ALLOW_INTERRUPT",
+   "alacn": "FLYBY_ALLOW_INTERRUPT",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "FLYBY_ALLOW_INTERRUPT({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1209,
+   "name": "FLYBY_SET_EVENT_POS",
+   "alacn": "FLYBY_SET_EVENT_POS",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "angle"
+    },
+    {
+     "kind": "value",
+     "label": "duration"
+    }
+   ],
+   "call": "FLYBY_SET_EVENT_POS({1}, {2}, {3}, {4})",
+   "status": "yes"
+  },
+  {
+   "token": 1210,
+   "name": "FLYBY_SET_EVENT_ANGLE",
+   "alacn": "FLYBY_SET_EVENT_ANGLE",
+   "params": [
+    {
+     "kind": "value",
+     "label": "angle"
+    },
+    {
+     "kind": "value",
+     "label": "angle"
+    },
+    {
+     "kind": "value",
+     "label": "duration"
+    }
+   ],
+   "call": "FLYBY_SET_EVENT_ANGLE({1}, {2}, {3})",
+   "status": "yes"
+  },
+  {
+   "token": 1211,
+   "name": "FLYBY_SET_EVENT_ZOOM",
+   "alacn": "FLYBY_SET_EVENT_ZOOM",
+   "params": [
+    {
+     "kind": "value",
+     "label": "zoom"
+    },
+    {
+     "kind": "value",
+     "label": "angle"
+    },
+    {
+     "kind": "value",
+     "label": "duration"
+    }
+   ],
+   "call": "FLYBY_SET_EVENT_ZOOM({1}, {2}, {3})",
+   "status": "yes"
+  },
+  {
+   "token": 1212,
+   "name": "FLYBY_SET_EVENT_INT_POINT",
+   "alacn": "FLYBY_SET_EVENT_INT_POINT",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "angle"
+    },
+    {
+     "kind": "value",
+     "label": "duration"
+    }
+   ],
+   "call": "FLYBY_SET_EVENT_INT_POINT({1}, {2}, {3}, {4})",
+   "status": "yes"
+  },
+  {
+   "token": 1213,
+   "name": "FLYBY_SET_EVENT_TOOLTIP",
+   "alacn": "FLYBY_SET_EVENT_TOOLTIP",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "code"
+    },
+    {
+     "kind": "value",
+     "label": "start"
+    },
+    {
+     "kind": "value",
+     "label": "duration"
+    }
+   ],
+   "call": "FLYBY_SET_EVENT_TOOLTIP({1}, {2}, {tooltip:3}, {4}, {5})",
+   "status": "partial"
+  },
+  {
+   "token": 1214,
+   "name": "FLYBY_SET_END_TARGET",
+   "alacn": "FLYBY_SET_END_TARGET",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "angle"
+    },
+    {
+     "kind": "value",
+     "label": "zoom"
+    }
+   ],
+   "call": "FLYBY_SET_END_TARGET({1}, {2}, {3}, {4})",
+   "status": "yes"
+  },
+  {
+   "token": 1215,
+   "name": "FLYBY_SET_MESSAGE",
+   "alacn": "FLYBY_SET_MESSAGE",
+   "params": [
+    {
+     "kind": "value",
+     "label": "idx"
+    },
+    {
+     "kind": "value",
+     "label": "start"
+    }
+   ],
+   "call": "FLYBY_OPEN_DIALOG({1}, {2})",
+   "status": "yes"
+  },
+  {
+   "token": 1216,
+   "name": "KILL_TEAM_IN_AREA",
+   "alacn": "KILL_TEAM_IN_AREA",
+   "params": [
+    {
+     "kind": "value",
+     "label": "x"
+    },
+    {
+     "kind": "value",
+     "label": "z"
+    },
+    {
+     "kind": "value",
+     "label": "rad"
+    }
+   ],
+   "call": "KILL_TEAM_IN_AREA({1}, {2}, {3})",
+   "status": "yes"
+  },
+  {
+   "token": 1217,
+   "name": "CLEAR_ALL_MSG",
+   "alacn": "CLEAR_ALL_MSG",
+   "params": [],
+   "call": "CLEAR_ALL_MSG()",
+   "status": "yes"
+  },
+  {
+   "token": 1218,
+   "name": "SET_MSG_ID",
+   "alacn": "SET_MSG_ID",
+   "params": [
+    {
+     "kind": "value",
+     "label": "id"
+    }
+   ],
+   "call": "SET_MSG_ID({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1219,
+   "name": "GET_MSG_ID",
+   "alacn": "GET_MSG_ID",
+   "params": [
+    {
+     "kind": "var",
+     "label": "id"
+    }
+   ],
+   "set": 1,
+   "expr": "GET_MSG_ID()",
+   "status": "yes"
+  },
+  {
+   "token": 1220,
+   "name": "KILL_ALL_MSG_ID",
+   "alacn": "KILL_ALL_MSG_ID",
+   "params": [
+    {
+     "kind": "value",
+     "label": "id"
+    }
+   ],
+   "call": "KILL_ALL_MSG_ID({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1221,
+   "name": "GIVE_UP_AND_SULK",
+   "alacn": "GIVE_UP_AND_SULK",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "GIVE_UP_AND_SULK({me}, {1})",
+   "status": "yes"
+  },
+  {
+   "token": 1222,
+   "name": "AUTO_MESSAGES",
+   "alacn": "AUTO_MESSAGES",
+   "params": [
+    {
+     "kind": "onoff",
+     "label": null
+    }
+   ],
+   "call": "AUTO_MESSAGES({1})",
+   "status": "yes"
+  },
+  {
+   "token": 1223,
+   "name": "IS_PRISON_ON_LEVEL",
+   "alacn": "IS_PRISON_ON_LEVEL",
+   "params": [
+    {
+     "kind": "var",
+     "label": "var"
+    }
+   ],
+   "set": 1,
+   "expr": "IS_PRISON_ON_LEVEL()",
+   "status": "yes"
+  }
+ ],
+ "internals": [
+  {
+   "name": "INT_GAME_TURN",
+   "index": 0,
+   "alacn": null,
+   "kind": "read",
+   "lua": "getTurn()"
+  },
+  {
+   "name": "INT_MY_NUM_PEOPLE",
+   "index": 1,
+   "alacn": null,
+   "kind": "read",
+   "lua": "GET_NUM_PEOPLE({me})"
+  },
+  {
+   "name": "INT_BLUE_PEOPLE",
+   "index": 2,
+   "alacn": null,
+   "kind": "read",
+   "lua": "GET_NUM_PEOPLE(TRIBE_BLUE)"
+  },
+  {
+   "name": "INT_RED_PEOPLE",
+   "index": 3,
+   "alacn": null,
+   "kind": "read",
+   "lua": "GET_NUM_PEOPLE(TRIBE_RED)"
+  },
+  {
+   "name": "INT_YELLOW_PEOPLE",
+   "index": 4,
+   "alacn": null,
+   "kind": "read",
+   "lua": "GET_NUM_PEOPLE(TRIBE_YELLOW)"
+  },
+  {
+   "name": "INT_GREEN_PEOPLE",
+   "index": 5,
+   "alacn": null,
+   "kind": "read",
+   "lua": "GET_NUM_PEOPLE(TRIBE_GREEN)"
+  },
+  {
+   "name": "INT_MY_NUM_KILLED_BY_HUMAN",
+   "index": 6,
+   "alacn": null,
+   "kind": "read",
+   "lua": "GET_INTERNAL_VARIABLE({me}, INT_MY_NUM_KILLED_BY_HUMAN)",
+   "exact_reader": true
+  },
+  {
+   "name": "INT_RED_KILLED_BY_HUMAN",
+   "index": 7,
+   "alacn": null,
+   "kind": "read",
+   "lua": "GET_INTERNAL_VARIABLE({me}, INT_RED_KILLED_BY_HUMAN)",
+   "exact_reader": true
+  },
+  {
+   "name": "INT_YELLOW_KILLED_BY_HUMAN",
+   "index": 8,
+   "alacn": null,
+   "kind": "read",
+   "lua": "GET_INTERNAL_VARIABLE({me}, INT_YELLOW_KILLED_BY_HUMAN)",
+   "exact_reader": true
+  },
+  {
+   "name": "INT_GREEN_KILLED_BY_HUMAN",
+   "index": 9,
+   "alacn": null,
+   "kind": "read",
+   "lua": "GET_INTERNAL_VARIABLE({me}, INT_GREEN_KILLED_BY_HUMAN)",
+   "exact_reader": true
+  },
+  {
+   "name": "INT_WILD_PEOPLE",
+   "index": 10,
+   "alacn": null,
+   "kind": "read",
+   "lua": "GET_INTERNAL_VARIABLE({me}, INT_WILD_PEOPLE)",
+   "exact_reader": true
+  },
+  {
+   "name": "INT_BLUE_MANA",
+   "index": 11,
+   "alacn": null,
+   "kind": "read",
+   "lua": "MANA(TRIBE_BLUE)"
+  },
+  {
+   "name": "INT_RED_MANA",
+   "index": 12,
+   "alacn": null,
+   "kind": "read",
+   "lua": "MANA(TRIBE_RED)"
+  },
+  {
+   "name": "INT_YELLOW_MANA",
+   "index": 13,
+   "alacn": null,
+   "kind": "read",
+   "lua": "MANA(TRIBE_YELLOW)"
+  },
+  {
+   "name": "INT_GREEN_MANA",
+   "index": 14,
+   "alacn": null,
+   "kind": "read",
+   "lua": "MANA(TRIBE_GREEN)"
+  },
+  {
+   "name": "INT_ATTR_EXPANSION",
+   "index": 1000,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_EXPANSION"
+  },
+  {
+   "name": "INT_ATTR_PREF_SPY_TRAINS",
+   "index": 1001,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PREF_SPY_TRAINS"
+  },
+  {
+   "name": "INT_ATTR_PREF_RELIGIOUS_TRAINS",
+   "index": 1002,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PREF_RELIGIOUS_TRAINS"
+  },
+  {
+   "name": "INT_ATTR_PREF_WARRIOR_TRAINS",
+   "index": 1003,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PREF_WARRIOR_TRAINS"
+  },
+  {
+   "name": "INT_ATTR_PREF_SUPER_WARRIOR_TRAINS",
+   "index": 1004,
+   "alacn": "INT_ATTR_PREF_FIREWARRIOR_TRAINS",
+   "kind": "attr",
+   "lua": "ATTR_PREF_SUPER_WARRIOR_TRAINS"
+  },
+  {
+   "name": "INT_ATTR_PREF_SPY_PEOPLE",
+   "index": 1005,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PREF_SPY_PEOPLE"
+  },
+  {
+   "name": "INT_ATTR_PREF_RELIGIOUS_PEOPLE",
+   "index": 1006,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PREF_RELIGIOUS_PEOPLE"
+  },
+  {
+   "name": "INT_ATTR_PREF_WARRIOR_PEOPLE",
+   "index": 1007,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PREF_WARRIOR_PEOPLE"
+  },
+  {
+   "name": "INT_ATTR_PREF_SUPER_WARRIOR_PEOPLE",
+   "index": 1008,
+   "alacn": "INT_ATTR_PREF_FIREWARRIOR_PEOPLE",
+   "kind": "attr",
+   "lua": "ATTR_PREF_SUPER_WARRIOR_PEOPLE"
+  },
+  {
+   "name": "INT_ATTR_MAX_BUILDINGS_ON_GO",
+   "index": 1009,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_MAX_BUILDINGS_ON_GO"
+  },
+  {
+   "name": "INT_ATTR_HOUSE_PERCENTAGE",
+   "index": 1010,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_HOUSE_PERCENTAGE"
+  },
+  {
+   "name": "INT_ATTR_AWAY_BRAVE",
+   "index": 1011,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_AWAY_BRAVE"
+  },
+  {
+   "name": "INT_ATTR_AWAY_WARRIOR",
+   "index": 1012,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_AWAY_WARRIOR"
+  },
+  {
+   "name": "INT_ATTR_AWAY_RELIGIOUS",
+   "index": 1013,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_AWAY_RELIGIOUS"
+  },
+  {
+   "name": "INT_ATTR_DEFENSE_RAD_INCR",
+   "index": 1014,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_DEFENSE_RAD_INCR"
+  },
+  {
+   "name": "INT_ATTR_MAX_DEFENSIVE_ACTIONS",
+   "index": 1015,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_MAX_DEFENSIVE_ACTIONS"
+  },
+  {
+   "name": "INT_ATTR_AWAY_SPY",
+   "index": 1016,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_AWAY_SPY"
+  },
+  {
+   "name": "INT_ATTR_AWAY_SUPER_WARRIOR",
+   "index": 1017,
+   "alacn": "INT_ATTR_AWAY_FIREWARRIOR",
+   "kind": "attr",
+   "lua": "ATTR_AWAY_SUPER_WARRIOR"
+  },
+  {
+   "name": "INT_ATTR_ATTACK_PERCENTAGE",
+   "index": 1018,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_ATTACK_PERCENTAGE"
+  },
+  {
+   "name": "INT_ATTR_AWAY_MEDICINE_MAN",
+   "index": 1019,
+   "alacn": "INT_ATTR_AWAY_SHAMAN",
+   "kind": "attr",
+   "lua": "ATTR_AWAY_MEDICINE_MAN"
+  },
+  {
+   "name": "INT_ATTR_PEOPLE_PER_BOAT",
+   "index": 1020,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PEOPLE_PER_BOAT"
+  },
+  {
+   "name": "INT_ATTR_PEOPLE_PER_BALLOON",
+   "index": 1021,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PEOPLE_PER_BALLOON"
+  },
+  {
+   "name": "INT_ATTR_DONT_USE_BOATS",
+   "index": 1022,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_DONT_USE_BOATS"
+  },
+  {
+   "name": "INT_ATTR_MAX_SPY_ATTACKS",
+   "index": 1023,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_MAX_SPY_ATTACKS"
+  },
+  {
+   "name": "INT_ATTR_ENEMY_SPY_MAX_STAND",
+   "index": 1024,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_ENEMY_SPY_MAX_STAND"
+  },
+  {
+   "name": "INT_ATTR_MAX_ATTACKS",
+   "index": 1025,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_MAX_ATTACKS"
+  },
+  {
+   "name": "INT_ATTR_EMPTY_AT_WAYPOINT",
+   "index": 1026,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_EMPTY_AT_WAYPOINT"
+  },
+  {
+   "name": "INT_ATTR_SPY_CHECK_FREQUENCY",
+   "index": 1027,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_SPY_CHECK_FREQUENCY"
+  },
+  {
+   "name": "INT_ATTR_RETREAT_VALUE",
+   "index": 1028,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_RETREAT_VALUE"
+  },
+  {
+   "name": "INT_ATTR_BASE_UNDER_ATTACK_RETREAT",
+   "index": 1029,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_BASE_UNDER_ATTACK_RETREAT"
+  },
+  {
+   "name": "INT_ATTR_RANDOM_BUILD_SIDE",
+   "index": 1030,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_RANDOM_BUILD_SIDE"
+  },
+  {
+   "name": "INT_ATTR_USE_PREACHER_FOR_DEFENCE",
+   "index": 1031,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_USE_PREACHER_FOR_DEFENCE"
+  },
+  {
+   "name": "INT_ATTR_SHAMEN_BLAST",
+   "index": 1032,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_SHAMEN_BLAST"
+  },
+  {
+   "name": "INT_ATTR_MAX_TRAIN_AT_ONCE",
+   "index": 1033,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_MAX_TRAIN_AT_ONCE"
+  },
+  {
+   "name": "INT_ATTR_GROUP_OPTION",
+   "index": 1034,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_GROUP_OPTION"
+  },
+  {
+   "name": "INT_ATTR_PREF_BOAT_HUTS",
+   "index": 1035,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PREF_BOAT_HUTS"
+  },
+  {
+   "name": "INT_ATTR_PREF_BALLOON_HUTS",
+   "index": 1036,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PREF_BALLOON_HUTS"
+  },
+  {
+   "name": "INT_ATTR_PREF_BOAT_DRIVERS",
+   "index": 1037,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PREF_BOAT_DRIVERS"
+  },
+  {
+   "name": "INT_ATTR_PREF_BALLOON_DRIVERS",
+   "index": 1038,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_PREF_BALLOON_DRIVERS"
+  },
+  {
+   "name": "INT_ATTR_FIGHT_STOP_DISTANCE",
+   "index": 1039,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_FIGHT_STOP_DISTANCE"
+  },
+  {
+   "name": "INT_ATTR_SPY_DISCOVER_CHANCE",
+   "index": 1040,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_SPY_DISCOVER_CHANCE"
+  },
+  {
+   "name": "INT_ATTR_COUNT_PREACH_DAMAGE",
+   "index": 1041,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_COUNT_PREACH_DAMAGE"
+  },
+  {
+   "name": "INT_ATTR_DONT_GROUP_AT_DT",
+   "index": 1042,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_DONT_GROUP_AT_DT"
+  },
+  {
+   "name": "INT_ATTR_SPELL_DELAY",
+   "index": 1043,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_SPELL_DELAY"
+  },
+  {
+   "name": "INT_ATTR_DONT_DELETE_USELESS_BOAT_HOUSE",
+   "index": 1044,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_DONT_DELETE_USELESS_BOAT_HOUSE"
+  },
+  {
+   "name": "INT_ATTR_BOAT_HOUSE_BROKEN",
+   "index": 1045,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_BOAT_HOUSE_BROKEN"
+  },
+  {
+   "name": "INT_ATTR_DONT_AUTO_TRAIN_PREACHERS",
+   "index": 1046,
+   "alacn": null,
+   "kind": "attr",
+   "lua": "ATTR_DONT_AUTO_TRAIN_PREACHERS"
+  },
+  {
+   "name": "INT_ATTR_SPARE_6",
+   "index": 1047,
+   "alacn": "INT_ATTR_SPARE",
+   "kind": "attr",
+   "lua": "ATTR_SPARE_6"
+  },
+  {
+   "name": "INT_MY_MANA",
+   "index": 1048,
+   "alacn": null,
+   "kind": "read",
+   "lua": "MANA({me})"
+  },
+  {
+   "name": "INT_M_SPELL_BURN_COST",
+   "index": 1049,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_BURN, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_BLAST_COST",
+   "index": 1050,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_BLAST, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_LIGHTNING_BOLT_COST",
+   "index": 1051,
+   "alacn": "INT_M_SPELL_LIGHTNING_COST",
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_LIGHTNING_BOLT, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_WHIRLWIND_COST",
+   "index": 1052,
+   "alacn": "INT_M_SPELL_TORNADO_COST",
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_WHIRLWIND, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_INSECT_PLAGUE_COST",
+   "index": 1053,
+   "alacn": "INT_M_SPELL_SWARM_COST",
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_INSECT_PLAGUE, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_INVISIBILITY_COST",
+   "index": 1054,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_INVISIBILITY, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_HYPNOTISM_COST",
+   "index": 1055,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_HYPNOTISM, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_FIRESTORM_COST",
+   "index": 1056,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_FIRESTORM, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_GHOST_ARMY_COST",
+   "index": 1057,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_GHOST_ARMY, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_EROSION_COST",
+   "index": 1058,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_EROSION, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_SWAMP_COST",
+   "index": 1059,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_SWAMP, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_LAND_BRIDGE_COST",
+   "index": 1060,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_LAND_BRIDGE, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_ANGEL_OF_DEATH_COST",
+   "index": 1061,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_ANGEL_OF_DEATH, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_EARTHQUAKE_COST",
+   "index": 1062,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_EARTHQUAKE, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_FLATTEN_COST",
+   "index": 1063,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_FLATTEN, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_VOLCANO_COST",
+   "index": 1064,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_VOLCANO, {me})"
+  },
+  {
+   "name": "INT_M_SPELL_WRATH_OF_GOD_COST",
+   "index": 1065,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_ARMAGEDDON, {me})"
+  },
+  {
+   "name": "INT_M_BUILDING_TEPEE",
+   "index": 1066,
+   "alacn": "INT_M_BUILDING_SMALL_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_TEPEE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_HUT",
+   "index": 1067,
+   "alacn": "INT_M_BUILDING_MEDIUM_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_HUT)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_FARM",
+   "index": 1068,
+   "alacn": "INT_M_BUILDING_LARGE_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_FARM)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_DRUM_TOWER",
+   "index": 1069,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_DRUM_TOWER)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_TEMPLE",
+   "index": 1070,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_TEMPLE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_SPY_TRAIN",
+   "index": 1071,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_SPY_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_WARRIOR_TRAIN",
+   "index": 1072,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_WARRIOR_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_SUPER_TRAIN",
+   "index": 1073,
+   "alacn": "INT_M_BUILDING_FIREWARRIOR_TRAIN",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_SUPER_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_RECONVERSION",
+   "index": 1074,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_RECONVERSION)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_WALL_PIECE",
+   "index": 1075,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_WALL_PIECE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_GATE",
+   "index": 1076,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_GATE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_CURR_OE_SLOT",
+   "index": 1077,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_CURR_OE_SLOT)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_BOAT_HUT_1",
+   "index": 1078,
+   "alacn": "INT_M_BUILDING_BOAT_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_BOAT_HUT_1)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_BOAT_HUT_2",
+   "index": 1079,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_BOAT_HUT_2)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_AIRSHIP_HUT_1",
+   "index": 1080,
+   "alacn": "INT_M_BUILDING_AIRSHIP_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_AIRSHIP_HUT_1)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_BUILDING_AIRSHIP_HUT_2",
+   "index": 1081,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE({me}, M_BUILDING_AIRSHIP_HUT_2)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_TEPEE",
+   "index": 1082,
+   "alacn": "INT_B_BUILDING_SMALL_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_TEPEE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_HUT",
+   "index": 1083,
+   "alacn": "INT_B_BUILDING_MEDIUM_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_HUT)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_FARM",
+   "index": 1084,
+   "alacn": "INT_B_BUILDING_LARGE_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_FARM)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_DRUM_TOWER",
+   "index": 1085,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_DRUM_TOWER)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_TEMPLE",
+   "index": 1086,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_TEMPLE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_SPY_TRAIN",
+   "index": 1087,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_SPY_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_WARRIOR_TRAIN",
+   "index": 1088,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_WARRIOR_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_SUPER_TRAIN",
+   "index": 1089,
+   "alacn": "INT_B_BUILDING_FIREWARRIOR_TRAIN",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_SUPER_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_RECONVERSION",
+   "index": 1090,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_RECONVERSION)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_WALL_PIECE",
+   "index": 1091,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_WALL_PIECE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_GATE",
+   "index": 1092,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_GATE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_CURR_OE_SLOT",
+   "index": 1093,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_CURR_OE_SLOT)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_BOAT_HUT_1",
+   "index": 1094,
+   "alacn": "INT_B_BUILDING_BOAT_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_BOAT_HUT_1)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_BOAT_HUT_2",
+   "index": 1095,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_BOAT_HUT_2)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_AIRSHIP_HUT_1",
+   "index": 1096,
+   "alacn": "INT_B_BUILDING_AIRSHIP_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_AIRSHIP_HUT_1)",
+   "building_count": true
+  },
+  {
+   "name": "INT_B_BUILDING_AIRSHIP_HUT_2",
+   "index": 1097,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_BLUE, M_BUILDING_AIRSHIP_HUT_2)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_TEPEE",
+   "index": 1098,
+   "alacn": "INT_R_BUILDING_SMALL_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_TEPEE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_HUT",
+   "index": 1099,
+   "alacn": "INT_R_BUILDING_MEDIUM_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_HUT)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_FARM",
+   "index": 1100,
+   "alacn": "INT_R_BUILDING_LARGE_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_FARM)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_DRUM_TOWER",
+   "index": 1101,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_DRUM_TOWER)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_TEMPLE",
+   "index": 1102,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_TEMPLE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_SPY_TRAIN",
+   "index": 1103,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_SPY_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_WARRIOR_TRAIN",
+   "index": 1104,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_WARRIOR_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_SUPER_TRAIN",
+   "index": 1105,
+   "alacn": "INT_R_BUILDING_FIREWARRIOR_TRAIN",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_SUPER_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_RECONVERSION",
+   "index": 1106,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_RECONVERSION)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_WALL_PIECE",
+   "index": 1107,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_WALL_PIECE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_GATE",
+   "index": 1108,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_GATE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_CURR_OE_SLOT",
+   "index": 1109,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_CURR_OE_SLOT)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_BOAT_HUT_1",
+   "index": 1110,
+   "alacn": "INT_R_BUILDING_BOAT_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_BOAT_HUT_1)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_BOAT_HUT_2",
+   "index": 1111,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_BOAT_HUT_2)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_AIRSHIP_HUT_1",
+   "index": 1112,
+   "alacn": "INT_R_BUILDING_AIRSHIP_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_AIRSHIP_HUT_1)",
+   "building_count": true
+  },
+  {
+   "name": "INT_R_BUILDING_AIRSHIP_HUT_2",
+   "index": 1113,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_RED, M_BUILDING_AIRSHIP_HUT_2)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_TEPEE",
+   "index": 1114,
+   "alacn": "INT_Y_BUILDING_SMALL_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_TEPEE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_HUT",
+   "index": 1115,
+   "alacn": "INT_Y_BUILDING_MEDIUM_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_HUT)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_FARM",
+   "index": 1116,
+   "alacn": "INT_Y_BUILDING_LARGE_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_FARM)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_DRUM_TOWER",
+   "index": 1117,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_DRUM_TOWER)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_TEMPLE",
+   "index": 1118,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_TEMPLE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_SPY_TRAIN",
+   "index": 1119,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_SPY_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_WARRIOR_TRAIN",
+   "index": 1120,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_WARRIOR_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_SUPER_TRAIN",
+   "index": 1121,
+   "alacn": "INT_Y_BUILDING_FIREWARRIOR_TRAIN",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_SUPER_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_RECONVERSION",
+   "index": 1122,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_RECONVERSION)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_WALL_PIECE",
+   "index": 1123,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_WALL_PIECE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_GATE",
+   "index": 1124,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_GATE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_CURR_OE_SLOT",
+   "index": 1125,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_CURR_OE_SLOT)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_BOAT_HUT_1",
+   "index": 1126,
+   "alacn": "INT_Y_BUILDING_BOAT_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_BOAT_HUT_1)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_BOAT_HUT_2",
+   "index": 1127,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_BOAT_HUT_2)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_AIRSHIP_HUT_1",
+   "index": 1128,
+   "alacn": "INT_Y_BUILDING_AIRSHIP_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_AIRSHIP_HUT_1)",
+   "building_count": true
+  },
+  {
+   "name": "INT_Y_BUILDING_AIRSHIP_HUT_2",
+   "index": 1129,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_YELLOW, M_BUILDING_AIRSHIP_HUT_2)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_TEPEE",
+   "index": 1130,
+   "alacn": "INT_G_BUILDING_SMALL_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_TEPEE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_HUT",
+   "index": 1131,
+   "alacn": "INT_G_BUILDING_MEDIUM_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_HUT)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_FARM",
+   "index": 1132,
+   "alacn": "INT_G_BUILDING_LARGE_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_FARM)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_DRUM_TOWER",
+   "index": 1133,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_DRUM_TOWER)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_TEMPLE",
+   "index": 1134,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_TEMPLE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_SPY_TRAIN",
+   "index": 1135,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_SPY_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_WARRIOR_TRAIN",
+   "index": 1136,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_WARRIOR_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_SUPER_TRAIN",
+   "index": 1137,
+   "alacn": "INT_G_BUILDING_FIREWARRIOR_TRAIN",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_SUPER_TRAIN)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_RECONVERSION",
+   "index": 1138,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_RECONVERSION)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_WALL_PIECE",
+   "index": 1139,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_WALL_PIECE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_GATE",
+   "index": 1140,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_GATE)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_CURR_OE_SLOT",
+   "index": 1141,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_CURR_OE_SLOT)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_BOAT_HUT_1",
+   "index": 1142,
+   "alacn": "INT_G_BUILDING_BOAT_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_BOAT_HUT_1)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_BOAT_HUT_2",
+   "index": 1143,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_BOAT_HUT_2)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_AIRSHIP_HUT_1",
+   "index": 1144,
+   "alacn": "INT_G_BUILDING_AIRSHIP_HUT",
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_AIRSHIP_HUT_1)",
+   "building_count": true
+  },
+  {
+   "name": "INT_G_BUILDING_AIRSHIP_HUT_2",
+   "index": 1145,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_BUILDING_OF_TYPE(TRIBE_GREEN, M_BUILDING_AIRSHIP_HUT_2)",
+   "building_count": true
+  },
+  {
+   "name": "INT_M_PERSON_BRAVE",
+   "index": 1146,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE({me}, M_PERSON_BRAVE)"
+  },
+  {
+   "name": "INT_M_PERSON_WARRIOR",
+   "index": 1147,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE({me}, M_PERSON_WARRIOR)"
+  },
+  {
+   "name": "INT_M_PERSON_RELIGIOUS",
+   "index": 1148,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE({me}, M_PERSON_RELIGIOUS)"
+  },
+  {
+   "name": "INT_M_PERSON_SPY",
+   "index": 1149,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE({me}, M_PERSON_SPY)"
+  },
+  {
+   "name": "INT_M_PERSON_SUPER_WARRIOR",
+   "index": 1150,
+   "alacn": "INT_M_PERSON_FIREWARRIOR",
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE({me}, M_PERSON_SUPER_WARRIOR)"
+  },
+  {
+   "name": "INT_M_PERSON_MEDICINE_MAN",
+   "index": 1151,
+   "alacn": "INT_M_PERSON_SHAMAN",
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE({me}, M_PERSON_MEDICINE_MAN)"
+  },
+  {
+   "name": "INT_B_PERSON_BRAVE",
+   "index": 1152,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLUE, M_PERSON_BRAVE)"
+  },
+  {
+   "name": "INT_B_PERSON_WARRIOR",
+   "index": 1153,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLUE, M_PERSON_WARRIOR)"
+  },
+  {
+   "name": "INT_B_PERSON_RELIGIOUS",
+   "index": 1154,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLUE, M_PERSON_RELIGIOUS)"
+  },
+  {
+   "name": "INT_B_PERSON_SPY",
+   "index": 1155,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLUE, M_PERSON_SPY)"
+  },
+  {
+   "name": "INT_B_PERSON_SUPER_WARRIOR",
+   "index": 1156,
+   "alacn": "INT_B_PERSON_FIREWARRIOR",
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLUE, M_PERSON_SUPER_WARRIOR)"
+  },
+  {
+   "name": "INT_B_PERSON_MEDICINE_MAN",
+   "index": 1157,
+   "alacn": "INT_B_PERSON_SHAMAN",
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_BLUE, M_PERSON_MEDICINE_MAN)"
+  },
+  {
+   "name": "INT_R_PERSON_BRAVE",
+   "index": 1158,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_RED, M_PERSON_BRAVE)"
+  },
+  {
+   "name": "INT_R_PERSON_WARRIOR",
+   "index": 1159,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_RED, M_PERSON_WARRIOR)"
+  },
+  {
+   "name": "INT_R_PERSON_RELIGIOUS",
+   "index": 1160,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_RED, M_PERSON_RELIGIOUS)"
+  },
+  {
+   "name": "INT_R_PERSON_SPY",
+   "index": 1161,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_RED, M_PERSON_SPY)"
+  },
+  {
+   "name": "INT_R_PERSON_SUPER_WARRIOR",
+   "index": 1162,
+   "alacn": "INT_R_PERSON_FIREWARRIOR",
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_RED, M_PERSON_SUPER_WARRIOR)"
+  },
+  {
+   "name": "INT_R_PERSON_MEDICINE_MAN",
+   "index": 1163,
+   "alacn": "INT_R_PERSON_SHAMAN",
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_RED, M_PERSON_MEDICINE_MAN)"
+  },
+  {
+   "name": "INT_Y_PERSON_BRAVE",
+   "index": 1164,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_YELLOW, M_PERSON_BRAVE)"
+  },
+  {
+   "name": "INT_Y_PERSON_WARRIOR",
+   "index": 1165,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_YELLOW, M_PERSON_WARRIOR)"
+  },
+  {
+   "name": "INT_Y_PERSON_RELIGIOUS",
+   "index": 1166,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_YELLOW, M_PERSON_RELIGIOUS)"
+  },
+  {
+   "name": "INT_Y_PERSON_SPY",
+   "index": 1167,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_YELLOW, M_PERSON_SPY)"
+  },
+  {
+   "name": "INT_Y_PERSON_SUPER_WARRIOR",
+   "index": 1168,
+   "alacn": "INT_Y_PERSON_FIREWARRIOR",
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_YELLOW, M_PERSON_SUPER_WARRIOR)"
+  },
+  {
+   "name": "INT_Y_PERSON_MEDICINE_MAN",
+   "index": 1169,
+   "alacn": "INT_Y_PERSON_SHAMAN",
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_YELLOW, M_PERSON_MEDICINE_MAN)"
+  },
+  {
+   "name": "INT_G_PERSON_BRAVE",
+   "index": 1170,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_GREEN, M_PERSON_BRAVE)"
+  },
+  {
+   "name": "INT_G_PERSON_WARRIOR",
+   "index": 1171,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_GREEN, M_PERSON_WARRIOR)"
+  },
+  {
+   "name": "INT_G_PERSON_RELIGIOUS",
+   "index": 1172,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_GREEN, M_PERSON_RELIGIOUS)"
+  },
+  {
+   "name": "INT_G_PERSON_SPY",
+   "index": 1173,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_GREEN, M_PERSON_SPY)"
+  },
+  {
+   "name": "INT_G_PERSON_SUPER_WARRIOR",
+   "index": 1174,
+   "alacn": "INT_G_PERSON_FIREWARRIOR",
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_GREEN, M_PERSON_SUPER_WARRIOR)"
+  },
+  {
+   "name": "INT_G_PERSON_MEDICINE_MAN",
+   "index": 1175,
+   "alacn": "INT_G_PERSON_SHAMAN",
+   "kind": "read",
+   "lua": "PLAYERS_PEOPLE_OF_TYPE(TRIBE_GREEN, M_PERSON_MEDICINE_MAN)"
+  },
+  {
+   "name": "INT_BLUE_KILLED_BY_ME",
+   "index": 1176,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_KILLED_BY_PLAYER({me}, TRIBE_BLUE)"
+  },
+  {
+   "name": "INT_RED_KILLED_BY_ME",
+   "index": 1177,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_KILLED_BY_PLAYER({me}, TRIBE_RED)"
+  },
+  {
+   "name": "INT_YELLOW_KILLED_BY_ME",
+   "index": 1178,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_KILLED_BY_PLAYER({me}, TRIBE_YELLOW)"
+  },
+  {
+   "name": "INT_GREEN_KILLED_BY_ME",
+   "index": 1179,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_KILLED_BY_PLAYER({me}, TRIBE_GREEN)"
+  },
+  {
+   "name": "INT_MY_NUM_KILLED_BY_BLUE",
+   "index": 1180,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_KILLED_BY_PLAYER(TRIBE_BLUE, {me})"
+  },
+  {
+   "name": "INT_MY_NUM_KILLED_BY_RED",
+   "index": 1181,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_KILLED_BY_PLAYER(TRIBE_RED, {me})"
+  },
+  {
+   "name": "INT_MY_NUM_KILLED_BY_YELLOW",
+   "index": 1182,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_KILLED_BY_PLAYER(TRIBE_YELLOW, {me})"
+  },
+  {
+   "name": "INT_MY_NUM_KILLED_BY_GREEN",
+   "index": 1183,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_KILLED_BY_PLAYER(TRIBE_GREEN, {me})"
+  },
+  {
+   "name": "INT_BURN",
+   "index": 1184,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_BURN",
+   "value": 1
+  },
+  {
+   "name": "INT_BLAST",
+   "index": 1185,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_BLAST",
+   "value": 2
+  },
+  {
+   "name": "INT_LIGHTNING_BOLT",
+   "index": 1186,
+   "alacn": "INT_LIGHTNING",
+   "kind": "const",
+   "lua": "M_SPELL_LIGHTNING_BOLT",
+   "value": 3
+  },
+  {
+   "name": "INT_WHIRLWIND",
+   "index": 1187,
+   "alacn": "INT_TORNADO",
+   "kind": "const",
+   "lua": "M_SPELL_WHIRLWIND",
+   "value": 4
+  },
+  {
+   "name": "INT_INSECT_PLAGUE",
+   "index": 1188,
+   "alacn": "INT_SWARM",
+   "kind": "const",
+   "lua": "M_SPELL_INSECT_PLAGUE",
+   "value": 5
+  },
+  {
+   "name": "INT_INVISIBILITY",
+   "index": 1189,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_INVISIBILITY",
+   "value": 6
+  },
+  {
+   "name": "INT_HYPNOTISM",
+   "index": 1190,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_HYPNOTISM",
+   "value": 7
+  },
+  {
+   "name": "INT_FIRESTORM",
+   "index": 1191,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_FIRESTORM",
+   "value": 8
+  },
+  {
+   "name": "INT_GHOST_ARMY",
+   "index": 1192,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_GHOST_ARMY",
+   "value": 9
+  },
+  {
+   "name": "INT_EROSION",
+   "index": 1193,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_EROSION",
+   "value": 10
+  },
+  {
+   "name": "INT_SWAMP",
+   "index": 1194,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_SWAMP",
+   "value": 11
+  },
+  {
+   "name": "INT_LAND_BRIDGE",
+   "index": 1195,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_LAND_BRIDGE",
+   "value": 12
+  },
+  {
+   "name": "INT_ANGEL_OF_DEATH",
+   "index": 1196,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_ANGEL_OF_DEATH",
+   "value": 13
+  },
+  {
+   "name": "INT_EARTHQUAKE",
+   "index": 1197,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_EARTHQUAKE",
+   "value": 14
+  },
+  {
+   "name": "INT_FLATTEN",
+   "index": 1198,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_FLATTEN",
+   "value": 15
+  },
+  {
+   "name": "INT_VOLCANO",
+   "index": 1199,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_VOLCANO",
+   "value": 16
+  },
+  {
+   "name": "INT_WRATH_OF_GOD",
+   "index": 1200,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_ARMAGEDDON",
+   "value": 18
+  },
+  {
+   "name": "INT_BRAVE",
+   "index": 1201,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_PERSON_BRAVE",
+   "value": 2
+  },
+  {
+   "name": "INT_WARRIOR",
+   "index": 1202,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_PERSON_WARRIOR",
+   "value": 3
+  },
+  {
+   "name": "INT_RELIGIOUS",
+   "index": 1203,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_PERSON_RELIGIOUS",
+   "value": 4
+  },
+  {
+   "name": "INT_SPY",
+   "index": 1204,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_PERSON_SPY",
+   "value": 5
+  },
+  {
+   "name": "INT_SUPER_WARRIOR",
+   "index": 1205,
+   "alacn": "INT_FIREWARRIOR",
+   "kind": "const",
+   "lua": "M_PERSON_SUPER_WARRIOR",
+   "value": 6
+  },
+  {
+   "name": "INT_MEDICINE_MAN",
+   "index": 1206,
+   "alacn": "INT_SHAMAN",
+   "kind": "const",
+   "lua": "M_PERSON_MEDICINE_MAN",
+   "value": 7
+  },
+  {
+   "name": "INT_TEPEE",
+   "index": 1207,
+   "alacn": "INT_SMALL_HUT",
+   "kind": "const",
+   "lua": "M_BUILDING_TEPEE",
+   "value": 1
+  },
+  {
+   "name": "INT_HUT",
+   "index": 1208,
+   "alacn": "INT_MEDIUM_HUT",
+   "kind": "const",
+   "lua": "M_BUILDING_HUT",
+   "value": 2
+  },
+  {
+   "name": "INT_FARM",
+   "index": 1209,
+   "alacn": "INT_LARGE_HUT",
+   "kind": "const",
+   "lua": "M_BUILDING_FARM",
+   "value": 3
+  },
+  {
+   "name": "INT_DRUM_TOWER",
+   "index": 1210,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_BUILDING_DRUM_TOWER",
+   "value": 4
+  },
+  {
+   "name": "INT_TEMPLE",
+   "index": 1211,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_BUILDING_TEMPLE",
+   "value": 5
+  },
+  {
+   "name": "INT_SPY_TRAIN",
+   "index": 1212,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_BUILDING_SPY_TRAIN",
+   "value": 6
+  },
+  {
+   "name": "INT_WARRIOR_TRAIN",
+   "index": 1213,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_BUILDING_WARRIOR_TRAIN",
+   "value": 7
+  },
+  {
+   "name": "INT_SUPER_TRAIN",
+   "index": 1214,
+   "alacn": "INT_FIREWARRIOR_TRAIN",
+   "kind": "const",
+   "lua": "M_BUILDING_SUPER_TRAIN",
+   "value": 8
+  },
+  {
+   "name": "INT_RECONVERSION",
+   "index": 1215,
+   "alacn": null,
+   "kind": "const",
+   "lua": "0",
+   "value": 0,
+   "note": "the interpreter has no case for INT_RECONVERSION, so it evaluates to 0, not the building model"
+  },
+  {
+   "name": "INT_WALL_PIECE",
+   "index": 1216,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_BUILDING_WALL_PIECE",
+   "value": 10
+  },
+  {
+   "name": "INT_GATE",
+   "index": 1217,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_BUILDING_GATE",
+   "value": 11
+  },
+  {
+   "name": "INT_BOAT_HUT_1",
+   "index": 1218,
+   "alacn": "INT_BOAT_HUT",
+   "kind": "const",
+   "lua": "M_BUILDING_BOAT_HUT_1",
+   "value": 13
+  },
+  {
+   "name": "INT_BOAT_HUT_2",
+   "index": 1219,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_BUILDING_BOAT_HUT_2",
+   "value": 14
+  },
+  {
+   "name": "INT_AIRSHIP_HUT_1",
+   "index": 1220,
+   "alacn": "INT_AIRSHIP_HUT",
+   "kind": "const",
+   "lua": "M_BUILDING_AIRSHIP_HUT_1",
+   "value": 15
+  },
+  {
+   "name": "INT_AIRSHIP_HUT_2",
+   "index": 1221,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_BUILDING_AIRSHIP_HUT_2",
+   "value": 16
+  },
+  {
+   "name": "INT_NO_SPECIFIC_PERSON",
+   "index": 1222,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_PERSON_NONE",
+   "value": 0
+  },
+  {
+   "name": "INT_NO_SPECIFIC_BUILDING",
+   "index": 1223,
+   "alacn": null,
+   "kind": "const",
+   "lua": "0",
+   "value": 0
+  },
+  {
+   "name": "INT_NO_SPECIFIC_SPELL",
+   "index": 1224,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_NONE",
+   "value": 0
+  },
+  {
+   "name": "INT_TARGET_MEDICINE_MAN",
+   "index": 1225,
+   "alacn": "INT_TARGET_SHAMAN",
+   "kind": "const",
+   "lua": "cp.TARGET_SHAMAN",
+   "value": 999
+  },
+  {
+   "name": "INT_M_VEHICLE_BOAT_1",
+   "index": 1226,
+   "alacn": "INT_M_VEHICLE_BOAT",
+   "kind": "read",
+   "lua": "GET_NUM_OF_AVAILABLE_BOATS({me})"
+  },
+  {
+   "name": "INT_M_VEHICLE_AIRSHIP_1",
+   "index": 1227,
+   "alacn": "INT_M_VEHICLE_AIRSHIP",
+   "kind": "read",
+   "lua": "PLAYERS_VEHICLE_OF_TYPE({me}, M_VEHICLE_AIRSHIP_1)"
+  },
+  {
+   "name": "INT_B_VEHICLE_BOAT_1",
+   "index": 1228,
+   "alacn": "INT_B_VEHICLE_BOAT",
+   "kind": "read",
+   "lua": "PLAYERS_VEHICLE_OF_TYPE(TRIBE_BLUE, M_VEHICLE_BOAT_1)"
+  },
+  {
+   "name": "INT_B_VEHICLE_AIRSHIP_1",
+   "index": 1229,
+   "alacn": "INT_B_VEHICLE_AIRSHIP",
+   "kind": "read",
+   "lua": "PLAYERS_VEHICLE_OF_TYPE(TRIBE_BLUE, M_VEHICLE_AIRSHIP_1)"
+  },
+  {
+   "name": "INT_R_VEHICLE_BOAT_1",
+   "index": 1230,
+   "alacn": "INT_R_VEHICLE_BOAT",
+   "kind": "read",
+   "lua": "PLAYERS_VEHICLE_OF_TYPE(TRIBE_RED, M_VEHICLE_BOAT_1)"
+  },
+  {
+   "name": "INT_R_VEHICLE_AIRSHIP_1",
+   "index": 1231,
+   "alacn": "INT_R_VEHICLE_AIRSHIP",
+   "kind": "read",
+   "lua": "PLAYERS_VEHICLE_OF_TYPE(TRIBE_RED, M_VEHICLE_AIRSHIP_1)"
+  },
+  {
+   "name": "INT_Y_VEHICLE_BOAT_1",
+   "index": 1232,
+   "alacn": "INT_Y_VEHICLE_BOAT",
+   "kind": "read",
+   "lua": "PLAYERS_VEHICLE_OF_TYPE(TRIBE_YELLOW, M_VEHICLE_BOAT_1)"
+  },
+  {
+   "name": "INT_Y_VEHICLE_AIRSHIP_1",
+   "index": 1233,
+   "alacn": "INT_Y_VEHICLE_AIRSHIP",
+   "kind": "read",
+   "lua": "PLAYERS_VEHICLE_OF_TYPE(TRIBE_YELLOW, M_VEHICLE_AIRSHIP_1)"
+  },
+  {
+   "name": "INT_G_VEHICLE_BOAT_1",
+   "index": 1234,
+   "alacn": "INT_G_VEHICLE_BOAT",
+   "kind": "read",
+   "lua": "PLAYERS_VEHICLE_OF_TYPE(TRIBE_GREEN, M_VEHICLE_BOAT_1)"
+  },
+  {
+   "name": "INT_G_VEHICLE_AIRSHIP_1",
+   "index": 1235,
+   "alacn": "INT_G_VEHICLE_AIRSHIP",
+   "kind": "read",
+   "lua": "PLAYERS_VEHICLE_OF_TYPE(TRIBE_GREEN, M_VEHICLE_AIRSHIP_1)"
+  },
+  {
+   "name": "INT_CP_FREE_ENTRIES",
+   "index": 1236,
+   "alacn": null,
+   "kind": "read",
+   "lua": "FREE_ENTRIES({me})"
+  },
+  {
+   "name": "INT_RANDOM_100",
+   "index": 1237,
+   "alacn": null,
+   "kind": "read",
+   "lua": "G_RANDOM(100)",
+   "side_effect": true
+  },
+  {
+   "name": "INT_NUM_SHAMEN_DEFENDERS",
+   "index": 1238,
+   "alacn": null,
+   "kind": "read",
+   "lua": "NUM_SHAMEN_DEFENDERS({me})"
+  },
+  {
+   "name": "INT_CAMERA_ANGLE",
+   "index": 1239,
+   "alacn": null,
+   "kind": "read",
+   "lua": "GET_INTERNAL_VARIABLE({me}, INT_CAMERA_ANGLE)",
+   "exact_reader": true
+  },
+  {
+   "name": "INT_CAMERA_X",
+   "index": 1240,
+   "alacn": null,
+   "kind": "read",
+   "lua": "CAMERA_X()"
+  },
+  {
+   "name": "INT_CAMERA_Z",
+   "index": 1241,
+   "alacn": null,
+   "kind": "read",
+   "lua": "CAMERA_Z()"
+  },
+  {
+   "name": "INT_M_SPELL_SHIELD_COST",
+   "index": 1242,
+   "alacn": null,
+   "kind": "read",
+   "lua": "PLAYERS_SPELL_COST(M_SPELL_SHIELD, {me})"
+  },
+  {
+   "name": "INT_SHIELD",
+   "index": 1243,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_SHIELD",
+   "value": 19
+  },
+  {
+   "name": "INT_CONVERT",
+   "index": 1244,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_CONVERT_WILD",
+   "value": 17
+  },
+  {
+   "name": "INT_TELEPORT",
+   "index": 1245,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_TELEPORT",
+   "value": 21
+  },
+  {
+   "name": "INT_BLOODLUST",
+   "index": 1246,
+   "alacn": null,
+   "kind": "const",
+   "lua": "M_SPELL_BLOODLUST",
+   "value": 20
+  }
+ ]
+}

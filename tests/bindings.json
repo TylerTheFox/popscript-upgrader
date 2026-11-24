@@ -1,0 +1,2580 @@
+{
+"functions": {
+"ATTACK": {
+"params": [
+[
+"SBYTE",
+"team"
+],
+[
+"SBYTE",
+"opponent"
+],
+[
+"SLONG",
+"people"
+],
+[
+"SLONG",
+"target_type"
+],
+[
+"SLONG",
+"target_model"
+],
+[
+"SLONG",
+"damage"
+],
+[
+"SLONG",
+"spell1"
+],
+[
+"SLONG",
+"spell2"
+],
+[
+"SLONG",
+"spell3"
+],
+[
+"SLONG",
+"attack_type"
+],
+[
+"SLONG",
+"look_after"
+],
+[
+"SLONG",
+"marker"
+],
+[
+"SBYTE",
+"marker2"
+],
+[
+"SBYTE",
+"direction"
+]
+],
+"line": 929
+},
+"AUTO_MESSAGES": {
+"params": [
+[
+"SLONG",
+"on"
+]
+],
+"line": 422
+},
+"BUILD_DRUM_TOWER": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+]
+],
+"line": 1408
+},
+"CALL_TO_ARMS": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 990
+},
+"CAMERA_ROTATION": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"angle"
+]
+],
+"line": 984
+},
+"CAMERA_X": {
+"params": [],
+"line": 1634
+},
+"CAMERA_Z": {
+"params": [],
+"line": 1640
+},
+"CHECK_IF_PERSON_PREACHED_TO": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1024
+},
+"CLEAR_ALL_MSG": {
+"params": [],
+"line": 344
+},
+"CLEAR_GUARDING_FROM": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"entry1"
+],
+[
+"SLONG",
+"entry2"
+],
+[
+"SLONG",
+"entry3"
+],
+[
+"SLONG",
+"entry4"
+]
+],
+"line": 1232
+},
+"CLEAR_HOUSE_INFO_FLAG": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1100
+},
+"CLEAR_SHAMAN_LEFT_CLICK": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 428
+},
+"CLEAR_SHAMAN_RIGHT_CLICK": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 434
+},
+"CLEAR_STANDING_PEOPLE": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1223
+},
+"CONVERT_AT_MARKER": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"marker"
+]
+],
+"line": 1360
+},
+"COUNT_ANGELS": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 646
+},
+"COUNT_GUARD_POSTS": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"rad"
+]
+],
+"line": 849
+},
+"COUNT_PEOPLE_IN_HOUSES": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 911
+},
+"COUNT_PEOPLE_IN_MARKER": {
+"params": [
+[
+"SLONG",
+"opponent"
+],
+[
+"SLONG",
+"marker"
+],
+[
+"SLONG",
+"radius"
+]
+],
+"line": 1341
+},
+"COUNT_SHAPES": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1106
+},
+"COUNT_WITH_BUILD_COMMAND": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1091
+},
+"CREATE_MSG_INFORMATION": {
+"params": [
+[
+"SLONG",
+"index"
+]
+],
+"line": 676
+},
+"CREATE_MSG_INFORMATION_ZOOM": {
+"params": [
+[
+"SLONG",
+"index"
+],
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"angle"
+]
+],
+"line": 682
+},
+"CREATE_MSG_NARRATIVE": {
+"params": [
+[
+"SLONG",
+"index"
+]
+],
+"line": 664
+},
+"CREATE_MSG_OBJECTIVE": {
+"params": [
+[
+"SLONG",
+"index"
+]
+],
+"line": 670
+},
+"DEFEND_SHAMEN": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"num_people"
+]
+],
+"line": 1262
+},
+"DELAY_MAIN_DRUM_TOWER": {
+"params": [
+[
+"SLONG",
+"on"
+],
+[
+"SLONG",
+"pn"
+]
+],
+"line": 901
+},
+"DELETE_SMOKE_STUFF": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"rad"
+]
+],
+"line": 625
+},
+"DESELECT_ALL_PEOPLE": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 817
+},
+"DISABLE_USER_INPUTS": {
+"params": [],
+"line": 404
+},
+"DONT_HOUSE_SPECIALISTS": {
+"params": [
+[
+"SLONG",
+"on"
+]
+],
+"line": 781
+},
+"DONT_TARGET_DRUM_TOWERS": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1478
+},
+"DONT_TARGET_SHAMAN": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1505
+},
+"DONT_TARGET_S_WARRIORS": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1514
+},
+"ENABLE_USER_INPUTS": {
+"params": [],
+"line": 398
+},
+"EXTRA_WOOD_COLLECTION": {
+"params": [
+[
+"SLONG",
+"on"
+],
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1040
+},
+"FIX_WILD_IN_AREA": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"rad"
+]
+],
+"line": 742
+},
+"FLASH_BUTTON": {
+"params": [
+[
+"SLONG",
+"id"
+],
+[
+"SLONG",
+"on"
+]
+],
+"line": 811
+},
+"FLYBY_ALLOW_INTERRUPT": {
+"params": [
+[
+"UBYTE",
+"allow_flag"
+]
+],
+"line": 392
+},
+"FLYBY_CREATE_NEW": {
+"params": [],
+"line": 374
+},
+"FLYBY_OPEN_DIALOG": {
+"params": [
+[
+"SWORD",
+"string_idx"
+],
+[
+"SWORD",
+"start_tens_secs"
+]
+],
+"line": 332
+},
+"FLYBY_SET_END_TARGET": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"angle"
+],
+[
+"SLONG",
+"zoom"
+]
+],
+"line": 607
+},
+"FLYBY_SET_EVENT_ANGLE": {
+"params": [
+[
+"SLONG",
+"angle"
+],
+[
+"SLONG",
+"start"
+],
+[
+"SLONG",
+"duration"
+]
+],
+"line": 583
+},
+"FLYBY_SET_EVENT_INT_POINT": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"start"
+],
+[
+"SLONG",
+"duration"
+]
+],
+"line": 595
+},
+"FLYBY_SET_EVENT_POS": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"start"
+],
+[
+"SLONG",
+"duration"
+]
+],
+"line": 577
+},
+"FLYBY_SET_EVENT_TOOLTIP": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"code"
+],
+[
+"SLONG",
+"start"
+],
+[
+"SLONG",
+"duration"
+]
+],
+"line": 601
+},
+"FLYBY_SET_EVENT_ZOOM": {
+"params": [
+[
+"SLONG",
+"zoom"
+],
+[
+"SLONG",
+"start"
+],
+[
+"SLONG",
+"duration"
+]
+],
+"line": 589
+},
+"FLYBY_START": {
+"params": [],
+"line": 380
+},
+"FLYBY_STOP": {
+"params": [],
+"line": 386
+},
+"FORCE_TOOLTIP": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"code"
+],
+[
+"SLONG",
+"duration"
+]
+],
+"line": 631
+},
+"FREE_ENTRIES": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1587
+},
+"GET_HEAD_TRIGGER_COUNT": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+]
+],
+"line": 843
+},
+"GET_HEIGHT_AT_POS": {
+"params": [
+[
+"SLONG",
+"marker"
+]
+],
+"line": 855
+},
+"GET_INTERNAL_VARIABLE": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"index"
+]
+],
+"line": 1597
+},
+"GET_MSG_ID": {
+"params": [],
+"line": 861
+},
+"GET_NUM_OF_AVAILABLE_BOATS": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1655
+},
+"GET_NUM_ONE_OFF_SPELLS": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"spell"
+]
+],
+"line": 1384
+},
+"GET_NUM_PEOPLE": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1664
+},
+"GET_NUM_PEOPLE_BEING_PREACHED": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 772
+},
+"GET_NUM_PEOPLE_CONVERTED": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 655
+},
+"GET_SPELLS_CAST": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"spell"
+]
+],
+"line": 1378
+},
+"GET_TURNS_PER_SECOND": {
+"params": [],
+"line": 1609
+},
+"GET_USER_VARIABLE_BOOLEAN_VALUE": {
+"params": [
+[
+"const SLONG",
+"pn"
+],
+[
+"const SLONG",
+"idx"
+]
+],
+"line": 1688
+},
+"GET_USER_VARIABLE_VALUE": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"idx"
+]
+],
+"line": 1670
+},
+"GIVE_MANA_TO_PLAYER": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"mana"
+]
+],
+"line": 834
+},
+"GIVE_ONE_SHOT": {
+"params": [
+[
+"SLONG",
+"spell"
+],
+[
+"SLONG",
+"pn"
+]
+],
+"line": 464
+},
+"GIVE_UP_AND_SULK": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"on"
+]
+],
+"line": 891
+},
+"GUARD_BETWEEN_MARKERS": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"marker1"
+],
+[
+"SLONG",
+"marker2"
+],
+[
+"SLONG",
+"num_braves"
+],
+[
+"SLONG",
+"num_warriors"
+],
+[
+"SLONG",
+"num_s_warriors"
+],
+[
+"SLONG",
+"num_preachers"
+],
+[
+"SLONG",
+"type"
+]
+],
+"line": 1399
+},
+"HAS_HOUSE_INFO_BEEN_SHOWN": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1472
+},
+"HAS_PLAYER_BEEN_IN_ENCYC": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1127
+},
+"HAS_TIMER_REACHED_ZERO": {
+"params": [],
+"line": 565
+},
+"IS_BUILDING_NEAR": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"bldg_model"
+],
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"radius"
+]
+],
+"line": 1253
+},
+"IS_PLAYER_IN_WORLD_VIEW": {
+"params": [],
+"line": 867
+},
+"IS_PRISON_ON_LEVEL": {
+"params": [],
+"line": 458
+},
+"IS_SHAMAN_AVAILABLE_FOR_ATTACK": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1151
+},
+"IS_SHAMAN_ICON_LEFT_CLICKED": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 440
+},
+"IS_SHAMAN_ICON_RIGHT_CLICKED": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 446
+},
+"IS_SHAMAN_IN_AREA": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"marker"
+],
+[
+"SLONG",
+"radius"
+]
+],
+"line": 637
+},
+"IS_SHAMAN_SELECTED": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1115
+},
+"I_HAVE_ONE_SHOT": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"type"
+],
+[
+"SLONG",
+"model"
+]
+],
+"line": 1298
+},
+"KILL_ALL_MSG_ID": {
+"params": [
+[
+"SLONG",
+"msg_id"
+]
+],
+"line": 619
+},
+"KILL_TEAM_IN_AREA": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"rad"
+]
+],
+"line": 338
+},
+"MANA": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1646
+},
+"MARKER_ENTRIES": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"entry1"
+],
+[
+"SLONG",
+"entry2"
+],
+[
+"SLONG",
+"entry3"
+],
+[
+"SLONG",
+"entry4"
+]
+],
+"line": 972
+},
+"MARVELLOUS_HOUSE_DEATH": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 996
+},
+"MOVE_SHAMAN_TO_MARKER": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"marker"
+]
+],
+"line": 1192
+},
+"MSG_ID": {
+"params": [],
+"line": 356
+},
+"NUM_SHAMEN_DEFENDERS": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1625
+},
+"OH_LOOK_PLAYER_HAS_JUST_KILLED_HIS_FIRST_GHOST": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1202
+},
+"ONLY_STAND_AT_MARKERS": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1214
+},
+"OPEN_DIALOG": {
+"params": [
+[
+"SLONG",
+"index"
+]
+],
+"line": 410
+},
+"PARTIAL_BUILDING_COUNT": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1142
+},
+"PLAYERS_ALL_BUILDING_OF_TYPE": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"type"
+]
+],
+"line": 1551
+},
+"PLAYERS_BUILDING_OF_TYPE": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"type"
+]
+],
+"line": 1542
+},
+"PLAYERS_KILLED_BY_PLAYER": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"opponent"
+]
+],
+"line": 1581
+},
+"PLAYERS_PEOPLE_OF_TYPE": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"type"
+]
+],
+"line": 1533
+},
+"PLAYERS_SPELL_COST": {
+"params": [
+[
+"SLONG",
+"spell"
+],
+[
+"SLONG",
+"player_num"
+]
+],
+"line": 1575
+},
+"PLAYERS_VEHICLE_OF_TYPE": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"type"
+]
+],
+"line": 1560
+},
+"PRAY_AT_HEAD": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"num_people"
+],
+[
+"SLONG",
+"marker"
+]
+],
+"line": 1289
+},
+"PREACH_AT_MARKER": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"marker"
+]
+],
+"line": 1369
+},
+"PUT_PERSON_IN_DT": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"person_type"
+],
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+]
+],
+"line": 1304
+},
+"READ_CP_ATTACK_RESULT_VARIABLE": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 532
+},
+"READ_CP_ATTRIB": {
+"params": [
+[
+"const int",
+"pn"
+],
+[
+"const int",
+"attrib"
+]
+],
+"line": 873
+},
+"READ_CP_DEFENCE_MARKER": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 517
+},
+"READ_CP_DEFENCE_RADIUS": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 524
+},
+"READ_CP_DRUM_TOWER_X": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 501
+},
+"READ_CP_DRUM_TOWER_Z": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 509
+},
+"READ_CP_STATE_FLAGS": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 488
+},
+"REMOVE_HEAD_AT_POS": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+]
+],
+"line": 766
+},
+"REMOVE_TIMER": {
+"params": [],
+"line": 613
+},
+"RESET_BASE_MARKER": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 541
+},
+"SEND_ALL_PEOPLE_TO_MARKER": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"marker"
+]
+],
+"line": 1390
+},
+"SEND_GHOST_PEOPLE": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"num"
+],
+[
+"SLONG",
+"opponent"
+]
+],
+"line": 1427
+},
+"SEND_PEOPLE_TO_MARKER": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"marker"
+]
+],
+"line": 1133
+},
+"SEND_SHAMEN_DEFENDERS_HOME": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1271
+},
+"SET_ATTACK_VARIABLE": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"var"
+]
+],
+"line": 1418
+},
+"SET_AUTO_BUILD": {
+"params": [
+[
+"SLONG",
+"on"
+]
+],
+"line": 828
+},
+"SET_AUTO_HOUSE": {
+"params": [
+[
+"SLONG",
+"on"
+]
+],
+"line": 787
+},
+"SET_BASE_MARKER": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"marker"
+]
+],
+"line": 550
+},
+"SET_BASE_RADIUS": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"radius"
+]
+],
+"line": 1332
+},
+"SET_BUCKET_COUNT_FOR_SPELL": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"spell"
+],
+[
+"SLONG",
+"multiplier"
+]
+],
+"line": 1060
+},
+"SET_BUCKET_USAGE": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"on"
+]
+],
+"line": 1030
+},
+"SET_BUILDING_DIRECTION": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"dir"
+]
+],
+"line": 1323
+},
+"SET_DEFENCE_RADIUS": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"rad"
+]
+],
+"line": 1005
+},
+"SET_DRUM_TOWER_POS": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+]
+],
+"line": 1350
+},
+"SET_MARKER_ENTRY": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"entry"
+],
+[
+"SLONG",
+"marker1"
+],
+[
+"SLONG",
+"marker2"
+],
+[
+"SLONG",
+"num_braves"
+],
+[
+"SLONG",
+"num_warriors"
+],
+[
+"SLONG",
+"num_s_warriors"
+],
+[
+"SLONG",
+"num_preachers"
+]
+],
+"line": 939
+},
+"SET_MSG_AUTO_OPEN_DLG": {
+"params": [],
+"line": 760
+},
+"SET_MSG_CREATE_RETURN_MSG_ON_RMB_ZOOM": {
+"params": [],
+"line": 724
+},
+"SET_MSG_DELETE_ON_OK": {
+"params": [],
+"line": 700
+},
+"SET_MSG_DELETE_ON_RMB_ZOOM": {
+"params": [],
+"line": 712
+},
+"SET_MSG_ID": {
+"params": [
+[
+"SWORD",
+"user_def_id"
+]
+],
+"line": 350
+},
+"SET_MSG_OK_SAVE_EXIT_DLG": {
+"params": [],
+"line": 748
+},
+"SET_MSG_OPEN_DLG_ON_RMB_DELETE": {
+"params": [],
+"line": 730
+},
+"SET_MSG_OPEN_DLG_ON_RMB_ZOOM": {
+"params": [],
+"line": 718
+},
+"SET_MSG_RETURN_ON_OK": {
+"params": [],
+"line": 706
+},
+"SET_MSG_TIMEOUT": {
+"params": [
+[
+"SLONG",
+"time"
+]
+],
+"line": 694
+},
+"SET_MSG_ZOOM": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"angle"
+]
+],
+"line": 688
+},
+"SET_MSG_ZOOM_ON_LMB_OPEN_DLG": {
+"params": [],
+"line": 736
+},
+"SET_NO_REINC": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1014
+},
+"SET_REINCARNATION": {
+"params": [
+[
+"SLONG",
+"on"
+],
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1069
+},
+"SET_SPECIAL_NO_BLDG_PANEL": {
+"params": [
+[
+"SLONG",
+"on"
+]
+],
+"line": 754
+},
+"SET_SPELL_ENTRY": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"entry"
+],
+[
+"SLONG",
+"spell"
+],
+[
+"SLONG",
+"min_mana"
+],
+[
+"SLONG",
+"frequency"
+],
+[
+"SLONG",
+"min_people"
+],
+[
+"SLONG",
+"base_spell"
+]
+],
+"line": 958
+},
+"SET_TIMER_GOING": {
+"params": [
+[
+"SLONG",
+"value"
+],
+[
+"SLONG",
+"decrement"
+]
+],
+"line": 571
+},
+"SET_USER_VARIABLE_BOOLEAN_VALUE": {
+"params": [
+[
+"const SLONG",
+"pn"
+],
+[
+"const SLONG",
+"idx"
+],
+[
+"const bool",
+"val"
+]
+],
+"line": 1697
+},
+"SET_USER_VARIABLE_VALUE": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"idx"
+],
+[
+"SLONG",
+"val"
+]
+],
+"line": 1679
+},
+"SET_WOOD_COLLECTION_RADII": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"min"
+],
+[
+"SLONG",
+"max"
+],
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+]
+],
+"line": 1050
+},
+"SHAMAN_DEFEND": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"on"
+]
+],
+"line": 1455
+},
+"SPELL_ATTACK": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"spell_num"
+],
+[
+"SLONG",
+"marker"
+],
+[
+"SLONG",
+"direction"
+]
+],
+"line": 1436
+},
+"SPELL_COST": {
+"params": [
+[
+"SLONG",
+"spell"
+]
+],
+"line": 1569
+},
+"START_REINC_NOW": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 920
+},
+"STATE_SET": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"on"
+],
+[
+"SLONG",
+"flag"
+]
+],
+"line": 1445
+},
+"STOP_CAMERA_ROTATION": {
+"params": [],
+"line": 793
+},
+"TARGET_DRUM_TOWERS": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1487
+},
+"TARGET_PLAYER_DT_AND_S": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"target"
+]
+],
+"line": 1082
+},
+"TARGET_SHAMAN": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1496
+},
+"TARGET_S_WARRIORS": {
+"params": [
+[
+"SLONG",
+"pn"
+]
+],
+"line": 1523
+},
+"TRACK_SHAMAN_EXTRA_BOLLOCKS": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"angle"
+]
+],
+"line": 1160
+},
+"TRACK_SHAMAN_TO_ANGLE": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"angle"
+]
+],
+"line": 1176
+},
+"TRACK_TO_MARKER": {
+"params": [
+[
+"SLONG",
+"idx"
+]
+],
+"line": 452
+},
+"TRAIN_PEOPLE_NOW": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"num_people"
+],
+[
+"SLONG",
+"people_type"
+]
+],
+"line": 1314
+},
+"TRIGGER_LEVEL_LOST": {
+"params": [],
+"line": 362
+},
+"TRIGGER_LEVEL_WON": {
+"params": [],
+"line": 368
+},
+"TRIGGER_THING": {
+"params": [
+[
+"SLONG",
+"idx"
+]
+],
+"line": 799
+},
+"TURN_PANEL_ON": {
+"params": [
+[
+"SLONG",
+"idx"
+]
+],
+"line": 805
+},
+"TURN_PUSH": {
+"params": [
+[
+"SLONG",
+"on"
+]
+],
+"line": 559
+},
+"VEHICLE_PATROL": {
+"params": [
+[
+"SLONG",
+"pn"
+],
+[
+"SLONG",
+"num_people"
+],
+[
+"SLONG",
+"marker1"
+],
+[
+"SLONG",
+"marker2"
+],
+[
+"SLONG",
+"marker3"
+],
+[
+"SLONG",
+"marker4"
+],
+[
+"SLONG",
+"vehicle_type"
+]
+],
+"line": 1280
+},
+"WRITE_CP_ATTRIB": {
+"params": [
+[
+"const int",
+"pn"
+],
+[
+"const int",
+"attrib"
+],
+[
+"const UBYTE",
+"value"
+]
+],
+"line": 882
+},
+"ZOOM_TO": {
+"params": [
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SWORD",
+"angle"
+]
+],
+"line": 416
+},
+"computer_build_at_c3d": {
+"params": [
+[
+"struct Player *",
+"t_player"
+],
+[
+"Coord3D *",
+"pos"
+],
+[
+"SLONG",
+"bldg_model"
+]
+],
+"line": 317
+},
+"computer_build_at_xz": {
+"params": [
+[
+"struct Player *",
+"t_player"
+],
+[
+"SLONG",
+"x"
+],
+[
+"SLONG",
+"z"
+],
+[
+"SLONG",
+"bldg_model"
+]
+],
+"line": 307
+},
+"computer_check_nav_path_for_script_query": {
+"params": [
+[
+"struct Player *",
+"t_player"
+],
+[
+"UWORD",
+"pos1"
+],
+[
+"UWORD",
+"pos2"
+]
+],
+"line": 1208
+},
+"computer_check_spell_bucket_usage": {
+"params": [
+[
+"struct Thing *",
+"mm"
+],
+[
+"SLONG",
+"spell"
+]
+],
+"line": 1727
+},
+"computer_dont_sort_people_into_sensible_houses": {
+"params": [
+[
+"struct Player*",
+"t_player"
+]
+],
+"line": 1715
+},
+"computer_number_action_entries_of_type": {
+"params": [
+[
+"struct Player *",
+"t_player"
+],
+[
+"SLONG",
+"type"
+]
+],
+"line": 1703
+},
+"computer_reset_limits_for_all_spells": {
+"params": [
+[
+"struct Player*",
+"t_player"
+]
+],
+"line": 1793
+},
+"computer_reset_limits_for_spell": {
+"params": [
+[
+"struct Player*",
+"t_player"
+],
+[
+"SLONG",
+"spell_model"
+]
+],
+"line": 1775
+},
+"computer_set_default_num_workers_for_bldg": {
+"params": [
+[
+"struct Player*",
+"t_player"
+],
+[
+"SLONG",
+"bldg_model"
+],
+[
+"SLONG",
+"num_workers"
+]
+],
+"line": 1767
+},
+"computer_set_limits_count_for_spell": {
+"params": [
+[
+"struct Player*",
+"t_player"
+],
+[
+"SLONG",
+"spell_model"
+],
+[
+"SLONG",
+"count"
+]
+],
+"line": 1781
+},
+"computer_set_limits_number_cast_for_spell": {
+"params": [
+[
+"struct Player*",
+"t_player"
+],
+[
+"SLONG",
+"spell_model"
+],
+[
+"SLONG",
+"number_cast"
+]
+],
+"line": 1787
+},
+"computer_set_response_params": {
+"params": [
+[
+"struct Player*",
+"t_player"
+],
+[
+"SLONG",
+"index"
+],
+[
+"SLONG",
+"timer_ticks"
+],
+[
+"SLONG",
+"random_ticks"
+]
+],
+"line": 1737
+},
+"computer_sort_people_into_sensible_houses": {
+"params": [
+[
+"struct Player*",
+"t_player"
+]
+],
+"line": 1709
+},
+"computer_trigger_response_immediately": {
+"params": [
+[
+"struct Player*",
+"t_player"
+],
+[
+"SLONG",
+"index"
+]
+],
+"line": 1751
+},
+"script_is_empty": {
+"params": [
+[
+"SLONG",
+"idx"
+]
+],
+"line": 1615
+},
+"script_set_up_empty_script": {
+"params": [
+[
+"SLONG",
+"idx"
+]
+],
+"line": 466
+}
+},
+"constants": [
+"ATTACK_BUILDING",
+"ATTACK_BY_BALLOON",
+"ATTACK_BY_BOAT",
+"ATTACK_MARKER",
+"ATTACK_NORMAL",
+"ATTACK_PERSON",
+"ATTACK_TARGET_MEDICINE_MAN",
+"ATTR_ATTACK_PERCENTAGE",
+"ATTR_AWAY_BRAVE",
+"ATTR_AWAY_MEDICINE_MAN",
+"ATTR_AWAY_RELIGIOUS",
+"ATTR_AWAY_SPY",
+"ATTR_AWAY_SUPER_WARRIOR",
+"ATTR_AWAY_WARRIOR",
+"ATTR_BASE_UNDER_ATTACK_RETREAT",
+"ATTR_BOAT_HOUSE_BROKEN",
+"ATTR_COUNT_PREACH_DAMAGE",
+"ATTR_DEFENSE_RAD_INCR",
+"ATTR_DONT_AUTO_TRAIN_PREACHERS",
+"ATTR_DONT_DELETE_USELESS_BOAT_HOUSE",
+"ATTR_DONT_GROUP_AT_DT",
+"ATTR_DONT_USE_BOATS",
+"ATTR_EMPTY_AT_WAYPOINT",
+"ATTR_ENEMY_SPY_MAX_STAND",
+"ATTR_EXPANSION",
+"ATTR_FIGHT_STOP_DISTANCE",
+"ATTR_GROUP_OPTION",
+"ATTR_HOUSE_PERCENTAGE",
+"ATTR_MAX_ATTACKS",
+"ATTR_MAX_BUILDINGS_ON_GO",
+"ATTR_MAX_DEFENSIVE_ACTIONS",
+"ATTR_MAX_SPY_ATTACKS",
+"ATTR_MAX_TRAIN_AT_ONCE",
+"ATTR_PEOPLE_PER_BALLOON",
+"ATTR_PEOPLE_PER_BOAT",
+"ATTR_PREF_BALLOON_DRIVERS",
+"ATTR_PREF_BALLOON_HUTS",
+"ATTR_PREF_BOAT_DRIVERS",
+"ATTR_PREF_BOAT_HUTS",
+"ATTR_PREF_RELIGIOUS_PEOPLE",
+"ATTR_PREF_RELIGIOUS_TRAINS",
+"ATTR_PREF_SPY_PEOPLE",
+"ATTR_PREF_SPY_TRAINS",
+"ATTR_PREF_SUPER_WARRIOR_PEOPLE",
+"ATTR_PREF_SUPER_WARRIOR_TRAINS",
+"ATTR_PREF_WARRIOR_PEOPLE",
+"ATTR_PREF_WARRIOR_TRAINS",
+"ATTR_RANDOM_BUILD_SIDE",
+"ATTR_RETREAT_VALUE",
+"ATTR_SHAMEN_BLAST",
+"ATTR_SPARE_6",
+"ATTR_SPELL_DELAY",
+"ATTR_SPY_CHECK_FREQUENCY",
+"ATTR_SPY_DISCOVER_CHANCE",
+"ATTR_USE_PREACHER_FOR_DEFENCE",
+"CP_AT_TYPE_AUTO_ATTACK",
+"CP_AT_TYPE_BOAT_PATROL",
+"CP_AT_TYPE_BRING_NEW_PEOPLE_BACK",
+"CP_AT_TYPE_BUILD_OUTER_DEFENCES",
+"CP_AT_TYPE_BUILD_VEHICLE",
+"CP_AT_TYPE_CONSTRUCT_BUILDING",
+"CP_AT_TYPE_DEFEND",
+"CP_AT_TYPE_DEFEND_BASE",
+"CP_AT_TYPE_DEFEND_SHAMEN",
+"CP_AT_TYPE_FETCH_FAR_VEHICLE",
+"CP_AT_TYPE_FETCH_LOST_PEOPLE",
+"CP_AT_TYPE_FETCH_LOST_VEHICLE",
+"CP_AT_TYPE_FETCH_WOOD",
+"CP_AT_TYPE_FLATTEN_BASE",
+"CP_AT_TYPE_GUARD_AT_MARKER",
+"CP_AT_TYPE_HOUSE_A_PERSON",
+"CP_AT_TYPE_MED_MAN_DEFEND",
+"CP_AT_TYPE_MED_MAN_GET_WILD_PEEPS",
+"CP_AT_TYPE_POPULATE_DRUM_TOWER",
+"CP_AT_TYPE_PRAY_AT_HEAD",
+"CP_AT_TYPE_PREACH",
+"CP_AT_TYPE_REPAIR_BLDGS",
+"CP_AT_TYPE_SABOTAGE",
+"CP_AT_TYPE_SEND_ALL_TO_MARKER",
+"CP_AT_TYPE_SEND_GHOSTS",
+"CP_AT_TYPE_SPELL_DEFENCE",
+"CP_AT_TYPE_SPELL_OFFENSIVE",
+"CP_AT_TYPE_SUPER_DEFEND",
+"CP_AT_TYPE_TRAIN_PEOPLE",
+"GUARD_NORMAL",
+"GUARD_WITH_GHOSTS",
+"INT_AIRSHIP_HUT_1",
+"INT_AIRSHIP_HUT_2",
+"INT_ANGEL_OF_DEATH",
+"INT_BLAST",
+"INT_BLOODLUST",
+"INT_BLUE_KILLED_BY_ME",
+"INT_BLUE_MANA",
+"INT_BLUE_PEOPLE",
+"INT_BOAT_HUT_1",
+"INT_BOAT_HUT_2",
+"INT_BRAVE",
+"INT_BURN",
+"INT_B_BUILDING_AIRSHIP_HUT_1",
+"INT_B_BUILDING_AIRSHIP_HUT_2",
+"INT_B_BUILDING_BOAT_HUT_1",
+"INT_B_BUILDING_BOAT_HUT_2",
+"INT_B_BUILDING_CURR_OE_SLOT",
+"INT_B_BUILDING_DRUM_TOWER",
+"INT_B_BUILDING_FARM",
+"INT_B_BUILDING_GATE",
+"INT_B_BUILDING_HUT",
+"INT_B_BUILDING_RECONVERSION",
+"INT_B_BUILDING_SPY_TRAIN",
+"INT_B_BUILDING_SUPER_TRAIN",
+"INT_B_BUILDING_TEMPLE",
+"INT_B_BUILDING_TEPEE",
+"INT_B_BUILDING_WALL_PIECE",
+"INT_B_BUILDING_WARRIOR_TRAIN",
+"INT_B_PERSON_BRAVE",
+"INT_B_PERSON_MEDICINE_MAN",
+"INT_B_PERSON_RELIGIOUS",
+"INT_B_PERSON_SPY",
+"INT_B_PERSON_SUPER_WARRIOR",
+"INT_B_PERSON_WARRIOR",
+"INT_B_VEHICLE_AIRSHIP_1",
+"INT_B_VEHICLE_BOAT_1",
+"INT_CAMERA_ANGLE",
+"INT_CAMERA_X",
+"INT_CAMERA_Z",
+"INT_CONVERT",
+"INT_CP_FREE_ENTRIES",
+"INT_DRUM_TOWER",
+"INT_EARTHQUAKE",
+"INT_EROSION",
+"INT_FARM",
+"INT_FIRESTORM",
+"INT_FLATTEN",
+"INT_GAME_TURN",
+"INT_GATE",
+"INT_GHOST_ARMY",
+"INT_GREEN_KILLED_BY_HUMAN",
+"INT_GREEN_KILLED_BY_ME",
+"INT_GREEN_MANA",
+"INT_GREEN_PEOPLE",
+"INT_G_BUILDING_AIRSHIP_HUT_1",
+"INT_G_BUILDING_AIRSHIP_HUT_2",
+"INT_G_BUILDING_BOAT_HUT_1",
+"INT_G_BUILDING_BOAT_HUT_2",
+"INT_G_BUILDING_CURR_OE_SLOT",
+"INT_G_BUILDING_DRUM_TOWER",
+"INT_G_BUILDING_FARM",
+"INT_G_BUILDING_GATE",
+"INT_G_BUILDING_HUT",
+"INT_G_BUILDING_RECONVERSION",
+"INT_G_BUILDING_SPY_TRAIN",
+"INT_G_BUILDING_SUPER_TRAIN",
+"INT_G_BUILDING_TEMPLE",
+"INT_G_BUILDING_TEPEE",
+"INT_G_BUILDING_WALL_PIECE",
+"INT_G_BUILDING_WARRIOR_TRAIN",
+"INT_G_PERSON_BRAVE",
+"INT_G_PERSON_MEDICINE_MAN",
+"INT_G_PERSON_RELIGIOUS",
+"INT_G_PERSON_SPY",
+"INT_G_PERSON_SUPER_WARRIOR",
+"INT_G_PERSON_WARRIOR",
+"INT_G_VEHICLE_AIRSHIP_1",
+"INT_G_VEHICLE_BOAT_1",
+"INT_HUT",
+"INT_HYPNOTISM",
+"INT_INSECT_PLAGUE",
+"INT_INVISIBILITY",
+"INT_LAND_BRIDGE",
+"INT_LIGHTNING_BOLT",
+"INT_MEDICINE_MAN",
+"INT_MY_MANA",
+"INT_MY_NUM_KILLED_BY_BLUE",
+"INT_MY_NUM_KILLED_BY_GREEN",
+"INT_MY_NUM_KILLED_BY_HUMAN",
+"INT_MY_NUM_KILLED_BY_RED",
+"INT_MY_NUM_KILLED_BY_YELLOW",
+"INT_MY_NUM_PEOPLE",
+"INT_M_BUILDING_AIRSHIP_HUT_1",
+"INT_M_BUILDING_AIRSHIP_HUT_2",
+"INT_M_BUILDING_BOAT_HUT_1",
+"INT_M_BUILDING_BOAT_HUT_2",
+"INT_M_BUILDING_CURR_OE_SLOT",
+"INT_M_BUILDING_DRUM_TOWER",
+"INT_M_BUILDING_FARM",
+"INT_M_BUILDING_GATE",
+"INT_M_BUILDING_HUT",
+"INT_M_BUILDING_RECONVERSION",
+"INT_M_BUILDING_SPY_TRAIN",
+"INT_M_BUILDING_SUPER_TRAIN",
+"INT_M_BUILDING_TEMPLE",
+"INT_M_BUILDING_TEPEE",
+"INT_M_BUILDING_WALL_PIECE",
+"INT_M_BUILDING_WARRIOR_TRAIN",
+"INT_M_PERSON_BRAVE",
+"INT_M_PERSON_MEDICINE_MAN",
+"INT_M_PERSON_RELIGIOUS",
+"INT_M_PERSON_SPY",
+"INT_M_PERSON_SUPER_WARRIOR",
+"INT_M_PERSON_WARRIOR",
+"INT_M_SPELL_ANGEL_OF_DEATH_COST",
+"INT_M_SPELL_BLAST_COST",
+"INT_M_SPELL_BURN_COST",
+"INT_M_SPELL_EARTHQUAKE_COST",
+"INT_M_SPELL_EROSION_COST",
+"INT_M_SPELL_FIRESTORM_COST",
+"INT_M_SPELL_FLATTEN_COST",
+"INT_M_SPELL_GHOST_ARMY_COST",
+"INT_M_SPELL_HYPNOTISM_COST",
+"INT_M_SPELL_INSECT_PLAGUE_COST",
+"INT_M_SPELL_INVISIBILITY_COST",
+"INT_M_SPELL_LAND_BRIDGE_COST",
+"INT_M_SPELL_LIGHTNING_BOLT_COST",
+"INT_M_SPELL_SHIELD_COST",
+"INT_M_SPELL_SWAMP_COST",
+"INT_M_SPELL_VOLCANO_COST",
+"INT_M_SPELL_WHIRLWIND_COST",
+"INT_M_SPELL_WRATH_OF_GOD_COST",
+"INT_M_VEHICLE_AIRSHIP_1",
+"INT_M_VEHICLE_BOAT_1",
+"INT_NO_SPECIFIC_BUILDING",
+"INT_NO_SPECIFIC_PERSON",
+"INT_NO_SPECIFIC_SPELL",
+"INT_NUM_SHAMEN_DEFENDERS",
+"INT_RANDOM_100",
+"INT_RECONVERSION",
+"INT_RED_KILLED_BY_HUMAN",
+"INT_RED_KILLED_BY_ME",
+"INT_RED_MANA",
+"INT_RED_PEOPLE",
+"INT_RELIGIOUS",
+"INT_R_BUILDING_AIRSHIP_HUT_1",
+"INT_R_BUILDING_AIRSHIP_HUT_2",
+"INT_R_BUILDING_BOAT_HUT_1",
+"INT_R_BUILDING_BOAT_HUT_2",
+"INT_R_BUILDING_CURR_OE_SLOT",
+"INT_R_BUILDING_DRUM_TOWER",
+"INT_R_BUILDING_FARM",
+"INT_R_BUILDING_GATE",
+"INT_R_BUILDING_HUT",
+"INT_R_BUILDING_RECONVERSION",
+"INT_R_BUILDING_SPY_TRAIN",
+"INT_R_BUILDING_SUPER_TRAIN",
+"INT_R_BUILDING_TEMPLE",
+"INT_R_BUILDING_TEPEE",
+"INT_R_BUILDING_WALL_PIECE",
+"INT_R_BUILDING_WARRIOR_TRAIN",
+"INT_R_PERSON_BRAVE",
+"INT_R_PERSON_MEDICINE_MAN",
+"INT_R_PERSON_RELIGIOUS",
+"INT_R_PERSON_SPY",
+"INT_R_PERSON_SUPER_WARRIOR",
+"INT_R_PERSON_WARRIOR",
+"INT_R_VEHICLE_AIRSHIP_1",
+"INT_R_VEHICLE_BOAT_1",
+"INT_SHIELD",
+"INT_SPY",
+"INT_SPY_TRAIN",
+"INT_SUPER_TRAIN",
+"INT_SUPER_WARRIOR",
+"INT_SWAMP",
+"INT_TARGET_MEDICINE_MAN",
+"INT_TELEPORT",
+"INT_TEMPLE",
+"INT_TEPEE",
+"INT_VOLCANO",
+"INT_WALL_PIECE",
+"INT_WARRIOR",
+"INT_WARRIOR_TRAIN",
+"INT_WHIRLWIND",
+"INT_WILD_PEOPLE",
+"INT_WRATH_OF_GOD",
+"INT_YELLOW_KILLED_BY_HUMAN",
+"INT_YELLOW_KILLED_BY_ME",
+"INT_YELLOW_MANA",
+"INT_YELLOW_PEOPLE",
+"INT_Y_BUILDING_AIRSHIP_HUT_1",
+"INT_Y_BUILDING_AIRSHIP_HUT_2",
+"INT_Y_BUILDING_BOAT_HUT_1",
+"INT_Y_BUILDING_BOAT_HUT_2",
+"INT_Y_BUILDING_CURR_OE_SLOT",
+"INT_Y_BUILDING_DRUM_TOWER",
+"INT_Y_BUILDING_FARM",
+"INT_Y_BUILDING_GATE",
+"INT_Y_BUILDING_HUT",
+"INT_Y_BUILDING_RECONVERSION",
+"INT_Y_BUILDING_SPY_TRAIN",
+"INT_Y_BUILDING_SUPER_TRAIN",
+"INT_Y_BUILDING_TEMPLE",
+"INT_Y_BUILDING_TEPEE",
+"INT_Y_BUILDING_WALL_PIECE",
+"INT_Y_BUILDING_WARRIOR_TRAIN",
+"INT_Y_PERSON_BRAVE",
+"INT_Y_PERSON_MEDICINE_MAN",
+"INT_Y_PERSON_RELIGIOUS",
+"INT_Y_PERSON_SPY",
+"INT_Y_PERSON_SUPER_WARRIOR",
+"INT_Y_PERSON_WARRIOR",
+"INT_Y_VEHICLE_AIRSHIP_1",
+"INT_Y_VEHICLE_BOAT_1",
+"OWNER_NONE",
+"RESPONSE_BRING_NEW_PEOPLE",
+"RESPONSE_BUILD_VEHICLE",
+"RESPONSE_CONSTRUCT_BLDG",
+"RESPONSE_CONVERT_WILD",
+"RESPONSE_DEFEND_BASE",
+"RESPONSE_FETCH_FAR_VEHICLE",
+"RESPONSE_FETCH_LOST_PEOPLE",
+"RESPONSE_FETCH_LOST_VEHICLE",
+"RESPONSE_FETCH_WOOD",
+"RESPONSE_GUARD_BASE",
+"RESPONSE_HOUSE_PERSON",
+"RESPONSE_POPULATE_DRUM_TOWER",
+"RESPONSE_REPAIR_BLDGS",
+"RESPONSE_SPY_SABOTAGE",
+"RESPONSE_TRAIN_PEOPLE",
+"WILD"
+]
+}
