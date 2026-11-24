@@ -111,11 +111,11 @@
 },
 "CAMERA_X": {
 "params": [],
-"line": 1634
+"line": 1636
 },
 "CAMERA_Z": {
 "params": [],
-"line": 1640
+"line": 1642
 },
 "CHECK_IF_PERSON_PREACHED_TO": {
 "params": [
@@ -693,7 +693,7 @@
 "pn"
 ]
 ],
-"line": 1655
+"line": 1657
 },
 "GET_NUM_ONE_OFF_SPELLS": {
 "params": [
@@ -715,7 +715,7 @@
 "pn"
 ]
 ],
-"line": 1664
+"line": 1666
 },
 "GET_NUM_PEOPLE_BEING_PREACHED": {
 "params": [
@@ -750,7 +750,7 @@
 },
 "GET_TURNS_PER_SECOND": {
 "params": [],
-"line": 1609
+"line": 1611
 },
 "GET_USER_VARIABLE_BOOLEAN_VALUE": {
 "params": [
@@ -763,7 +763,7 @@
 "idx"
 ]
 ],
-"line": 1688
+"line": 1690
 },
 "GET_USER_VARIABLE_VALUE": {
 "params": [
@@ -776,7 +776,7 @@
 "idx"
 ]
 ],
-"line": 1670
+"line": 1672
 },
 "GIVE_MANA_TO_PLAYER": {
 "params": [
@@ -1012,7 +1012,7 @@
 "pn"
 ]
 ],
-"line": 1646
+"line": 1648
 },
 "MARKER_ENTRIES": {
 "params": [
@@ -1072,7 +1072,7 @@
 "pn"
 ]
 ],
-"line": 1625
+"line": 1627
 },
 "OH_LOOK_PLAYER_HAS_JUST_KILLED_HIS_FIRST_GHOST": {
 "params": [
@@ -1714,7 +1714,7 @@
 "val"
 ]
 ],
-"line": 1697
+"line": 1699
 },
 "SET_USER_VARIABLE_VALUE": {
 "params": [
@@ -1731,7 +1731,7 @@
 "val"
 ]
 ],
-"line": 1679
+"line": 1681
 },
 "SET_WOOD_COLLECTION_RADII": {
 "params": [
@@ -2099,7 +2099,7 @@
 "spell"
 ]
 ],
-"line": 1727
+"line": 1729
 },
 "computer_dont_sort_people_into_sensible_houses": {
 "params": [
@@ -2108,7 +2108,7 @@
 "t_player"
 ]
 ],
-"line": 1715
+"line": 1717
 },
 "computer_number_action_entries_of_type": {
 "params": [
@@ -2121,7 +2121,7 @@
 "type"
 ]
 ],
-"line": 1703
+"line": 1705
 },
 "computer_reset_limits_for_all_spells": {
 "params": [
@@ -2130,7 +2130,7 @@
 "t_player"
 ]
 ],
-"line": 1793
+"line": 1795
 },
 "computer_reset_limits_for_spell": {
 "params": [
@@ -2143,7 +2143,7 @@
 "spell_model"
 ]
 ],
-"line": 1775
+"line": 1777
 },
 "computer_set_default_num_workers_for_bldg": {
 "params": [
@@ -2160,7 +2160,7 @@
 "num_workers"
 ]
 ],
-"line": 1767
+"line": 1769
 },
 "computer_set_limits_count_for_spell": {
 "params": [
@@ -2177,7 +2177,7 @@
 "count"
 ]
 ],
-"line": 1781
+"line": 1783
 },
 "computer_set_limits_number_cast_for_spell": {
 "params": [
@@ -2194,7 +2194,7 @@
 "number_cast"
 ]
 ],
-"line": 1787
+"line": 1789
 },
 "computer_set_response_params": {
 "params": [
@@ -2215,7 +2215,7 @@
 "random_ticks"
 ]
 ],
-"line": 1737
+"line": 1739
 },
 "computer_sort_people_into_sensible_houses": {
 "params": [
@@ -2224,7 +2224,7 @@
 "t_player"
 ]
 ],
-"line": 1709
+"line": 1711
 },
 "computer_trigger_response_immediately": {
 "params": [
@@ -2237,7 +2237,7 @@
 "index"
 ]
 ],
-"line": 1751
+"line": 1753
 },
 "script_is_empty": {
 "params": [
@@ -2246,7 +2246,7 @@
 "idx"
 ]
 ],
-"line": 1615
+"line": 1617
 },
 "script_set_up_empty_script": {
 "params": [
